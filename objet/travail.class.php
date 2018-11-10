@@ -1,6 +1,5 @@
 <?php
-  include('controller.class.php');
-  
+
   class travail extends Controller //ENCAPSULATION DE USER DANS TRAVAIL
   {
 

@@ -82,8 +82,11 @@
               </div>
             </div>
           </div>
-
-
+          <pre>
+          <?php
+            print_r($_SESSION['user_info']);
+           ?>
+         </pre>
 
 
 

@@ -1,6 +1,5 @@
 <?php
-  include('controller.class.php');
-  
+
   class offre extends Controller
   {
 

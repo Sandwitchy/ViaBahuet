@@ -1,5 +1,4 @@
 <?php
-  include('controller.class.php');
 
   class utilisateur extends Controller
   {

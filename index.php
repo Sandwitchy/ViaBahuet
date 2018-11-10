@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  <?php
+    include('tools/bdd.inc.php');
+    include('objet/callClass.php');
+   ?>
   <head>
 
     <meta charset="utf-8">
@@ -21,23 +24,48 @@
     <link href="css/sb-admin.css" rel="stylesheet">
 
   </head>
-
   <body class="bg-dark">
-
+    <?php
+    //tentative de connexion d'un user
+      if (isset($_POST['connexion']))
+      {
+        $var_LOG = $_POST['log'];
+        $var_Password = $_POST['password'];
+        $ocontroller = new Controller($conn);
+        $INT_resconn = $ocontroller -> connexionVerif($var_LOG,$var_Password);
+        print_r($INT_resconn);
+        if ($INT_resconn == "FALSE")
+        {
+          ?>
+          <div class="alert alert-danger">
+            <strong>Erreur :</strong> Identifiant/Mail ou mot de passe faux
+          </div>
+          <?php
+        }
+        else
+        {
+          $ouser = new user($INT_resconn);
+          $ouser -> recupUser($conn);
+          session_start();
+          $_SESSION['user_info'] = $ouser;
+          header('location:home.php');
+        }
+      }
+     ?>
     <div class="container">
       <div class="card card-login mx-auto mt-5">
         <div class="card-header">Se Connecter</div>
         <div class="card-body">
-          <form>
+          <form method='post' action='#'>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
-                <label for="inputEmail">Email</label>
+                <input type="text" id="inputEmail" name='log' class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
+                <label for="inputEmail">Email ou Identifiant</label>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                <input type="password" id="inputPassword" name='password' class="form-control" placeholder="Password" required="required">
                 <label for="inputPassword">Mot de passe</label>
               </div>
             </div>
@@ -49,7 +77,7 @@
                 </label>
               </div>
             </div>
-            <a class="btn btn-primary btn-block" href="home.php">Se Connecter</a>
+            <input type='submit' name='connexion' class='btn btn-primary btn-block' value="Se Connecter">
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="register.php">Créer un compte</a>

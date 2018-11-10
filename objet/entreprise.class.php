@@ -1,6 +1,5 @@
 <?php
 
-  require("utilisateur.class.php");
 
   class entreprise extends utilisateur //HERITE DE LA CLASSE UTILISATEUR
   {

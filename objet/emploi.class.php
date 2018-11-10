@@ -1,6 +1,5 @@
 <?php
 
-  require("offre.class.php");
 
   class emploi extends offre //HERITE DE LA CLASSE OFFRE
   {

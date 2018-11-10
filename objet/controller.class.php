@@ -60,5 +60,38 @@
       $conn = $this->get_conn();
       $req_sql = $conn->query($sql_INSERTTABLE);
     }
+    //Fonction de connexion Utilisateur
+    /*
+      Entré :
+        Log
+        pass
+      Sortie :
+        1 : log n'existe pas
+        2 : mot de passe mauvais
+        idUser : log & mot de passe bon
+    */
+    public function connexionVerif($Var_Log,$Var_Pass)
+    {
+      $conn = $this -> get_conn();
+      $Var_Log = $conn -> quote($Var_Log);
+      $sql_Verif = "SELECT idUser,mailUser,loginUser,passUser FROM user
+                    WHERE mailUser = $Var_Log
+                    OR loginUser = $Var_Log";
+      $req_SQL = $conn -> query($sql_Verif);
+      if ($req_SQL == FALSE)
+      {
+        return "FALSE";//erreur le log n'existe pas
+      }else
+      {
+        $res_SQL = $req_SQL -> fetch();
+        if($Var_Pass != $res_SQL['passUser'])
+        {
+          return "FALSE"; //erreur password mauvais
+        }else {
+          return $res_SQL['idUser']; //réussi
+        }
+      }
+
+    }
   }
  ?>

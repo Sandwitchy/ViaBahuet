@@ -1,6 +1,5 @@
 <?php
 
-  require("offre.class.php");
 
   class stage extends offre //HERITE DE LA CLASSE OFFRE ET ENCAPSULATION DE LA CLASSE USER
   {

@@ -1,5 +1,4 @@
 <?php
-  include('controller.class.php');
   class adresse extends Controller //ENCAPSULATION DE VILLE DANS ADRESSE
   {
 

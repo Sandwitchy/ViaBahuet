@@ -1,6 +1,4 @@
 <?php
-  require("utilisateur.class.php");
-
   class user extends utilisateur //ENCAPSULATION DE ADRESSE DANS USER ET HERITE DE LA CLASSE UTILISATEUR
   {
 
@@ -18,10 +16,9 @@
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function user($adresse,$idUtilisateur,$suspendu,$datedebSuspens,$idUser,$nUser,$pUser,$mUser,$passUser,$logUser,$telUser,$photoUser)
+    public function user($idUser= "",$nUser= "",$pUser= "",$mUser= "",$passUser= "",$logUser= "",$adresse = "",$suspendu= "",$datedebSuspens= "",$telUser= "",$photoUser= "")
     {
-
-      utilisateur::utilisateur($idUtilisateur,$suspendu,$datedebSuspens);
+      utilisateur::utilisateur($suspendu,$datedebSuspens);
       $this->adresse    = $adresse;
       $this->idUser     = $idUser;
       $this->nameUser   = $nUser;
@@ -110,6 +107,40 @@
       $this->photoUser = $photoUser;
     }
 
+    //INSCRIPTION USER MEMBRE
+    public function registeruser($conn,$nUser,$pUser,$mUser,$passUser,$logUser)
+    {
+      //sécurise les variable contre InjectionSQL
+      $nUser = $conn -> quote($nUser);
+      $pUser = $conn -> quote($pUser);
+      $mUser = $conn -> quote($mUser);
+      $passUser = $conn -> quote($passUser);
+      $logUser = $conn -> quote($logUser);
+      //Insert du nouveau membre
+      $sql_InsertUser = "INSERT INTO user (nameUser,preUser,mailUser,passUser,loginUser,idTypeUser)
+                         VALUES($nUser,$pUser,$mUser,$passUser,$logUser,'1')";
+      $req_SQL = $conn->query($sql_InsertUser)or die($sql_InsertUser);
+    }
+    //récuperation des infos user
+    public function recupUser($conn)
+    {
+      $idUser = $this -> get_idUser();
+      $idUser = $conn -> quote($idUser);
+      $sql_User = "SELECT * FROM user WHERE idUser = $idUser";
+      $req_SQL = $conn -> query($sql_User);
+      $res_SQL = $req_SQL -> fetch();
+
+      $this -> set_adresse($res_SQL['rueUser']);
+      $this -> set_nameUser($res_SQL['nameUser']);
+      $this -> set_preUser($res_SQL['preUser']);
+      $this -> set_mailUser($res_SQL['mailUser']);
+      $this -> set_passUser($res_SQL['passUser']);
+      $this -> set_loginUser($res_SQL['loginUser']);
+      $this -> set_telUser($res_SQL['telUser']);
+      $this -> set_photoUser($res_SQL['photoUser']);
+      utilisateur::set_suspendu($res_SQL['suspendu']);
+      utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
+    }
   }
 
 ?>
