@@ -13,10 +13,11 @@
     private $loginUser;
     private $telUser;
     private $photoUser;
+    private $typeUser;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function user($idUser= "",$nUser= "",$pUser= "",$mUser= "",$passUser= "",$logUser= "",$adresse = "",$suspendu= "",$datedebSuspens= "",$telUser= "",$photoUser= "")
+    public function user($idUser= "",$nUser= "",$pUser= "",$mUser= "",$passUser= "",$logUser= "",$adresse = "",$suspendu= "",$datedebSuspens= "",$telUser= "",$photoUser= "",$typeUser = "")
     {
       utilisateur::utilisateur($suspendu,$datedebSuspens);
       $this->adresse    = $adresse;
@@ -28,6 +29,7 @@
       $this->loginUser  = $logUser;
       $this->telUser    = $telUser;
       $this->photoUser  = $photoUser;
+      $this->typeUser   = $typeUser;
     }
 
     //INITIALISATION DES GETTERS DE LA CLASSE
@@ -35,6 +37,10 @@
     public function get_adresse()
     {
       return $this->adresse;
+    }
+    public function get_typeUser()
+    {
+      return $this->typeUser;
     }
     public function get_idUser()
     {
@@ -81,6 +87,10 @@
     public function set_nameUser($nUser)
     {
       $this->nameUser = $nUser;
+    }
+    public function set_typeUser($typeUser)
+    {
+      $this->typeUser = $typeUser;
     }
     public function set_preUser($pUser)
     {
@@ -138,6 +148,7 @@
       $this -> set_loginUser($res_SQL['loginUser']);
       $this -> set_telUser($res_SQL['telUser']);
       $this -> set_photoUser($res_SQL['photoUser']);
+      $this -> set_typeUser($res_SQL['idTypeUser']);
       utilisateur::set_suspendu($res_SQL['suspendu']);
       utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
     }

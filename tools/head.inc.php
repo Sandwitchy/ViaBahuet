@@ -3,9 +3,14 @@
 
   <head>
     <?php
+      include('bdd.inc.php');
+      include('./objet/callClass.php');
       session_start();
-      if (!isset($_SESSION['user_info'])) {
+      if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
+      {
         header('location:index.php');
+      }else {
+        $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
       }
      ?>
     <meta charset="utf-8">
@@ -119,9 +124,17 @@
             <i class="fas fa-fw fa-building"></i>
             <span>Les Entreprises</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-database"></i>
-            <span>Administration</span></a>
-        </li>
+        <?php
+          $INT_TypeUser = $GLOBAL_ouser->get_typeUser();
+          if ($INT_TypeUser != 1)
+          {
+            ?>
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-database"></i>
+                <span>Administration</span></a>
+            </li>
+            <?php
+          }
+         ?>
       </ul>
