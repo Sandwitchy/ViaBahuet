@@ -1,6 +1,7 @@
 <?php
+  include('controller.class.php');
 
-  class utilisateur
+  class utilisateur extends Controller
   {
 
     //DECLARATION DES VARIABLES DE LA CLASSE

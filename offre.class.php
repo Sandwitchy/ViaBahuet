@@ -1,6 +1,7 @@
 <?php
-
-  class offre
+  include('controller.class.php');
+  
+  class offre extends Controller
   {
 
     //DECLARATION DES VARIABLES DE LA CLASSE
@@ -48,7 +49,7 @@
     }
 
     //INITIALISATION DES SETTERS DE LA CLASSE
-    
+
     public function set_entreprise($entreprise)
     {
       $this->entreprise = $entreprise;

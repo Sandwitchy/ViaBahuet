@@ -1,6 +1,6 @@
 <?php
-
-  class adresse //ENCAPSULATION DE VILLE DANS ADRESSE
+  include('controller.class.php');
+  class adresse extends Controller //ENCAPSULATION DE VILLE DANS ADRESSE
   {
 
     //DECLARATION DES VARIABLES DE LA CLASSE
