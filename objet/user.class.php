@@ -131,6 +131,7 @@
                          VALUES($nUser,$pUser,$mUser,$passUser,$logUser,'1')";
       $req_SQL = $conn->query($sql_InsertUser)or die($sql_InsertUser);
     }
+    
     //récuperation des infos user
     public function recupUser($conn)
     {

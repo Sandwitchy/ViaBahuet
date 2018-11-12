@@ -105,9 +105,6 @@
       </div>
       <!-- /.content-wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
-
     <?php
     //ajout du pied de page
     include('tools/foot.inc.php');
