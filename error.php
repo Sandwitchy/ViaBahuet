@@ -9,7 +9,7 @@
           <strong>Erreur :</strong> La ville entrée n'existe pas
         </div>
         <?php
-        unset($_SESSION['error']);
+        $_SESSION['error'] = 0;
         break;
       case 2:
         ?>
@@ -18,7 +18,7 @@
           que le nouveau mot de passe et sa confirmation soit identique.
         </div>
         <?php
-        unset($_SESSION['error']);
+          $_SESSION['error'] = 0;
         break;
       case 3:
         ?>
@@ -26,7 +26,7 @@
           <strong>Erreur :</strong> L'image ne correspond pas au type image autorisé ou l'image est trop lourde
         </div>
         <?php
-        unset($_SESSION['error']);
+          $_SESSION['error'] = 0;
         break;
       case 4:
         ?>
@@ -34,7 +34,7 @@
           <strong>Erreur :</strong>Une erreur est survenue
         </div>
         <?php
-        unset($_SESSION['error']);
+          $_SESSION['error'] = 0;
         break;
     }//end switch error
   }
@@ -48,7 +48,7 @@
           Vos informations ont bien été mis à jour
         </div>
         <?php
-        unset($_SESSION['success']);
+        $_SESSION['success'] = 0;
         break;
       case 2:
       ?>
@@ -56,7 +56,7 @@
         Votre mot de passe à bien été mis à jour
       </div>
       <?php
-      unset($_SESSION['success']);
+      $_SESSION['success'] = 0;
         break;
       case 3:
       ?>
@@ -64,7 +64,7 @@
         Votre Image de profil à bien été mis à jour
       </div>
       <?php
-      unset($_SESSION['success']);
+      $_SESSION['success'] = 0;
       break;
     }//end switch success
   }

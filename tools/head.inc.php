@@ -8,8 +8,6 @@
       if(session_id() == '' || !isset($_SESSION)) {
           // session isn't started
           session_start();
-          $_SESSION['success'] = 0;
-          $_SESSION['error'] = 0;
       }
       if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
       {
@@ -158,12 +156,6 @@
             <a class="nav-link" href="profile.php">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Mon profil</span>
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-briefcase"></i>
-            <span>Mes Expériences</span>
           </a>
         </li>
         <li class="nav-item">

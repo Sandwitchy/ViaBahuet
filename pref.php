@@ -31,7 +31,7 @@ include('error.php');
               </div>
             </div>
             <div class='col-md'>
-              <button type="button" id="triggermodal" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Mofifier le Mot de Passe</button>
+              <button type="button" id="triggermodal" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Modifier le Mot de Passe</button>
             </div>
           </div>
         </div>

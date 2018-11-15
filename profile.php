@@ -14,14 +14,13 @@ include('tools/head.inc.php');
 
               <div class="col-md-6">
                 <img class="pp" src="image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>" class="img-fluid" alt="Photo de profil" style="border-radius:50%;width:120px;height:120px;margin-top:15px;margin-left:20px;"> <!-- IMAGE -->
-                <a href="#"  style="text-decoration:none;"><i class="fas fa-edit"></i></a>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5" style="margin-top:2%;">
                 <div class="col-md"> <!-- NOM -->
-                  <h4 class="h4">DUPUIS</h4>
+                  <h4 class="h4"><?php echo $GLOBAL_ouser->get_nameUser(); ?></h4>
                 </div>
                 <div class="col-md"> <!-- PRENOM -->
-                  <h5 class="h5">Jules</h5>
+                  <h5 class="h5"><?php echo $GLOBAL_ouser->get_preUser(); ?></h5>
                 </div>
               </div>
             </div>
@@ -34,7 +33,7 @@ include('tools/head.inc.php');
               <a href="#" style="text-decoration:none;"><i class="fas fa-address-book"></i> Mes coordonnées</a>
             </div>
             <div class="col-md-5 col-sm-3">
-              <a href="#"  style="text-decoration:none;"><i class="fas fa-edit"></i>Modifier mes informations</a>
+              <a href="pref.php"  style="text-decoration:none;"><i class="fas fa-edit"></i>Modifier mes informations</a>
             </div>
 
           </div>
