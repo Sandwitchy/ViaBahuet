@@ -23,8 +23,8 @@
 </div>
 
 
-<!-- Bootstrap core JavaScript-->
 
+<!-- Bootstrap core JavaScript-->
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -37,6 +37,7 @@
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin.min.js"></script>
+
 
 
 </body>

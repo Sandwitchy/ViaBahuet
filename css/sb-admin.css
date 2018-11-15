@@ -37,6 +37,7 @@ body {
 .ui-helper-hidden-accessible {
   display: none;
 }
+
 #wrapper {
   display: -webkit-box;
   display: -ms-flexbox;

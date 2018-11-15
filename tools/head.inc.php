@@ -17,6 +17,7 @@
       }else {
         $_SESSION['user_info'] ->recupUser($conn);
         $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
+
       }
      ?>
     <meta charset="utf-8">
@@ -38,6 +39,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
+
     <!--Jquery ui import -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -79,7 +81,8 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html">Start Bootstrap</a>
+
+      <a class="navbar-brand mr-1" href="index.html">Via Bahuet</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -128,6 +131,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
             <a class="dropdown-item" href="pref.php">Préférences</a>
             <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
@@ -143,9 +147,17 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
+
           <a class="nav-link" href="home.php">
             <i class="fas fa-fw fa-bars"></i>
             <span>Accueil</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+
+            <a class="nav-link" href="profile.php">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>Mon profil</span>
           </a>
         </li>
         <li class="nav-item dropdown">

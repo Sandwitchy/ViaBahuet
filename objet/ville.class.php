@@ -11,6 +11,7 @@
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
+
     public function ville($liVil,$CP,$INSEE="")
     {
       $this->INSEE = $INSEE;
@@ -79,6 +80,7 @@
         return FALSE;
       }
     }
+
   }
 
 ?>

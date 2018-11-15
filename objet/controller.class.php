@@ -3,7 +3,9 @@
   {
     private $conn; //chaine de connexion à la BDD
 
-    public function Controller($conn)
+
+    public function Controller($conn="")
+
     {
       $this->conn = $conn;
     }
@@ -93,5 +95,26 @@
       }
 
     }
+
+    public function updateBDD($table,$data,$idUser,$conn) //FAIRE UNE FONCTION QUI GENERE PLUSIEURS MODIFICATIONS EN FONCTION DU NOMBRE DE DONNEES
+    {
+      $SQL_update = "UPDATE $table SET";
+      $i = 0;
+      foreach($data as $uneData) //Construction de la requête
+      {
+        $donnee = $conn->quote($uneData['donnee']);
+        if($i == 0) //s'il n'y a qu'une donnée, je construis une requête simple
+        {
+          $SQL_update = $SQL_update." ".$uneData['colonne']."=".$donnee;
+          $i++;
+        }
+        else {
+          $SQL_update = $SQL_update." , ".$uneData['colonne']."=".$donnee; //s'il y a plusieurs données, je les ajoute en gérant les virgules dans la RQT
+        }
+      }
+      $SQL_update = $SQL_update." WHERE idUser = $idUser";
+      $conn ->query($SQL_update); //je termine la RQT et j'exécute
+    }
+
   }
  ?>

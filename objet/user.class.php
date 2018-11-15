@@ -15,13 +15,13 @@
     private $photoUser;
     private $typeUser;
     private $ville;
+    private $descUser;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function user($idUser= "",$nUser= "",$pUser= "",$mUser= "",$passUser= "",$logUser= "",$adresse = "",$suspendu= "",$datedebSuspens= "",$telUser= "",$photoUser= "",$typeUser = "")
+    public function user($idUser= "",$nUser= "",$pUser= "",$mUser= "",$passUser= "",$logUser= "",$adresse = "",$suspendu= "",$datedebSuspens= "",$telUser= "",$photoUser= "",$typeUser = "",$descUser= "")
     {
       utilisateur::utilisateur($suspendu,$datedebSuspens);
-
       $this->adresse    = $adresse;
       $this->idUser     = $idUser;
       $this->nameUser   = $nUser;
@@ -32,6 +32,8 @@
       $this->telUser    = $telUser;
       $this->photoUser  = $photoUser;
       $this->typeUser   = $typeUser;
+      $this->descUser   = $descUser;
+
     }
 
     //INITIALISATION DES GETTERS DE LA CLASSE
@@ -76,10 +78,17 @@
     {
       return $this->photoUser;
     }
+
     public function get_ville()
     {
       return $this->ville;
     }
+
+    public function get_descUser()
+    {
+      return $this->descUser;
+    }
+
     //INITIALISATION DES SETTERS DE LA CLASSE
     public function set_adresse($adresse)
     {
@@ -125,8 +134,12 @@
     {
       $this->photoUser = $photoUser;
     }
+    public function set_descUser($descUser)
+    {
+      $this->descUser = $descUser;
+    }
 
-    //INSCRIPTION USER de type MEMBRE
+    //INSCRIPTION USER MEMBRE
     public function registeruser($conn,$nUser,$pUser,$mUser,$passUser,$logUser)
     {
       //sécurise les variable contre InjectionSQL
@@ -159,7 +172,6 @@
       $this -> set_telUser($res_SQL['telUser']);
       $this -> set_photoUser($res_SQL['photoUser']);
       $this -> set_typeUser($res_SQL['idTypeUser']);
-
       $this ->ville = new ville("","",$res_SQL['INSEE']);
       $this->ville->searchInfo($conn,$res_SQL['INSEE']);
 
@@ -185,6 +197,9 @@
       $mail = $conn -> quote($mail);
       $tel = $conn -> quote($tel);
       $rue = $conn -> quote($rue);
+      $this -> set_descUser($res_SQL['descUser']);
+      utilisateur::set_suspendu($res_SQL['suspendu']);
+      utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
       $SQL_updateUser = "UPDATE user
                          SET loginUser = $login,
                              nameUser = $nom,
@@ -195,6 +210,7 @@
                              INSEE = $INSEE
                           WHERE idUser = $id";
       $req_SQL = $conn -> query($SQL_updateUser);
+      
     }
     /*
     fonction pour changer le pot de passe de l'user
@@ -223,4 +239,5 @@
       }
     }
 }
+
 ?>
