@@ -1,7 +1,10 @@
 <?php
   include('tools/bdd.inc.php');
   include('objet/callClass.php');
-  session_start();
+  if(session_id() == '' || !isset($_SESSION)) {
+      // session isn't started
+      session_start();
+  }
   if (isset($_POST['envoieProPic']))
   {
       $n = $_FILES['imgProfile']['name'];
@@ -15,34 +18,44 @@
   {
     $oldimg = $ouser -> get_photoUser();
     $cheminimg = "image/";
-    if ((strstr($t,'png'))||(strstr($t,'jpg'))||(strstr($t,'jpeg'))||(strstr($t,'gif')))
+    if ($e == 0)
     {
-      if ($s > 2500000)
+      if ((strstr($t,'png'))||(strstr($t,'jpg'))||(strstr($t,'jpeg'))||(strstr($t,'gif')))
       {
-        $_SESSION['error'] = 3;
-        header('location:pref.php');
+        if ($s > 2500000)
+        {
+          $_SESSION['error'] = 3;
+          header('location:pref.php');
+        }
+        else
+        {
+          $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
+          $idUser = $ouser->get_idUser();
+          $pathnewphoto = "image/".$idUser.$ext;
+          move_uploaded_file($temp,$pathnewphoto);
+          if ($oldimg != 'image/pic.jpg')
+          {
+            unlink($oldimg);
+          }
+          $sql = "UPDATE user SET photoUser = '$pathnewphoto' WHERE idUser = '$idUser'";
+          $req_sql = $conn -> query($sql);
+          unset($_SESSION['success']);
+          $_SESSION['success'] = 3;
+          header('location:pref.php');
+        }
       }
       else
       {
-        $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
-        $idUser = $ouser->get_idUser();
-        $pathnewphoto = "image/".$idUser.$ext;
-        move_uploaded_file($temp,$pathnewphoto);
-        if (!strstr($oldimg,'pic.jpg'))
-        {
-          //$oldimg = str_replace("image/","",$oldimg);
-          unlink($oldimg);
-        }
-        $sql = "UPDATE user SET photoUser = '$pathnewphoto' WHERE idUser = '$idUser'";
-        $req_sql = $conn -> query($sql);
-        $_SESSION['success'] = 3;
+        unset($_SESSION['error']);
+        $_SESSION['error'] = 3;
         header('location:pref.php');
       }
-    }
-    else
+    }else
     {
-      $_SESSION['error'] = 3;
+      unset($_SESSION['error']);
+      $_SESSION['error'] = 4;
       header('location:pref.php');
     }
+
   }
  ?>

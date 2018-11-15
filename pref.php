@@ -1,92 +1,21 @@
 <?php
 //Ajout du head de page
 include('tools/head.inc.php');
+include('error.php');
 ?>
   <div id="content-wrapper">
     <div class="container-fluid">
       <?php
-      if (isset($_SESSION['error']))
+      if (($_SESSION['error'] != 0)&&(isset($_SESSION['error'])))
       {
-        switch ($_SESSION['error'])
-        {
-          case 1:
-            ?>
-            <div class="alert alert-danger">
-              <strong>Erreur :</strong> La ville entrée n'existe pas
-            </div>
-            <?php
-            unset($_SESSION['error']);//détruit la variable
-            break;
-          case 2:
-            ?>
-            <div class="alert alert-danger">
-              <strong>Erreur :</strong> L'un des mots de passe est incorrect. Vérifier si il s'agît bien de votre mot de passe et
-              que le nouveau mot de passe et sa confirmation soit identique.
-            </div>
-            <?php
-            unset($_SESSION['error']);//détruit la variable
-            break;
-        }//end switch error
-      }//end if
-      if(isset($_SESSION['success']))
-        {
-          switch ($_SESSION['success'])
-          {
-            case 1:
-              ?>
-              <div class="alert alert-success">
-                Vos informations ont bien été mis à jour
-              </div>
-              <?php
-              unset($_SESSION['success']);//détruit la variable
-              break;
-            case 2:
-            ?>
-            <div class="alert alert-success">
-              Votre mot de passe à bien été mis à jour
-            </div>
-            <?php
-            unset($_SESSION['success']);//détruit la variable
-              break;
-          }//end switch success
-        }//end if success
+        error($_SESSION['error']);
+      }
+      if (($_SESSION['success'] != 0)&&(isset($_SESSION['success'])))
+      {
+        success($_SESSION['success']);
+      }
+
       ?>
-      <!-- Modal Mot de passe -->
-      <div class="modal" id="ModalMDP" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modifier le Mot de Passe</h5>
-            </div>
-            <div class="modal-body">
-              <form method='POST' action="#">
-                <div class="form-group">
-                  <div class="form-label-group">
-                    <input type="password" id="inputOldPass" name='oldpass' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="Password" required="required">
-                    <label for="inputOldPass">Ancien Mot de Passe</label>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="form-label-group">
-                    <input type="password" id="inputNewPass" name='newpass' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="New Password" required="required">
-                    <label for="inputNewPass">Nouveau Mot de Passe</label>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="form-label-group">
-                    <input type="password" id="inputConfPass" name='confpass' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="Confirm Password" required="required">
-                    <label for="inputConfPass">Comfirmer Nouveau Mot de Passe</label>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <input type='submit' name="modpass" value='Enregistrer' class='btn btn-danger'>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
-            </form>
-            </div>
-          </div>
-        </div>
-      </div><!--end Modal Mot de passe -->
     <div class='row'>
       <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;'>
         <h1>Mes Préférences</h1>
@@ -102,7 +31,7 @@ include('tools/head.inc.php');
               </div>
             </div>
             <div class='col-md'>
-                <button type="button" id="triggermdp" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Mofifier le Mot de Passe</button>
+              <button type="button" id="triggermodal" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Mofifier le Mot de Passe</button>
             </div>
           </div>
         </div>
@@ -185,7 +114,7 @@ include('tools/head.inc.php');
        </div>
        <div class='text-center' style="margin-top:2%">
          <div class="btn-group">
-           <input type='submit' value='Enyoyer' name='envoieProPic' class='btn btn-primary'>
+           <input type='submit' value='Envoyer' name='envoieProPic' class='btn btn-primary'>
            <input type='reset' value='Annuler' class='btn btn-secondary'>
          </div>
        </div>
@@ -217,6 +146,7 @@ include('tools/head.inc.php');
       $tel = $_POST['tel'];
       $rue = $_POST['rue'];
       $GLOBAL_ouser -> updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn);
+      unset($_SESSION['success']);
       $_SESSION['success'] = 1;
       echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
     }
@@ -228,13 +158,52 @@ include('tools/head.inc.php');
       $res = $GLOBAL_ouser -> changePass($old,$new,$confirm,$conn);
       if ($res == true)
       {
-          $_SESSION['success'] = 2;
+        unset($_SESSION['success']);
+        $_SESSION['success'] = 2;
       }else {
-          $_SESSION['error'] = 2;
+        unset($_SESSION['error']);
+        $_SESSION['error'] = 2;
       }
       echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
     }
      ?>
+     <!-- Modal Mot de passe -->
+     <div class="modal" id="ModalMDP" role="dialog">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title">Modifier le Mot de Passe</h5>
+           </div>
+           <div class="modal-body">
+             <form method='POST' action="#">
+               <div class="form-group">
+                 <div class="form-label-group">
+                   <input type="password" id="inputOldPass" name='oldpass' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="Password" required="required">
+                   <label for="inputOldPass">Ancien Mot de Passe</label>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <div class="form-label-group">
+                   <input type="password" id="inputNewPass" name='newpass' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="New Password" required="required">
+                   <label for="inputNewPass">Nouveau Mot de Passe</label>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <div class="form-label-group">
+                   <input type="password" id="inputConfPass" name='confpass' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="Confirm Password" required="required">
+                   <label for="inputConfPass">Comfirmer Nouveau Mot de Passe</label>
+                 </div>
+               </div>
+           </div>
+           <div class="modal-footer">
+             <input type='submit' name="modpass" value='Enregistrer' class='btn btn-danger'>
+             <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+           </form>
+           </div>
+         </div>
+       </div>
+     </div><!--end Modal Mot de passe -->
+
     <!-- Sticky Footer -->
     <footer class="sticky-footer">
       <div class="container my-auto">

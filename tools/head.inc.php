@@ -5,14 +5,17 @@
     <?php
       include('bdd.inc.php');
       include('./objet/callClass.php');
-      session_start();
+      if(session_id() == '' || !isset($_SESSION)) {
+          // session isn't started
+          session_start();
+          $_SESSION['success'] = 0;
+          $_SESSION['error'] = 0;
+      }
       if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
       {
         echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
       }else {
         $_SESSION['user_info'] ->recupUser($conn);
-        $_SESSION['error'] = 0;
-        $_SESSION['success'] = 0;
         $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
       }
      ?>
@@ -65,6 +68,9 @@
         source: availableTags
       });
     } );
+    $('#ModalMDP').on('shown.bs.modal', function () {
+      $('#triggermodal').trigger('onclick')
+    })
     </script>
 
   </head>

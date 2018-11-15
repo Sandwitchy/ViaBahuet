@@ -84,7 +84,7 @@
           </div>
           <pre>
           <?php
-            print_r($_SESSION['user_info']);
+            print_r($_SESSION);
            ?>
          </pre>
 
