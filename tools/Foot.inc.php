@@ -22,8 +22,9 @@
   </div>
 </div>
 
+
+
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -37,9 +38,7 @@
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin.min.js"></script>
 
-<!-- Demo scripts for this page-->
-<script src="js/demo/datatables-demo.js"></script>
-<script src="js/demo/chart-area-demo.js"></script>
+
 
 </body>
 

@@ -3,7 +3,9 @@
   {
     private $conn; //chaine de connexion à la BDD
 
+
     public function Controller($conn="")
+
     {
       $this->conn = $conn;
     }
@@ -113,5 +115,6 @@
       $SQL_update = $SQL_update." WHERE idUser = $idUser";
       $conn ->query($SQL_update); //je termine la RQT et j'exécute
     }
+
   }
  ?>

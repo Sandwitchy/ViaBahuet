@@ -11,7 +11,8 @@
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function utilisateur($id,$suspens,$date)
+
+    public function utilisateur($id="",$suspens="",$date="")
     {
 
       $this->idUtilisateur = $id;
