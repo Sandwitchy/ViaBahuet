@@ -1,0 +1,12 @@
+<?php
+  include('controller.class.php');
+  include('utilisateur.class.php');
+  include('adresse.class.php');
+  include('entreprise.class.php');
+  include('offre.class.php');
+  include('stage.class.php');
+  include('travail.class.php');
+  include('emploi.class.php');
+  include('user.class.php');
+  include('ville.class.php');
+ ?>
