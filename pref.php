@@ -104,7 +104,7 @@ include('error.php');
     </div><!--end contanier xl-14 -->
     <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;margin-right:2%;'>
       <div class="text-center">
-        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
+        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
         <h4>Image de profil</h4>
       </div>
       <form method='post' enctype="multipart/form-data" action='gestImg.php'>

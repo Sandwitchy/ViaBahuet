@@ -17,7 +17,6 @@
   function imgprofile($n,$t,$s,$temp,$e,$conn,$ouser)
   {
     $oldimg = $ouser -> get_photoUser();
-    $cheminimg = "image/";
     if ($e == 0)
     {
       if ((strstr($t,'png'))||(strstr($t,'jpg'))||(strstr($t,'jpeg'))||(strstr($t,'gif')))
@@ -31,9 +30,10 @@
         {
           $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
           $idUser = $ouser->get_idUser();
-          $pathnewphoto = "image/".$idUser.$ext;
-          move_uploaded_file($temp,$pathnewphoto);
-          if ($oldimg != 'image/pic.jpg')
+          $pathnewphoto1 = "image/".$idUser.$ext;
+          $pathnewphoto = $idUser.$ext;
+          move_uploaded_file($temp,$pathnewphoto1);
+          if ($oldimg != 'pic.jpg')
           {
             unlink($oldimg);
           }
