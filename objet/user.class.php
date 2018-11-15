@@ -14,12 +14,14 @@
     private $telUser;
     private $photoUser;
     private $typeUser;
+    private $ville;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
     public function user($idUser= "",$nUser= "",$pUser= "",$mUser= "",$passUser= "",$logUser= "",$adresse = "",$suspendu= "",$datedebSuspens= "",$telUser= "",$photoUser= "",$typeUser = "")
     {
       utilisateur::utilisateur($suspendu,$datedebSuspens);
+
       $this->adresse    = $adresse;
       $this->idUser     = $idUser;
       $this->nameUser   = $nUser;
@@ -74,7 +76,10 @@
     {
       return $this->photoUser;
     }
-
+    public function get_ville()
+    {
+      return $this->ville;
+    }
     //INITIALISATION DES SETTERS DE LA CLASSE
     public function set_adresse($adresse)
     {
@@ -100,6 +105,10 @@
     {
       $this->mailUser = $mUser;
     }
+    public function set_ville($ville)
+    {
+      $this->ville = $ville;
+    }
     public function set_passUser($passUser)
     {
       $this->passUser = $passUser;
@@ -117,7 +126,7 @@
       $this->photoUser = $photoUser;
     }
 
-    //INSCRIPTION USER MEMBRE
+    //INSCRIPTION USER de type MEMBRE
     public function registeruser($conn,$nUser,$pUser,$mUser,$passUser,$logUser)
     {
       //sécurise les variable contre InjectionSQL
@@ -131,7 +140,7 @@
                          VALUES($nUser,$pUser,$mUser,$passUser,$logUser,'1')";
       $req_SQL = $conn->query($sql_InsertUser)or die($sql_InsertUser);
     }
-    
+
     //récuperation des infos user
     public function recupUser($conn)
     {
@@ -150,9 +159,68 @@
       $this -> set_telUser($res_SQL['telUser']);
       $this -> set_photoUser($res_SQL['photoUser']);
       $this -> set_typeUser($res_SQL['idTypeUser']);
+
+      $this ->ville = new ville("","",$res_SQL['INSEE']);
+      $this->ville->searchInfo($conn,$res_SQL['INSEE']);
+
       utilisateur::set_suspendu($res_SQL['suspendu']);
       utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
     }
-  }
-
+    //mise à jour des information essentiel de l'user exepté MDP
+    public function updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn)
+    {
+      $id = $this->idUser;
+      $this -> set_ville($ville);
+      $INSEE = $this->ville->get_INSEE();
+      $INSEE = $conn -> quote($INSEE);
+      $this -> set_adresse($rue);
+      $this -> set_nameUser($nom);
+      $this -> set_preUser($prenom);
+      $this -> set_mailUser($mail);
+      $this -> set_loginUser($login);
+      $this -> set_telUser($tel);
+      $login = $conn -> quote($login);
+      $nom = $conn -> quote($nom);
+      $prenom = $conn -> quote($prenom);
+      $mail = $conn -> quote($mail);
+      $tel = $conn -> quote($tel);
+      $rue = $conn -> quote($rue);
+      $SQL_updateUser = "UPDATE user
+                         SET loginUser = $login,
+                             nameUser = $nom,
+                             preUser = $prenom,
+                             telUser = $tel,
+                             mailUser = $mail,
+                             rueUser = $rue,
+                             INSEE = $INSEE
+                          WHERE idUser = $id";
+      $req_SQL = $conn -> query($SQL_updateUser);
+    }
+    /*
+    fonction pour changer le pot de passe de l'user
+    */
+    public function changePass($old,$new,$confirm,$conn)
+    {
+      $id = $this->idUser;
+      if ($new !== $confirm)
+      {
+        return false;
+      }else
+      {
+        $SQL_PASS = "SELECT passUser FROM user WHERE idUser = '$id'";
+        $req_PASS = $conn -> query($SQL_PASS);
+        $res_Req = $req_PASS -> fetch();
+        if ($old != $res_Req['passUser'])
+        {
+          return false;
+        }else
+        {
+          $new = $conn -> quote($new);
+          $SQL_newpass = "UPDATE user SET passUser = $new WHERE idUser = '$id'";
+          $req_sql = $conn -> query($sql_User);
+          return true;
+        }
+      }
+    }
+}
 ?>

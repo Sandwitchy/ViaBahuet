@@ -8,8 +8,11 @@
       session_start();
       if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
       {
-        header('location:index.php');
+        echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
       }else {
+        $_SESSION['user_info'] ->recupUser($conn);
+        $_SESSION['error'] = 0;
+        $_SESSION['success'] = 0;
         $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
       }
      ?>
@@ -32,6 +35,37 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
+    <!--Jquery ui import -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+    <script>
+    $( function() {
+      var availableTags = [
+        <?php
+          $sql_libville = "SELECT * FROM ville";
+          $req_sql = $conn -> query($sql_libville);
+          $i = 1;
+          while ($res_req = $req_sql->fetch())
+          {
+            if ($i == 1)
+            {
+              $tab = '"'.$res_req['libVill'].'"';
+              $i = 0;
+            }else {
+              $tab = $tab.',"'.$res_req['libVill'].'"';
+            }
+          }
+          echo $tab;
+         ?>
+      ];
+      $( "#inputLibville" ).autocomplete({
+        source: availableTags
+      });
+    } );
+    </script>
 
   </head>
 
@@ -88,7 +122,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="pref.php">Préférences</a>
             <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
@@ -103,7 +137,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="home.php">
             <i class="fas fa-fw fa-bars"></i>
             <span>Accueil</span>
           </a>
@@ -120,7 +154,7 @@
             <span>Les Membres</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="entreprise.php">
             <i class="fas fa-fw fa-building"></i>
             <span>Les Entreprises</span></a>
         </li>
