@@ -44,35 +44,6 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-    <script>
-    $( function() {
-      var availableTags = [
-        <?php
-          $sql_libville = "SELECT * FROM ville";
-          $req_sql = $conn -> query($sql_libville);
-          $i = 1;
-          while ($res_req = $req_sql->fetch())
-          {
-            if ($i == 1)
-            {
-              $tab = '"'.$res_req['libVill'].'"';
-              $i = 0;
-            }else {
-              $tab = $tab.',"'.$res_req['libVill'].'"';
-            }
-          }
-          echo $tab;
-         ?>
-      ];
-      $( "#inputLibville" ).autocomplete({
-        source: availableTags
-      });
-    } );
-    $('#ModalMDP').on('shown.bs.modal', function () {
-      $('#triggermodal').trigger('onclick')
-    })
-    </script>
-
   </head>
 
   <body id="page-top">

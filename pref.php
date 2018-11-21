@@ -3,6 +3,34 @@
 include('tools/head.inc.php');
 include('error.php');
 ?>
+<script>
+$( function() {
+  var availableTags = [
+    <?php
+      $sql_libville = "SELECT * FROM ville";
+      $req_sql = $conn -> query($sql_libville);
+      $i = 1;
+      while ($res_req = $req_sql->fetch())
+      {
+        if ($i == 1)
+        {
+          $tab = '"'.$res_req['libVill'].'"';
+          $i = 0;
+        }else {
+          $tab = $tab.',"'.$res_req['libVill'].'"';
+        }
+      }
+      echo $tab;
+     ?>
+  ];
+  $( "#inputLibville" ).autocomplete({
+    source: availableTags
+  });
+} );
+$('#ModalMDP').on('shown.bs.modal', function () {
+  $('#triggermodal').trigger('onclick')
+})
+</script>
   <div id="content-wrapper">
     <div class="container-fluid">
       <?php

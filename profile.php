@@ -67,8 +67,20 @@ include('tools/head.inc.php');
       </section>
       <section class="stage" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
         <div class="col-lg-14">
-          <div class="col-md-4">
-            <h4 class="h4">Stages</h4>
+          <div class-'row '>
+            <div class="col-md-4">
+              <h4 class="h4">Stages</h4>
+            </div>
+            <div class='col-md-10' style='text-align:right;margin-top:1px;padding-top:0px'>
+              <button class='btn btn-primary' type='button' onclick="document.location.replace('stagecrea.php');"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+          <!-- début affichage stage BDD -->
+          <div class="col-md-10"> <!-- CONTENU DU/DES STAGE(S)-->
+            <div class="col-md-5">
+              <h6 class="h6">Libellé du stage</h6>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
           <div class="col-md-10"> <!-- CONTENU DU/DES STAGE(S)-->
             <div class="col-md-5">
@@ -76,6 +88,7 @@ include('tools/head.inc.php');
             </div>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
+          <!-- fin affichage BDD -->
         </div>
       </section>
 
