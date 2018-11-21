@@ -27,12 +27,22 @@
                    </div>
                  </div>
                  <div class='form-group'>
-                   <select name='entreprise'>
+                   <label>Entreprise</label>
+                   <select name='entreprise' class='form-control'>
                      <?php
-                        $sql = 'SELECT nameEntreprise,idEntreprise'
+                        $sql = 'SELECT nameEntreprise,idEntreprise
+                                FROM entreprise';
+                        $req = $conn -> query($sql);
+                        while ($res = $req -> fetch())
+                        {
+                          ?>
+                          <option value='<?php echo $res['idEntreprise']; ?>'><?php echo $res['nameEntreprise']; ?></option>
+                          <?php
+                        }
                       ?>
                    </select>
                  </div>
+                 <input type='submit' class='btn btn-primary' name='createstage' value='Créer'>
                </div>
              </form>
            </div>

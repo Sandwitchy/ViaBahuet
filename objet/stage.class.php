@@ -16,9 +16,10 @@
 
      //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-     public function stage($user,$entreprise,$ifOff,$libOff,$descOff,$exigOff,$status,$idStag,$dateComm,$contentComm,$datedebStag,$datefinstag,$descStag)
+     public function stage($user="",$entreprise="",$descStag="",$datedebStag="",$datefinstag="",$libOff="",$descOff="",$exigOff="",$status="",$idStag="",$dateComm="",$contentComm="",$idOff="")
      {
-       offre::offre($entreprise,$ifOff,$libOff,$descOff,$exigOff,$status);
+       offre::offre($entreprise,$idOff,$libOff,$descOff,$exigOff,$status);
+       $this->user = $user;
        $this->idStag = $idStag;
        $this->dateComm = $dateComm;
        $this->contentComm = $contentComm;
@@ -82,6 +83,19 @@
       public function set_descStag($descStag)
       {
         $this->descStag = $descStage;
+      }
+      //création d'un stage sans passer par offre
+      public function creastage($conn)
+      {
+        $user = $this->user;
+        $entreprise = offre::get_entreprise();
+        $descStag = $this->descStag;
+        $datedeb= $this->datedebStag;
+        $datefin = $this->datefinStag;
+        $libOff = offre::get_libOff();
+
+        $sql = "INSERT INTO stage (idUser,idEntreprise,datedebStage,datefinStage,descStage,libStage) VALUES('$user','$entreprise','$descStag','$datedeb','$datefin','$libOff')";
+        $req = $conn -> query($sql)or die($sql);
       }
   }
 ?>
