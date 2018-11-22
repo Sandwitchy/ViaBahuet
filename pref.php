@@ -45,7 +45,6 @@ $('#ModalMDP').on('shown.bs.modal', function () {
       {
         success($_SESSION['success']);
       }
-
       ?>
     <div class='row'>
       <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;'>

@@ -6,6 +6,7 @@
       include('bdd.inc.php');
       include('./objet/callClass.php');
       include('error.php');
+
       if(session_id() == '' || !isset($_SESSION)) {
           // session isn't started
           session_start();
@@ -24,6 +25,7 @@
         $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
 
       }
+
      ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,7 +54,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
   </head>
-
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
