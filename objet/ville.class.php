@@ -12,10 +12,10 @@
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
 
-    public function ville($liVil,$CP,$INSEE="")
+    public function ville($libVil='',$CP='',$INSEE="")
     {
       $this->INSEE = $INSEE;
-      $this->libVil = $liVil;
+      $this->libVil = $libVil;
       $this->CP = $CP;
     }
 

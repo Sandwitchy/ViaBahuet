@@ -14,7 +14,7 @@
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function entreprise($idUtilisateur,$suspendu,$datedebSuspens,$idEnt,$nEnt,$dEnt,$sitewebEnt,$dateCreateEnt)
+    public function entreprise($idEnt='',$nEnt='',$dEnt='',$sitewebEnt='',$dateCreateEnt='',$idUtilisateur='',$suspendu='',$datedebSuspens='')
     {
       utilisateur::utilisateur($idUtilisateur,$suspendu,$datedebSuspens);
       $this->idEnt         = $idEnt;
@@ -58,5 +58,21 @@
       $this->dateCreateEnt = $dateCreateEnt;
     }
 
+    public function insertEntBDD($data,$conn)
+    {
+
+      $SQL_Ent = "INSERT INTO entreprise (idEntreprise,nameEntreprise,descEntreprise) VALUES (NULL,'$data[nameEntreprise]','$data[descEntreprise]')";
+      $conn->query($SQL_Ent); //INSERTION DES DONNEES DE LA NOUVELLE ENTREPRISE CRÉÉE PAR UN USER
+
+      $SQL_Ent = "SELECT idEntreprise, INSEE FROM entreprise, ville WHERE nameEntreprise = '$data[nameEntreprise]' AND descEntreprise = '$data[descEntreprise]' AND INSEE = (SELECT INSEE FROM ville WHERE libvill = '$data[INSEE]' )";
+      $req = $conn->query($SQL_Ent); //RECUPERATION DE L'ID DE L'ENTREPRISE QUI VIENT D'ETRE CRÉÉE
+      $res = $req->fetch();
+
+      $SQL_vilEnt = "INSERT INTO concerner VALUES ('$res[idEntreprise]','$res[INSEE]','$data[rueEntreprise]',0)";
+      $conn->query($SQL_vilEnt); //INSERTION DE L'ADRESSE DE L'ENTREPRISE QUI VIENT D'ETRE CRÉÉE AVEC SON ID
+
+
+
+    }
   }
 ?>

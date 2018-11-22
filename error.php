@@ -36,6 +36,14 @@
         <?php
           $_SESSION['error'] = 0;
         break;
+      case 5:
+        ?>
+        <div class="alert alert-danger">
+          <strong>Erreur :</strong> Veuillez entrer un nom de ville existant
+        </div>
+        <?php
+          $_SESSION['error'] = 0;
+        break;
     }//end switch error
   }
   function success($success)
@@ -66,6 +74,15 @@
       <?php
       $_SESSION['success'] = 0;
       break;
+      case 4:
+      ?>
+      <div class="alert alert-success">
+        L'entreprise a bien été ajoutée !
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+
     }//end switch success
   }
  ?>
