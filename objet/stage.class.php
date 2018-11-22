@@ -94,7 +94,7 @@
         $datefin = $this->datefinStag;
         $libOff = offre::get_libOff();
 
-        $sql = "INSERT INTO stage (idUser,idEntreprise,datedebStage,datefinStage,descStage,libStage) VALUES('$user','$entreprise','$descStag','$datedeb','$datefin','$libOff')";
+        $sql = "INSERT INTO stage (idUser,idEntreprise,datedebStage,datefinStage,descStage,libStage) VALUES('$user','$entreprise','$datedeb','$datefin','$descStag','$libOff')";
         $req = $conn -> query($sql)or die($sql);
       }
   }

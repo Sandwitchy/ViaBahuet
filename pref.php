@@ -1,7 +1,6 @@
 <?php
 //Ajout du head de page
 include('tools/head.inc.php');
-include('error.php');
 ?>
 <script>
 $( function() {
@@ -34,11 +33,15 @@ $('#ModalMDP').on('shown.bs.modal', function () {
   <div id="content-wrapper">
     <div class="container-fluid">
       <?php
-      if (($_SESSION['error'] != 0)&&(isset($_SESSION['error'])))
+      if(!isset($_SESSION['error'])) {
+        $_SESSION['error'] = 0;
+      }else if (($_SESSION['error'] != 0)||(isset($_SESSION['error'])))
       {
         error($_SESSION['error']);
       }
-      if (($_SESSION['success'] != 0)&&(isset($_SESSION['success'])))
+      if(!isset($_SESSION['success'])) {
+        $_SESSION['success'] = 0;
+      }elseif (($_SESSION['success'] != 0)||(isset($_SESSION['success'])))
       {
         success($_SESSION['success']);
       }
@@ -165,6 +168,7 @@ $('#ModalMDP').on('shown.bs.modal', function () {
       if ($check == FALSE)
       {
         $_SESSION['error'] = 1;
+        die("alors? on sait pas dev :imsexy:");
         echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
       }
       $login = $_POST['login'];

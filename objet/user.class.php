@@ -207,7 +207,7 @@
                              INSEE = $INSEE
                           WHERE idUser = $id";
       $req_SQL = $conn -> query($SQL_updateUser);
-
+      return true;
     }
     /*
     fonction pour changer le pot de passe de l'user

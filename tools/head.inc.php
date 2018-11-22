@@ -5,12 +5,19 @@
     <?php
       include('bdd.inc.php');
       include('./objet/callClass.php');
+      include('error.php');
       if(session_id() == '' || !isset($_SESSION)) {
           // session isn't started
           session_start();
       }
       if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
       {
+        if(!isset($_SESSION['error'])) {
+          $_SESSION['error'] = 0;
+        }
+        if(!isset($_SESSION['success'])) {
+          $_SESSION['success'] = 0;
+        }
         echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
       }else {
         $_SESSION['user_info'] ->recupUser($conn);
@@ -130,7 +137,7 @@
           </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="membre.php">
             <i class="fas fa-fw fa-user"></i>
             <span>Les Membres</span></a>
         </li>

@@ -67,22 +67,45 @@ include('tools/head.inc.php');
       </section>
       <section class="stage" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
         <div class="col-lg-14">
-          <div class-'row '>
-            <div class="col-md-4">
-              <h4 class="h4">Stages</h4>
+          <div class='row' style='margin:5px;'>
+            <div class="col-md-10">
+              <p class="h4">Stages</p>
             </div>
-            <div class='col-md-10' style='text-align:right;margin-top:1px;padding-top:0px'>
-              <button class='btn btn-primary' type='button' onclick="document.location.replace('stagecrea.php');"><i class="fas fa-plus"></i></button>
+            <div class='col-sm-1' style='margin-right:2px;'>
+              <button class='btn btn-secondary btn-sm' type='button' onclick="document.location.replace('stagecrea.php');"><i class="fas fa-plus"></i></button>
             </div>
           </div>
           <!-- début affichage stage BDD -->
-
-          <div class="col-md-10"> <!-- CONTENU DU/DES STAGE(S)-->
-            <div class="col-md-5">
-              <h6 class="h6"></h6>
-            </div>
-            <p></p>
-          </div>
+          <?php
+            $sql = "SELECT datedebStage,datefinStage,libStage,descStage,nameEntreprise
+                    FROM stage s,entreprise e
+                    WHERE s.idEntreprise = e.idEntreprise";
+            $req = $conn -> query($sql)or die($sql);
+            while ($res = $req -> fetch())
+            {
+              ?>
+              <div class="col-md-10" style="box-shadow:2px 5px 18px #888888;margin:2%;"> <!-- CONTENU DU/DES STAGE(S)-->
+                <div class='row' >
+                  <div class="col-md-4">
+                    <h4 class="h4"><?php echo $res['libStage']; ?></h4>
+                  </div>
+                  <div class='col-sm-2'>
+                    <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
+                  </div>
+                </div>
+                <div class='row' style="margin-left:2%;">
+                  <div class='col-xs-3'>
+                    <span class="badge badge-secondary"><?php echo $res['datedebStage']; ?></span>
+                  </div>
+                  <div class='col-xs-3'>
+                    <span class="badge badge-secondary"><?php echo $res['datefinStage']; ?></span>
+                  </div>
+                </div>
+                <p><?php echo $res['descStage'];?> </p>
+              </div>
+              <?php
+            }
+          ?>
           <!-- fin affichage BDD -->
         </div>
       </section>
