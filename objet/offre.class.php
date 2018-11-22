@@ -16,7 +16,7 @@
 
     public function offre($entreprise,$idOff,$libOff,$descOff,$exigOff,$status)
     {
-      $this->$entreprise = $entreprise;
+      $this->entreprise = $entreprise;
       $this->idOff = $idOff;
       $this->libOff = $libOff;
       $this->descOff = $descOff;

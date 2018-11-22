@@ -1,23 +1,50 @@
 <?php
 //Ajout du head de page
 include('tools/head.inc.php');
-include('error.php');
 ?>
+<script>
+$( function() {
+  var availableTags = [
+    <?php
+      $sql_libville = "SELECT * FROM ville";
+      $req_sql = $conn -> query($sql_libville);
+      $i = 1;
+      while ($res_req = $req_sql->fetch())
+      {
+        if ($i == 1)
+        {
+          $tab = '"'.$res_req['libVill'].'"';
+          $i = 0;
+        }else {
+          $tab = $tab.',"'.$res_req['libVill'].'"';
+        }
+      }
+      echo $tab;
+     ?>
+  ];
+  $( "#inputLibville" ).autocomplete({
+    source: availableTags
+  });
+} );
+$('#ModalMDP').on('shown.bs.modal', function () {
+  $('#triggermodal').trigger('onclick')
+})
+</script>
   <div id="content-wrapper">
     <div class="container-fluid">
       <?php
       if(!isset($_SESSION['error'])) {
-         $_SESSION['error'] = 0;
-       }else if (($_SESSION['error'] != 0)||(isset($_SESSION['error'])))
-       {
-         error($_SESSION['error']);
-       }
-       if(!isset($_SESSION['success'])) {
-         $_SESSION['success'] = 0;
-       }elseif (($_SESSION['success'] != 0)||(isset($_SESSION['success'])))
-       {
-         success($_SESSION['success']);
-       }
+        $_SESSION['error'] = 0;
+      }else if (($_SESSION['error'] != 0)||(isset($_SESSION['error'])))
+      {
+        error($_SESSION['error']);
+      }
+      if(!isset($_SESSION['success'])) {
+        $_SESSION['success'] = 0;
+      }elseif (($_SESSION['success'] != 0)||(isset($_SESSION['success'])))
+      {
+        success($_SESSION['success']);
+      }
       ?>
     <div class='row'>
       <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;'>
@@ -140,6 +167,7 @@ include('error.php');
       if ($check == FALSE)
       {
         $_SESSION['error'] = 1;
+        die("alors? on sait pas dev :imsexy:");
         echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
       }
       $login = $_POST['login'];

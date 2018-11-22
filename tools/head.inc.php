@@ -13,6 +13,12 @@
       }
       if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
       {
+        if(!isset($_SESSION['error'])) {
+          $_SESSION['error'] = 0;
+        }
+        if(!isset($_SESSION['success'])) {
+          $_SESSION['success'] = 0;
+        }
         echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
       }else {
         $_SESSION['user_info'] ->recupUser($conn);
@@ -42,10 +48,11 @@
     <link href="css/sb-admin.css" rel="stylesheet">
 
     <!--Jquery ui import -->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
   </head>
   <body id="page-top">
 
@@ -131,7 +138,7 @@
           </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="membre.php">
             <i class="fas fa-fw fa-user"></i>
             <span>Les Membres</span></a>
         </li>
