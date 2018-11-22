@@ -5,11 +5,11 @@
     <?php
       include('bdd.inc.php');
       include('./objet/callClass.php');
+      include('error.php');
+
       if(session_id() == '' || !isset($_SESSION)) {
           // session isn't started
           session_start();
-          $_SESSION['success'] = 0;
-          $_SESSION['error'] = 0;
       }
       if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
       {
@@ -19,6 +19,7 @@
         $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
 
       }
+
      ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,42 +42,11 @@
     <link href="css/sb-admin.css" rel="stylesheet">
 
     <!--Jquery ui import -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-    <script>
-    $( function() {
-      var availableTags = [
-        <?php
-          $sql_libville = "SELECT * FROM ville";
-          $req_sql = $conn -> query($sql_libville);
-          $i = 1;
-          while ($res_req = $req_sql->fetch())
-          {
-            if ($i == 1)
-            {
-              $tab = '"'.$res_req['libVill'].'"';
-              $i = 0;
-            }else {
-              $tab = $tab.',"'.$res_req['libVill'].'"';
-            }
-          }
-          echo $tab;
-         ?>
-      ];
-      $( "#inputLibville" ).autocomplete({
-        source: availableTags
-      });
-    } );
-    $('#ModalMDP').on('shown.bs.modal', function () {
-      $('#triggermodal').trigger('onclick')
-    })
-    </script>
-
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
   </head>
-
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
@@ -158,12 +128,6 @@
             <a class="nav-link" href="profile.php">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Mon profil</span>
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-briefcase"></i>
-            <span>Mes Expériences</span>
           </a>
         </li>
         <li class="nav-item">

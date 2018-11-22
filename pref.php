@@ -6,15 +6,18 @@ include('error.php');
   <div id="content-wrapper">
     <div class="container-fluid">
       <?php
-      if (($_SESSION['error'] != 0)&&(isset($_SESSION['error'])))
-      {
-        error($_SESSION['error']);
-      }
-      if (($_SESSION['success'] != 0)&&(isset($_SESSION['success'])))
-      {
-        success($_SESSION['success']);
-      }
-
+      if(!isset($_SESSION['error'])) {
+         $_SESSION['error'] = 0;
+       }else if (($_SESSION['error'] != 0)||(isset($_SESSION['error'])))
+       {
+         error($_SESSION['error']);
+       }
+       if(!isset($_SESSION['success'])) {
+         $_SESSION['success'] = 0;
+       }elseif (($_SESSION['success'] != 0)||(isset($_SESSION['success'])))
+       {
+         success($_SESSION['success']);
+       }
       ?>
     <div class='row'>
       <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;'>
@@ -31,7 +34,7 @@ include('error.php');
               </div>
             </div>
             <div class='col-md'>
-              <button type="button" id="triggermodal" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Mofifier le Mot de Passe</button>
+              <button type="button" id="triggermodal" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Modifier le Mot de Passe</button>
             </div>
           </div>
         </div>

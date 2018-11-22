@@ -41,6 +41,7 @@
       $res_sql = $req_sql -> fetchall(PDO::FETCH_ASSOC);
       return $res_sql;
     }
+    
     public function insertBDD($Var_nametable,$tab_value)
     {
       $sql_INSERTTABLE = "INSERT INTO $Var_nametable";

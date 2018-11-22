@@ -174,7 +174,7 @@
       $this -> set_typeUser($res_SQL['idTypeUser']);
       $this ->ville = new ville("","",$res_SQL['INSEE']);
       $this->ville->searchInfo($conn,$res_SQL['INSEE']);
-
+      $this-> set_descUser($res_SQL['descUser']);
       utilisateur::set_suspendu($res_SQL['suspendu']);
       utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
     }
@@ -197,9 +197,6 @@
       $mail = $conn -> quote($mail);
       $tel = $conn -> quote($tel);
       $rue = $conn -> quote($rue);
-      $this -> set_descUser($res_SQL['descUser']);
-      utilisateur::set_suspendu($res_SQL['suspendu']);
-      utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
       $SQL_updateUser = "UPDATE user
                          SET loginUser = $login,
                              nameUser = $nom,
@@ -210,7 +207,7 @@
                              INSEE = $INSEE
                           WHERE idUser = $id";
       $req_SQL = $conn -> query($SQL_updateUser);
-      
+
     }
     /*
     fonction pour changer le pot de passe de l'user
