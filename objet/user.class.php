@@ -235,6 +235,56 @@
         }
       }
     }
+    public function selecttagsuser($conn)
+    {
+      $id = $this->idUser;
+      $sql = "SELECT t.idTags,libTags
+              FROM tags t,taguser u
+              WHERE t.idTags = u.idTags
+              AND u.idUser = '$id'";
+      $req = $conn->query($sql)or die($sql);
+      $res = $req->fetchall(PDO::FETCH_ASSOC);
+      if ($res == NULL)
+      {
+        return false;
+      }else {
+        return $res;
+      }
+    }
+    public function createjointag2user($id,$lib,$conn)
+    {
+      $iduser = $this->idUser;
+      if ($id == "")
+      {
+        $sql = "SELECT * FROM tags WHERE libTags LIKE '$lib'";
+        $req = $conn -> query($sql);
+        $res = $req -> fetch();
+        if ($res != "")
+        {
+          $idt = $res['idTags'];
+          $pmk = $idt."/".$iduser;
+          $sql = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
+          $req = $conn -> query($sql);
+          return 1;
+        }else {
+          $sql = "INSERT INTO tags VALUES('','$lib',1)";
+          $req1 = $conn -> query($sql);
+          $sql2 = "SELECT * FROM tags WHERE libTags = '$lib'";
+          $req2 = $conn->query($sql2);
+          $res = $req2 -> fetch();
+          $idt = $res['idTags'];
+          $pmk = $idt."/".$iduser;
+          $sql3 = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
+          $req3 = $conn -> query($sql3);
+          return 0;
+        }
+      }else {
+        $pmk = $id."/".$iduser;
+        $sql ="INSERT INTO taguser VALUES('$pmk','$id','$iduser')";
+        $req = $conn -> query($sql);
+        return 2;
+      }
+    }
 }
 
 ?>

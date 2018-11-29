@@ -13,10 +13,10 @@ include('tools/head.inc.php');
      {
        if ($i == 1)
        {
-         $tab = '"'.$res_req['libvill'].'"';
+         $tab = '"'.$res_req['libVill'].'"';
          $i = 0;
        }else {
-         $tab = $tab.',"'.$res_req['libvill'].'"';
+         $tab = $tab.',"'.$res_req['libVill'].'"';
        }
      }
      echo $tab;
@@ -44,7 +44,7 @@ include('tools/head.inc.php');
            success($_SESSION['success']);
          }
     ?>
-    
+
     <div class="container-fluid">
 
     <button id="btnadd" onclick="appear()" type="button" class="btn btn-primary" name="button">Ajouter une entreprise</button>

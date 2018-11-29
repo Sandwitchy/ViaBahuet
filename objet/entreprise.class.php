@@ -11,10 +11,11 @@
     private $descEnt;
     private $sitewebEnt;
     private $dateCreateEnt;
+    private $ville;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function entreprise($idEnt='',$nEnt='',$dEnt='',$sitewebEnt='',$dateCreateEnt='',$idUtilisateur='',$suspendu='',$datedebSuspens='')
+    public function entreprise($idEnt='',$nEnt='',$dEnt='',$sitewebEnt='',$dateCreateEnt='',$idUtilisateur='',$suspendu='',$datedebSuspens='',$ville = "")
     {
       utilisateur::utilisateur($idUtilisateur,$suspendu,$datedebSuspens);
       $this->idEnt         = $idEnt;
@@ -22,6 +23,7 @@
       $this->descEnt       = $dEnt;
       $this->sitewebEnt    = $sitewebEnt;
       $this->dateCreateEnt = $dateCreateEnt;
+      $this->ville         = $ville;
     }
 
     //INITIALISATION DES GETTERS DE LA CLASSE
@@ -42,37 +44,139 @@
     {
       return $this->dateCreateEnt;
     }
-
+    public function get_villeEnt()
+    {
+      return $this->ville;
+    }
+    public function get_loginEnt()
+    {
+      return $this->login ;
+    }
+    public function get_mailEnt()
+    {
+      return $this->mail;
+    }
+    public function get_passEnt()
+    {
+      return $this->pass;
+    }
     //INITIALISATION DES SETTERS DE LA CLASSE
 
     public function set_nameEnt($nEnt)
     {
       $this->nameEnt = $nEnt;
     }
-    public function set_descEnt($dEnt)
-    {
-      $this->descEnt = $dEnt;
-    }
     public function set_dateCreateEnt($dateCreateEnt)
     {
       $this->dateCreateEnt = $dateCreateEnt;
     }
+    public function set_vileEnt($ville)
+    {
+      $this->$ville = $ville;
+    }
+    public function set_loginEnt($login)
+    {
+      $this->login = $login;
+    }
+    public function set_mailEnt($mail)
+    {
+      $this->mail = $mail;
+    }
+    public function set_passEnt($pass)
+    {
+      $this->pass = $pass;
+    }
+    public function set_descEnt($desc)
+    {
+      $this->desc = $desc;
+    }
+    public function recupUser($conn)
+    {
+      $idUser = $this -> get_idEnt();
+      $idUser = $conn -> quote($idUser);
+      $sql_User = "SELECT * FROM entreprise e, concerner c,ville v WHERE e.idEntreprise = c.idEntreprise
+                                                                  AND c.INSEE = v.INSEE
+                                                                  AND e.idEntreprise = $idUser";
+      $req_SQL = $conn -> query($sql_User)or die($sql_User);
+      $res_SQL = $req_SQL -> fetch();
+
+      $this -> set_nameEnt($res_SQL['nameEntreprise']);
+      $this -> set_mailEnt($res_SQL['mailEntreprise']);
+      $this -> set_passEnt($res_SQL['passEntreprise']);
+      $this -> set_loginEnt($res_SQL['loginEntreprise']);
+      $this ->ville = new ville($res_SQL['libVill'],$res_SQL['CP'],$res_SQL['INSEE']);
+      $this-> set_descEnt($res_SQL['descEntreprise']);
+      utilisateur::set_suspendu($res_SQL['suspendu']);
+      //utilisateur::set_datedebSuspens($res_SQL['dateSuspensdeb']);
+    }
 
     public function insertEntBDD($data,$conn)
     {
+      $desc = $conn->quote($data['descEntreprise']);
+      $SQL_Ent = "INSERT INTO entreprise (idEntreprise,nameEntreprise,descEntreprise) VALUES (NULL,'$data[nameEntreprise]',$desc)";
+      $conn->query($SQL_Ent)or die($SQL_Ent); //INSERTION DES DONNEES DE LA NOUVELLE ENTREPRISE CRÉÉE PAR UN USER
 
-      $SQL_Ent = "INSERT INTO entreprise (idEntreprise,nameEntreprise,descEntreprise) VALUES (NULL,'$data[nameEntreprise]','$data[descEntreprise]')";
-      $conn->query($SQL_Ent); //INSERTION DES DONNEES DE LA NOUVELLE ENTREPRISE CRÉÉE PAR UN USER
-
-      $SQL_Ent = "SELECT idEntreprise, INSEE FROM entreprise, ville WHERE nameEntreprise = '$data[nameEntreprise]' AND descEntreprise = '$data[descEntreprise]' AND INSEE = (SELECT INSEE FROM ville WHERE libvill = '$data[INSEE]' )";
-      $req = $conn->query($SQL_Ent); //RECUPERATION DE L'ID DE L'ENTREPRISE QUI VIENT D'ETRE CRÉÉE
+      $SQL_Ent = "SELECT idEntreprise, INSEE FROM entreprise, ville WHERE nameEntreprise = '$data[nameEntreprise]' AND descEntreprise = $desc AND INSEE = (SELECT INSEE FROM ville WHERE libvill = '$data[INSEE]' )";
+      $req = $conn->query($SQL_Ent)or die($SQL_Ent); //RECUPERATION DE L'ID DE L'ENTREPRISE QUI VIENT D'ETRE CRÉÉE
       $res = $req->fetch();
 
       $SQL_vilEnt = "INSERT INTO concerner VALUES ('$res[idEntreprise]','$res[INSEE]','$data[rueEntreprise]',0)";
-      $conn->query($SQL_vilEnt); //INSERTION DE L'ADRESSE DE L'ENTREPRISE QUI VIENT D'ETRE CRÉÉE AVEC SON ID
-
-
-
+      $conn->query($SQL_vilEnt)or die($SQL_vilEnt); //INSERTION DE L'ADRESSE DE L'ENTREPRISE QUI VIENT D'ETRE CRÉÉE AVEC SON ID
+    }
+    //check si l'entreprise à déja été inscrite par un user
+    public function checkifexist($name,$conn)
+    {
+      $name = $conn -> quote("%".$name."%");
+      $sql_check = "SELECT e.idEntreprise,createbyuser,nameEntreprise,rueEntreprise,libVill,descEntreprise
+                    FROM entreprise e,concerner c,ville v
+                    WHERE e.idEntreprise = c.idEntreprise
+                    AND c.INSEE = v.INSEE
+                    AND e.nameEntreprise LIKE $name";
+      $req_check = $conn ->query($sql_check)or header("index.php?error=4");
+      if ($req_check -> rowCount() == 0)
+      {
+        return false;
+      }else{
+        $res = $req_check->fetchall(PDO::FETCH_ASSOC);
+        return $res;
+      }
+    }
+    //inscription d'un compte Entreprise
+    public function registeruserentreprise($conn,$var_NameUser,$var_MailUser,$var_PassUser,$var_IdentifiantUser,$INSEE,$rue,$id)
+    {
+      $var_NameUser = $conn -> quote($var_NameUser);
+      $var_MailUser = $conn -> quote($var_MailUser);
+      $var_PassUser = $conn -> quote($var_PassUser);
+      $var_IdentifiantUser = $conn -> quote($var_IdentifiantUser);
+      $rue = $conn -> quote($rue);
+      $INSEE = $conn -> quote($INSEE);
+      if ($id == 'none')
+      {
+        $sql = "INSERT INTO entreprise (nameEntreprise,mailEntreprise,passEntreprise,loginEntreprise,createbyuser)
+                    VALUES($var_NameUser,$var_MailUser,$var_PassUser,$var_IdentifiantUser,0)";
+        $req_sql = $conn -> query($sql)or die($sql);
+        $sqlid = "SELECT idEntreprise
+                  FROM entreprise
+                  WHERE nameEntreprise = $var_NameUser
+                  AND mailEntreprise = $var_MailUser
+                  AND passEntreprise = $var_PassUser
+                  AND loginEntreprise = $var_IdentifiantUser";
+        $req_sqlid = $conn -> query($sqlid)or die($sqlid);
+        $res = $req_sqlid -> fetch();
+        $id = $res['idEntreprise'];
+        $sqlville = "INSERT INTO concerner VALUES($id,$INSEE,$rue,0)";
+        $req_ville = $conn ->query($sqlville)or $error = 1;
+      }else {
+        $sql = "UPDATE entreprise SET nameEntreprise = $var_NameUser,
+                                          mailEntreprise = $var_MailUser,
+                                          passEntreprise = $var_PassUser,
+                                          loginEntreprise = $var_IdentifiantUser,
+                                          createbyuser = 0
+                                      WHERE idEntreprise = '$id'";
+        $req_sql = $conn -> query($sql)or die($sql);
+        $sqlville = "UPDATE concerner SET INSEE = $INSEE , rueEntreprise = $rue WHERE idEntreprise = '$id'";
+        $req_ville = $conn ->query($sqlville)or die($sqlville);
+      }
     }
   }
 ?>

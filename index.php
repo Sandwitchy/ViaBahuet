@@ -32,15 +32,24 @@
         $var_LOG = $_POST['log'];
         $var_Password = $_POST['password'];
         $ocontroller = new Controller($conn);
-        $INT_resconn = $ocontroller -> connexionVerif($var_LOG,$var_Password);
-        print_r($INT_resconn);
+        $INT_resconn = $ocontroller -> connexionVerifuser($var_LOG,$var_Password);
         if ($INT_resconn == "FALSE")
         {
-          ?>
-          <div class="alert alert-danger">
-            <strong>Erreur :</strong> Identifiant/Mail ou mot de passe faux
-          </div>
-          <?php
+          $INT_resconn = $ocontroller -> connexionVerifEntreprise($var_LOG,$var_Password);
+          if ($INT_resconn == 'FALSE')
+          {
+            ?>
+            <div class="alert alert-danger">
+              <strong>Erreur :</strong> Identifiant/Mail ou mot de passe faux
+            </div>
+            <?php
+          }else {
+            $ouser = new entreprise($INT_resconn);
+            $ouser -> recupUser($conn);
+            session_start();
+            $_SESSION['user_info'] = $ouser;
+            header('location:home.php');
+          }
         }
         else
         {
@@ -53,6 +62,13 @@
       }
      ?>
     <div class="container">
+      <?php
+        include('error.php');
+        if ((isset($_GET['success']))&&($_GET['success'] == 5))
+        {
+          success($_GET['success']);
+        }
+      ?>
       <div class="card card-login mx-auto mt-5">
         <div class="card-header">Se Connecter</div>
         <div class="card-body">
