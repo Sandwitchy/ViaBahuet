@@ -107,7 +107,7 @@
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="index.php">Page de Connexion</a>
-            <a class="d-block small" href="index.php">Vous êtes une Entreprise inscrivez-vous ici</a>
+            <a class="d-block small" href="registerentreprise.php">Vous êtes une Entreprise inscrivez-vous ici</a>
           </div>
         </div>
       </div>

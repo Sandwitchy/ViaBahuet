@@ -63,13 +63,10 @@
     }
     public function searchIfExist($conn)
     {
-      $cp = $this->CP;
-      $cp = $conn -> quote($cp);
       $lib = $this->libVil;
       $lib = $conn -> quote($lib);
       $sql_search = "SELECT INSEE FROM ville
-                     WHERE CP = $cp
-                     AND libVill LIKE $lib";
+                     WHERE libVill LIKE $lib";
       $req_SQL = $conn->query($sql_search);
       if ($req_SQL != FALSE)
       {
