@@ -6,6 +6,7 @@
       include('bdd.inc.php');
       include('./objet/callClass.php');
       include('error.php');
+      include('function.php');
 
       if(session_id() == '' || !isset($_SESSION)) {
           // session isn't started
@@ -31,7 +32,7 @@
 
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href='css/profile.css' rel='stylesheet'>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
@@ -75,7 +76,6 @@
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -87,7 +87,6 @@
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -105,7 +104,7 @@
             <a class="dropdown-item" href="pref.php">Préférences</a>
             <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Se déconnecter</a>
           </div>
         </li>
       </ul>
@@ -124,14 +123,24 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-
+            <?php if (get_class($GLOBAL_ouser) == "user") {?>
             <a class="nav-link" href="profile.php">
+            <?php }else{ ?>
+            <a class="nav-link" href="profileent.php">
+            <?php }?>
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Mon profil</span>
           </a>
         </li>
+        <li class="nav-item dropdown">
+
+            <a class="nav-link" href="amis.php">
+            <i class="fas fa-fw fa-user-friends"></i>
+            <span>Mes amis</span>
+          </a>
+        </li>
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="membre.php">
             <i class="fas fa-fw fa-user"></i>
             <span>Les Membres</span></a>
         </li>
@@ -141,6 +150,7 @@
             <span>Les Entreprises</span></a>
         </li>
         <?php
+        if (get_class($GLOBAL_ouser) == "user") {
           $INT_TypeUser = $GLOBAL_ouser->get_typeUser();
           if ($INT_TypeUser != 1)
           {
@@ -152,5 +162,7 @@
             </li>
             <?php
           }
+        }
+
          ?>
       </ul>

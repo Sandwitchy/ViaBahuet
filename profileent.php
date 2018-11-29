@@ -1,13 +1,6 @@
 <?php
 //Ajout du head de page
 include('tools/head.inc.php');
-if(isset($_GET['user']))
-{
-  if($GLOBAL_ouser->get_idUser() != $_GET['user'])
-  {
-    echo "<script type='text/javascript'>document.location.replace('profileOther.php?user=$_GET[user]');</script>";
-  }
-}
 ?>
 
   <div id="content-wrapper">
@@ -84,12 +77,9 @@ if(isset($_GET['user']))
           </div>
           <!-- début affichage stage BDD -->
           <?php
-          $idUser = $GLOBAL_ouser->get_idUser();
             $sql = "SELECT datedebStage,datefinStage,libStage,descStage,nameEntreprise
                     FROM stage s,entreprise e
-                    WHERE s.idEntreprise = e.idEntreprise
-                    AND s.idUser = '$idUser'";
-
+                    WHERE s.idEntreprise = e.idEntreprise";
             $req = $conn -> query($sql)or die($sql);
             while ($res = $req -> fetch())
             {

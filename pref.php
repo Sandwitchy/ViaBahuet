@@ -1,26 +1,92 @@
 <?php
 //Ajout du head de page
 include('tools/head.inc.php');
-include('error.php');
 ?>
+<script>
+$( function() {
+  var availableTags = [
+    <?php
+      $sql_libville = "SELECT * FROM ville";
+      $req_sql = $conn -> query($sql_libville);
+      $i = 1;
+      while ($res_req = $req_sql->fetch())
+      {
+        if ($i == 1)
+        {
+          $tab = '"'.$res_req['libVill'].'"';
+          $i = 0;
+        }else {
+          $tab = $tab.',"'.$res_req['libVill'].'"';
+        }
+      }
+      echo $tab;
+     ?>
+  ];
+  $( "#inputLibville" ).autocomplete({
+    source: availableTags
+  });
+} );
+$( function() {
+  var tagstable = [
+    <?php
+      createviewtags($conn);
+      $tags = selectviewtags($conn);
+      $i = 1;
+      if ($tags == "")
+      {
+        echo "";
+      }else
+      {
+        foreach($tags as $tag)
+        {
+          if ($i == 1)
+          {
+            $tab = "{id:". $tag['idtags'].", value:'". $tag['libtags']."'}";
+            $i = 0;
+          }else {
+            $tab = $tab.",{id:". $tag['idtags'].", value:'". $tag['libtags']."'}";
+          }
+        }
+      }
+      echo $tab;
+     ?>
+  ];
+  $("#tags").autocomplete({
+    source: function (request,response){
+          response($.map(tagstable, function(item)
+          {
+            return{
+              id:item.id,
+              value:item.value
+            }
+          }))
+        },
+    select:function(event,ui){
+      $(this).val(ui.item.value)
+      $('#tagsid').val(ui.item.id);
+    },
+    minLength: 0,
+  })
+  } );
+</script>
   <div id="content-wrapper">
     <div class="container-fluid">
       <?php
       if(!isset($_SESSION['error'])) {
-         $_SESSION['error'] = 0;
-       }else if (($_SESSION['error'] != 0)||(isset($_SESSION['error'])))
-       {
-         error($_SESSION['error']);
-       }
-       if(!isset($_SESSION['success'])) {
-         $_SESSION['success'] = 0;
-       }elseif (($_SESSION['success'] != 0)||(isset($_SESSION['success'])))
-       {
-         success($_SESSION['success']);
-       }
+        $_SESSION['error'] = 0;
+      }else if (($_SESSION['error'] != 0)||(isset($_SESSION['error'])))
+      {
+        error($_SESSION['error']);
+      }
+      if(!isset($_SESSION['success'])) {
+        $_SESSION['success'] = 0;
+      }elseif (($_SESSION['success'] != 0)||(isset($_SESSION['success'])))
+      {
+        success($_SESSION['success']);
+      }
       ?>
     <div class='row'>
-      <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;'>
+      <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
         <h1>Mes Préférences</h1>
         <form method='post' action='#'>
         <div class='col-md-8'>
@@ -105,7 +171,7 @@ include('error.php');
         </div>
       </form>
     </div><!--end contanier xl-14 -->
-    <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin-left:2%;margin-right:2%;'>
+    <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
       <div class="text-center">
         <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
         <h4>Image de profil</h4>
@@ -125,12 +191,56 @@ include('error.php');
     </div><!--end container md-2-->
 </div><!--end row -->
       </div><!--container XS-14-->
+      <div class="xs-14" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+        <div class='col-md'>
+          <h4>Mes Tags</h4>
+          <?php
+            $tagsuser = $GLOBAL_ouser -> selecttagsuser($conn);
+            ?>
+            <div class='row'>
+            <?php
+            if ($tagsuser == false)
+            {
+              echo "Vous n'avez aucun tag";
+            }else {
+              foreach ($tagsuser as $tag) {
+                ?>
+                  <a class='tag blue'  style='color:white;'>
+                    <?php echo $tag['libTags']; ?>
+                    <span class='arrow'></span>
+                  </a>
+                <?php
+              }
+            }
+           ?>
+         </div>
+        </div>
+
+        <form method='post'>
+          <div class='form-row align-items-center'>
+            <div class='col-auto'>
+              <input type='text' class='form-control form-control-sm' id='tags' name='libtags'>
+            </div>
+            <div class='col-auto'>
+              <input type='hidden' id='tagsid' name='idtags'>
+              <input type='submit' class='btn btn-primary' name='envoietags'>
+            </div>
+          </div>
+        </form>
+      </div><!-- container xs-14-->
     </div>
     <!-- /.container-fluid -->
     <?php
     /*
       GESTION FORMULAIRE
     */
+    if (isset($_POST['envoietags']))
+    {
+      $libtags = $_POST['libtags'];
+      $id = $_POST['idtags'];
+      $GLOBAL_ouser -> createjointag2user($id,$libtags,$conn);
+      echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+    }
     if (isset($_POST['envoie']))
     {
       $CP = $_POST['CP'];

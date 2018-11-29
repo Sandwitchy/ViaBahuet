@@ -44,6 +44,14 @@
         <?php
           $_SESSION['error'] = 0;
         break;
+        case 6:
+          ?>
+          <div class="alert alert-danger">
+            <strong>Erreur :</strong> Les mots de passe sont différent
+          </div>
+          <?php
+            $_SESSION['error'] = 0;
+          break;
     }//end switch error
   }
   function success($success)
@@ -82,7 +90,14 @@
       <?php
       $_SESSION['success'] = 0;
       break;
-
+      case 5:
+      ?>
+      <div class="alert alert-success">
+        Votre compte à bien été créer vous pouvez maintenant vous connecté !
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
     }//end switch success
   }
  ?>

@@ -33,15 +33,36 @@
     Sortie :
       Resultats de la requete.
     ***************************************************************************/
-    public function selectAllTable($Var_nametable)
+    public function selectAllTable($Var_nametable,$conditions)
     {
       $sql_SELECTTABLE = "SELECT * FROM $Var_nametable";
+
+      if($conditions[0] != '')
+      {
+        $sql_SELECTTABLE = $sql_SELECTTABLE." WHERE nameUser LIKE";
+        $bool = 0;
+        foreach ($conditions as $unecondition)
+        {
+          if($bool == 0)
+          {
+            $sql_SELECTTABLE = $sql_SELECTTABLE." ".$unecondition;
+            $bool = 1;
+          }
+          else
+          {
+            $sql_SELECTTABLE = $sql_SELECTTABLE." OR ".$unecondition;
+          }
+
+        }
+      }
       $conn = $this->get_conn();
-      $req_sql = $conn->query($sql_SELECTTABLE);
+      $req_sql = $conn->query($sql_SELECTTABLE)or die($sql_SELECTTABLE);
       $res_sql = $req_sql -> fetchall(PDO::FETCH_ASSOC);
       return $res_sql;
+    // var_dump($sql_SELECTTABLE);
+    // die();
     }
-    
+
     public function insertBDD($Var_nametable,$tab_value)
     {
       $sql_INSERTTABLE = "INSERT INTO $Var_nametable";
@@ -73,7 +94,7 @@
         2 : mot de passe mauvais
         idUser : log & mot de passe bon
     */
-    public function connexionVerif($Var_Log,$Var_Pass)
+    public function connexionVerifuser($Var_Log,$Var_Pass)
     {
       $conn = $this -> get_conn();
       $Var_Log = $conn -> quote($Var_Log);
@@ -94,9 +115,29 @@
           return $res_SQL['idUser']; //réussi
         }
       }
-
     }
-
+    public function connexionVerifEntreprise($Var_Log,$Var_Pass)
+    {
+      $conn = $this -> get_conn();
+      $Var_Log = $conn -> quote($Var_Log);
+      $sql_Verif = "SELECT idEntreprise,mailEntreprise,loginEntreprise,passEntreprise FROM entreprise
+                    WHERE mailEntreprise = $Var_Log
+                    OR loginEntreprise = $Var_Log";
+      $req_SQL = $conn -> query($sql_Verif);
+      if ($req_SQL == FALSE)
+      {
+        return "FALSE";//erreur le log n'existe pas
+      }else
+      {
+        $res_SQL = $req_SQL -> fetch();
+        if($Var_Pass != $res_SQL['passEntreprise'])
+        {
+          return "FALSE"; //erreur password mauvais
+        }else {
+          return $res_SQL['idEntreprise']; //réussi
+        }
+      }
+    }
     public function updateBDD($table,$data,$idUser,$conn) //FAIRE UNE FONCTION QUI GENERE PLUSIEURS MODIFICATIONS EN FONCTION DU NOMBRE DE DONNEES
     {
       $SQL_update = "UPDATE $table SET";
