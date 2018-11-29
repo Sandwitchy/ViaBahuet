@@ -33,13 +33,34 @@
     Sortie :
       Resultats de la requete.
     ***************************************************************************/
-    public function selectAllTable($Var_nametable)
+    public function selectAllTable($Var_nametable,$conditions)
     {
       $sql_SELECTTABLE = "SELECT * FROM $Var_nametable";
+
+      if($conditions[0] != '')
+      {
+        $sql_SELECTTABLE = $sql_SELECTTABLE." WHERE nameUser LIKE";
+        $bool = 0;
+        foreach ($conditions as $unecondition)
+        {
+          if($bool == 0)
+          {
+            $sql_SELECTTABLE = $sql_SELECTTABLE." ".$unecondition;
+            $bool = 1;
+          }
+          else
+          {
+            $sql_SELECTTABLE = $sql_SELECTTABLE." OR ".$unecondition;
+          }
+
+        }
+      }
       $conn = $this->get_conn();
-      $req_sql = $conn->query($sql_SELECTTABLE);
+      $req_sql = $conn->query($sql_SELECTTABLE)or die($sql_SELECTTABLE);
       $res_sql = $req_sql -> fetchall(PDO::FETCH_ASSOC);
       return $res_sql;
+    // var_dump($sql_SELECTTABLE);
+    // die();
     }
 
     public function insertBDD($Var_nametable,$tab_value)
