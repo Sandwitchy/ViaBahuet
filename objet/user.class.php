@@ -252,6 +252,22 @@
         }
       }
     }
+    public function checkFriend($myfriend,$conn)
+   {
+     $myId = $this->idUser;
+     $SQL = "SELECT * FROM amis WHERE idUser1 = $myId AND idUser2 = $myfriend";
+     $req = $conn->query($SQL);
+     while($res = $req ->fetch())
+     {
+       if($res['idUser1'] == $myId AND $res['idUser2'] == $myfriend)
+       {
+         return true;
+       }
+       else {
+         return false;
+       }
+     }
+   }
 }
 
 ?>
