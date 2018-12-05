@@ -1,6 +1,6 @@
 <?php
 //Ajout du head de page
-include('tools/head.inc.php');
+include('../tools/head.inc.php');
 ?>
 <script>
   $( function() {
@@ -49,7 +49,7 @@ include('tools/head.inc.php');
 
     <button id="btnadd" onclick="appear()" type="button" class="btn btn-primary" name="button">Ajouter une entreprise</button>
 
-    <form style="display:none" id="formEnt" action="trait.php" method="post">
+    <form style="display:none" id="formEnt" action="../Back/trait.php" method="post">
       <div class="col-lg-14">
         <div class="col-md-6">
           <div class="form-group">
@@ -117,5 +117,5 @@ include('tools/head.inc.php');
 
 <?php
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
  ?>

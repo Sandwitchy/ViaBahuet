@@ -1,6 +1,6 @@
 <?php
 //Ajout du head de page
-include('tools/head.inc.php');
+include('../tools/head.inc.php');
 
 $oController = new Controller($conn);
 if(isset($_POST['rechercher']))
@@ -52,7 +52,7 @@ if(isset($_POST['reset']))
                       <div class="col-md-6" id="user">
                         <div class="row">
                           <div class="col-md-6">
-                            <img src="image/<?php echo $req[$i]['photoUser']; ?>" class="img-fluid img-thumbnail rounded" style="width:128px;height:128px;" alt="">
+                            <img src="../image/<?php echo $req[$i]['photoUser']; ?>" class="img-fluid img-thumbnail rounded" style="width:128px;height:128px;" alt="">
                           </div>
                           <div class="col-md">
                             <p> <a href="profile.php?user=<?php echo $req[$i]['idUser']; ?>"><?php echo $req[$i]["nameUser"]." ".$req[$i]["preUser"]; ?></a> </p>
@@ -110,5 +110,5 @@ if(isset($_POST['reset']))
 
 <?php
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
  ?>
