@@ -53,6 +53,7 @@ include('tools/head.inc.php');
       <div class="col-lg-14">
         <div class="col-md-6">
           <div class="form-group">
+            <h4>Ajout d'une entreprise</h4>
             <div class="form-label-group">
               <input type="text" id="inputEnt" name='nameEnt' value='' class="form-control" placeholder="login" required="required">
               <label for="inputEnt">Nom de l'entreprise</label>
@@ -62,8 +63,8 @@ include('tools/head.inc.php');
         <br>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description de l'entreprise</label>
-            <textarea class="form-control" name="descEnt" style="resize:none;" id="inputEnt" rows="8" cols="80" maxlength="2048"></textarea>
+            <label for="descEnt">Description de l'entreprise</label>
+            <textarea class="form-control" name="descEnt" style="resize:none;" id="descEnt" rows="8" cols="80" maxlength="2048"></textarea>
           </div>
         </div>
         <div class="col-md-9">
@@ -71,16 +72,16 @@ include('tools/head.inc.php');
             <div class="col-md-3">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="villeEnt" name='vilEnt' value='' class="form-control ui-widget" placeholder="Ville" required="required">
-                  <label for="inputEnt">Ville</label>
+                  <input type="text" id="villeEnt" name='vilEnt' value='' class="form-control ui-widget" placeholder="Ville" required>
+                  <label for="villeEnt">Ville</label>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="inputEnt" name='rueEnt' value='' class="form-control" placeholder="Rue">
-                  <label for="inputEnt">Rue</label>
+                  <input type="text" id="rueEnt" name='rueEnt' value='' class="form-control" placeholder="Rue">
+                  <label for="rueEnt">Rue</label>
                 </div>
               </div>
             </div>

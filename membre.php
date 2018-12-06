@@ -65,10 +65,16 @@ if(isset($_POST['reset']))
                               <p> <a  class="btn btn-danger btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=1 " value='1'><?php echo "Retirer l'ami"; ?></a> </p>
                               <?php
                               }
-                              else
+                              elseif($bool == false)
                               {
                                 ?>
                                 <p> <a  class="btn btn-success btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=0 " value='0'><?php echo "Ajouter en ami"; ?></a> </p>
+                                <?php
+                              }
+                              else
+                              {
+                                ?>
+                                <p> <a  class="btn btn-secon btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=0 " value='0'><?php echo "voir mon profil"; ?></a> </p>
                                 <?php
                               }
                             ?>
