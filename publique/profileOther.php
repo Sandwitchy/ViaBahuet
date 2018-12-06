@@ -1,6 +1,6 @@
 <?php
 //Ajout du head de page
-include('tools/head.inc.php');
+include('../tools/head.inc.php');
 $idUser = $_GET['user'];
 
 $SQL_user = "SELECT idStage,datedebStage,datefinStage,libStage,descStage,nameEntreprise,u.idUser,nameUser,preUser,mailUser,loginUser,descUser,photoUser
@@ -24,7 +24,7 @@ while ($res = $req -> fetch())
             <div class="row">
 
               <div class="col-md-6">
-                <img class="pp" src="image/<?php echo $res['photoUser']; ?>" class="img-fluid" alt="Photo de profil" style="border-radius:50%;width:120px;height:120px;margin-top:15px;margin-left:20px;"> <!-- IMAGE -->
+                <img class="pp" src="../image/<?php echo $res['photoUser']; ?>" class="img-fluid" alt="Photo de profil" style="border-radius:50%;width:120px;height:120px;margin-top:15px;margin-left:20px;"> <!-- IMAGE -->
               </div>
               <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5" style="margin-top:2%;">
                 <div class="col-md"> <!-- NOM -->
@@ -149,5 +149,5 @@ while ($res = $req -> fetch())
 <?php
 
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
  ?>

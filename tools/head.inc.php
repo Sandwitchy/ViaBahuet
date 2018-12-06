@@ -4,7 +4,7 @@
   <head>
     <?php
       include('bdd.inc.php');
-      include('./objet/callClass.php');
+      include('../objet/callClass.php');
       include('error.php');
       include('function.php');
 
@@ -31,19 +31,19 @@
     <title>SB Admin - Dashboard</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href='css/profile.css' rel='stylesheet'>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href='../css/profile.css' rel='stylesheet'>
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="../css/sb-admin.css" rel="stylesheet">
 
     <!--Jquery ui import -->
-      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="../vendor/jquery/jquery.min.js"></script>
       <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>

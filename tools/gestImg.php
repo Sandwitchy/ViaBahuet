@@ -1,6 +1,6 @@
 <?php
-  include('tools/bdd.inc.php');
-  include('objet/callClass.php');
+  include('../tools/bdd.inc.php');
+  include('../objet/callClass.php');
   if(session_id() == '' || !isset($_SESSION)) {
       // session isn't started
       session_start();
@@ -24,13 +24,13 @@
         if ($s > 2500000)
         {
           $_SESSION['error'] = 3;
-          header('location:pref.php');
+          header('location:../publique/pref.php');
         }
         else
         {
           $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
           $idUser = $ouser->get_idUser();
-          $pathnewphoto1 = "image/".$idUser.$ext;
+          $pathnewphoto1 = "../image/".$idUser.$ext;
           $pathnewphoto = $idUser.$ext;
           move_uploaded_file($temp,$pathnewphoto1);
           if ($oldimg != 'pic.jpg')
@@ -41,20 +41,20 @@
           $req_sql = $conn -> query($sql);
           unset($_SESSION['success']);
           $_SESSION['success'] = 3;
-          header('location:pref.php');
+          header('location:../publique/pref.php');
         }
       }
       else
       {
         unset($_SESSION['error']);
         $_SESSION['error'] = 3;
-        header('location:pref.php');
+        header('location:../publique/pref.php');
       }
     }else
     {
       unset($_SESSION['error']);
       $_SESSION['error'] = 4;
-      header('location:pref.php');
+      header('location:../publique/pref.php');
     }
 
   }

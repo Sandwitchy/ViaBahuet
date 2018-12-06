@@ -1,14 +1,14 @@
 <head>
 <!-- Bootstrap core CSS-->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <!-- Custom styles for this template-->
-<link href="css/sb-admin.css" rel="stylesheet">
+<link href="../css/sb-admin.css" rel="stylesheet">
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -20,9 +20,9 @@ $(document).ready(function(){
   <div class='col-md-10 mx-auto mt-5'>
 
 <?php
-include('tools/bdd.inc.php');
-include('objet/callClass.php');
-include('error.php');
+include('../tools/bdd.inc.php');
+include('../objet/callClass.php');
+include('../tools/error.php');
   //gestion de l'incription d'un nouvelle USER
   if (isset($_POST['register']))
   {
