@@ -58,37 +58,5 @@
     }
   }
 
-  if(isset($_GET['id']))
-  {
-    if($_GET['value'] == 0)
-    {
-
-      $myId = $GLOBAL_ouser->get_idUser();
-      $friendId = $_GET['id'];
-
-      if($myId == $friendId)
-      {
-        echo "<script type='text/javascript'>document.location.replace('../publique/membre.php');</script>";
-      }
-      else {
-        $ID = $myId.'.'.$friendId;
-        $SQL_friend = "INSERT INTO amis VALUES ('$ID',$myId,$friendId)";
-        $conn->query($SQL_friend);
-        echo "<script type='text/javascript'>document.location.replace('../publique/membre.php');</script>";
-        exit();
-      }
-    }
-    elseif($_GET['value'] == 1)
-    {
-      $myId = $GLOBAL_ouser->get_idUser();
-      $friendId = $_GET['id'];
-      $SQL = "DELETE FROM amis WHERE idUser1 = $myId AND idUser2 = $friendId";
-      $conn->query($SQL);
-      echo "<script type='text/javascript'>document.location.replace('../publique/membre.php');</script>";
-      exit();
-    }
-  }
-
-
 
 ?>

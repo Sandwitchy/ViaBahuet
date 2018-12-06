@@ -38,6 +38,29 @@ if(isset($_POST['reset']))
       </form>
 <body>
 <br>
+<script>
+function gestionamis(value,type){
+    $.ajax({
+          // chargement du fichier externe Taggestion.php
+          url      : "../Back/amisgestion.php",
+          // Passage des données au fichier externe (ici le nom cliqué)
+          data     : {
+                      idamis: value,
+                      idUser: <?php echo $GLOBAL_ouser->get_idUser(); ?>,
+                      type:type
+                      },
+          cache    : true,
+          dataType : "json",
+          method   : "POST",
+          error    : function(request, error) { // Info Debuggage si erreur
+                       alert("Erreur : responseText: "+request.responseText);
+                     },
+          success  : function() {
+                      location.reload();
+                     }
+     });
+}
+</script>
       <div class="col-lg"> <!-- ELEMENT A GAUCHE DE LA PAGE-->
         <div class="row">
           <div class="col-md-24">
@@ -59,18 +82,25 @@ if(isset($_POST['reset']))
                             <p> <?php echo $req[$i]["mailUser"]; ?> </p>
                             <?php
                             $bool =$GLOBAL_ouser->checkFriend($req[$i]['idUser'],$conn);
+                            if ($req[$i]['idUser'] == $GLOBAL_ouser->get_idUser())
+                            {
+                              ?>
+                            </p><a  class="btn btn-danger btn-sm">Vous êtes si seul?</a></p>
+                              <?php
+                            }else {
                               if($bool == true)
                               {
                               ?>
-                              <p> <a  class="btn btn-danger btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=1 " value='1'><?php echo "Retirer l'ami"; ?></a> </p>
+                              <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,1)" class="btn btn-danger btn-sm" ><?php echo "Retirer l'ami"; ?></button>
                               <?php
                               }
                               else
                               {
                                 ?>
-                                <p> <a  class="btn btn-success btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=0 " value='0'><?php echo "Ajouter en ami"; ?></a> </p>
+                                <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,0)"  class="btn btn-success btn-sm" ><?php echo "Ajouter en ami"; ?></button>
                                 <?php
                               }
+                            }
                             ?>
                           </div>
                         </div>

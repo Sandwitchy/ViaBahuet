@@ -76,6 +76,26 @@ $( function() {
                        }
        });
   }
+  function tagajout(value){
+      $.ajax({
+            // chargement du fichier externe Taggestion.php
+            url      : "../Back/Taggestion.php",
+            // Passage des données au fichier externe (ici le nom cliqué)
+            data     : {
+                        libTags: value,
+                        idUser: <?php echo $GLOBAL_ouser->get_idUser(); ?>
+                        },
+            cache    : true,
+            dataType : "json",
+            method   : "POST",
+            error    : function(request, error) { // Info Debuggage si erreur
+                         alert("Erreur : responseText: "+request.responseText);
+                       },
+            success  : function() {
+                        location.reload();
+                       }
+       });
+  }
 </script>
   <div id="content-wrapper">
     <div class="container-fluid">
@@ -227,7 +247,7 @@ $( function() {
           if(isset($_POST['tags']))
           {
             $bool = $GLOBAL_ouser -> deletetags($_POST['tags'],$conn);
-            echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+            echo "<script type='text/javascript'>location.reload();</script>";
           }
          ?>
         <form method='post'>
