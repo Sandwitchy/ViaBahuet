@@ -47,6 +47,9 @@
       <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
   </head>
   <body id="page-top">
 
@@ -101,10 +104,15 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 
-            <a class="dropdown-item" href="pref.php">Préférences</a>
+             <a class="dropdown-item" href=
+             "<?php if(get_class($GLOBAL_ouser) == "user"){
+             echo "pref.php";
+             }else{
+             echo "prefEnt.php"; }?>"
+             >Préférences</a>
             <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Se déconnecter</a>
+            <a class="dropdown-item" href="#" onclick="$('#logoutModal').modal('show')">Se déconnecter</a>
           </div>
         </li>
       </ul>

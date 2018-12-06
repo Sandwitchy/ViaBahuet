@@ -12,6 +12,12 @@
     private $sitewebEnt;
     private $dateCreateEnt;
     private $ville;
+    private $login;
+    private $pass;
+    private $photoEnt;
+    private $typeEnt;
+    private $mailEnt;
+    private $telEnt;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
@@ -60,8 +66,23 @@
     {
       return $this->pass;
     }
+    public function get_telEnt()
+    {
+      return $this->telEnt;
+    }
+    public function get_photoEnt()
+    {
+     return  $this->photoEnt;
+    }
     //INITIALISATION DES SETTERS DE LA CLASSE
-
+    public function set_photoEnt($photoEnt)
+    {
+      $this->photoEnt = $photoEnt;
+    }
+    public function set_telEnt($telEnt)
+    {
+      $this->telEnt = $telEnt;
+    }
     public function set_nameEnt($nEnt)
     {
       $this->nameEnt = $nEnt;
@@ -95,8 +116,8 @@
       $idUser = $this -> get_idEnt();
       $idUser = $conn -> quote($idUser);
       $sql_User = "SELECT * FROM entreprise e, concerner c,ville v WHERE e.idEntreprise = c.idEntreprise
-                                                                  AND c.INSEE = v.INSEE
-                                                                  AND e.idEntreprise = $idUser";
+                                                                   AND c.INSEE = v.INSEE
+                                                                   AND e.idEntreprise = $idUser";
       $req_SQL = $conn -> query($sql_User)or die($sql_User);
       $res_SQL = $req_SQL -> fetch();
 
@@ -107,6 +128,7 @@
       $this ->ville = new ville($res_SQL['libVill'],$res_SQL['CP'],$res_SQL['INSEE']);
       $this-> set_descEnt($res_SQL['descEntreprise']);
       utilisateur::set_suspendu($res_SQL['suspendu']);
+      $this -> set_photoEnt($res_SQL['photoEnt']);
       //utilisateur::set_datedebSuspens($res_SQL['dateSuspensdeb']);
     }
 
@@ -177,6 +199,66 @@
         $sqlville = "UPDATE concerner SET INSEE = $INSEE , rueEntreprise = $rue WHERE idEntreprise = '$id'";
         $req_ville = $conn ->query($sqlville)or die($sqlville);
       }
+    }
+    public function selecttagsEnt($conn)
+    {
+      $id = $this->idEnt;
+      $sql = "SELECT t.idTags,libTags
+              FROM tags t,tagent e
+              WHERE t.idTags = e.idTags
+              AND e.idEntreprise = '$id'";
+      $req = $conn->query($sql)or die($sql);
+      $res = $req->fetchall(PDO::FETCH_ASSOC);
+      if ($res == NULL)
+      {
+        return false;
+      }else {
+        return $res;
+      }
+    }
+    public function createjointag2user($id,$lib,$conn)
+    {
+      $iduser = $this->idEnt;
+      if ($id == "")
+      {
+        $sql = "SELECT * FROM tags WHERE libTags LIKE '$lib'";
+        $req = $conn -> query($sql);
+        $res = $req -> fetch();
+        if ($res != "")
+        {
+          $idt = $res['idTags'];
+          $pmk = $idt."/".$iduser;
+          $sql = "INSERT INTO tagent VALUES('$pmk','$idt','$iduser')";
+          $req = $conn -> query($sql);
+          return 1;
+        }else {
+          $sql = "INSERT INTO tags VALUES('','$lib',1)";
+          $req1 = $conn -> query($sql);
+          $sql2 = "SELECT * FROM tags WHERE libTags = '$lib'";
+          $req2 = $conn->query($sql2);
+          $res = $req2 -> fetch();
+          $idt = $res['idTags'];
+          $pmk = $idt."/".$iduser;
+          $sql3 = "INSERT INTO tagent VALUES('$pmk','$idt','$iduser')";
+          $req3 = $conn -> query($sql3);
+          return 0;
+        }
+      }else {
+        $pmk = $id."/".$iduser;
+        $sql ="INSERT INTO tagent VALUES('$pmk','$id','$iduser')";
+        $req = $conn -> query($sql);
+        return 2;
+      }
+    }
+    public function deletetags($libtags,$conn)
+    {
+      $sql = "SELECT idTags FROM tags WHERE libTags = '$libtags'";
+      $req = $conn->query($sql);
+      $res = $req -> fetch();
+      $idtags = $res['idTags'];
+      $iduser = $this->idEnt;
+      $sqldel = "DELETE FROM tagent WHERE idtags = $idtags AND idEntreprise = $iduser";
+      $req = $conn -> query($sqldel);
     }
   }
 ?>

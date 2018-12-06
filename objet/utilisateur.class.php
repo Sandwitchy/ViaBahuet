@@ -1,6 +1,6 @@
 <?php
 
-  class utilisateur extends Controller
+  abstract class utilisateur
   {
 
     //DECLARATION DES VARIABLES DE LA CLASSE
@@ -35,7 +35,6 @@
     {
       return $this->datedebSuspens;
     }
-
     //INITIALISATION DES SETTERS DE LA CLASSE
 
     public function set_suspendu($suspens)
@@ -46,6 +45,7 @@
     {
       $this->datedebSuspens = $date;
     }
-
+    abstract public function recupUser($conn);
+    abstract public function deletetags($libtags,$conn);
   }
 ?>

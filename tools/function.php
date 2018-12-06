@@ -16,5 +16,4 @@
     $res = $req -> fetchall(PDO::FETCH_ASSOC);
     return $res;
   }
-
  ?>
