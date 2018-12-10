@@ -56,7 +56,8 @@ while ($res = $req -> fetch())
               <br>
                   <hr class="separator"> <!-- SEPARATEUR -->
               <br>
-              <textarea id='textarea' onblur="register()" readonly value="textProfile" rows="8" cols="80" style="resize:none;box-shadow:2px 2px 10px #888888;outline:0;"><?php echo $res['descUser'];?></textarea>
+              <textarea id='textarea' readonly value="textProfile" rows="8" cols="80" style="resize:none;box-shadow:2px 2px 10px #888888;outline:0;">
+                <?php echo $res['descUser'];?></textarea>
             </div>
           </div>
         </div>
@@ -127,25 +128,6 @@ while ($res = $req -> fetch())
 
   </div>
   <!-- /.content-wrapper -->
-  <script type="text/javascript">
-    function changeState()
-    {
-      var textarea = document.getElementById("textarea");
-      textarea.removeAttribute("readonly");
-      textarea.setAttribute("checkButton","1");
-    }
-
-    function register()
-    {
-      if(document.getElementById("textarea").getAttribute("checkButton") == 1)
-      {
-        var textarea = document.getElementById('textarea').value;
-        location.href = "updateTextarea.inc.php?txt="+textarea;
-        var textarea = document.getElementById('textarea');
-        textarea.setAttribute("readonly","readonly");
-      }
-    }
-  </script>
 <?php
 
 //ajout du pied de page
