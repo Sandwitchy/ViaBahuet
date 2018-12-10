@@ -76,26 +76,6 @@ $( function() {
                        }
        });
   }
-  function tagajout(value){
-      $.ajax({
-            // chargement du fichier externe Taggestion.php
-            url      : "../Back/Taggestion.php",
-            // Passage des données au fichier externe (ici le nom cliqué)
-            data     : {
-                        libTags: value,
-                        idUser: <?php echo $GLOBAL_ouser->get_idUser(); ?>
-                        },
-            cache    : true,
-            dataType : "json",
-            method   : "POST",
-            error    : function(request, error) { // Info Debuggage si erreur
-                         alert("Erreur : responseText: "+request.responseText);
-                       },
-            success  : function() {
-                        location.reload();
-                       }
-       });
-  }
 </script>
   <div id="content-wrapper">
     <div class="container-fluid">
@@ -114,10 +94,10 @@ $( function() {
       }
       ?>
     <div class='row'>
-      <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+      <div class='col-lg-8' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
         <h1>Mes Préférences</h1>
         <form method='post' action='#'>
-        <div class='col-md-8'>
+        <div class='col-md'>
           <div class='row'>
             <div class='col-md'>
               <div class="form-group">
@@ -133,7 +113,7 @@ $( function() {
           </div>
         </div>
 
-        <div class='col-md-8'>
+        <div class='col-md'>
           <div class='row'>
             <div class="form-group col-md">
               <div class="form-label-group">
@@ -149,7 +129,7 @@ $( function() {
             </div>
           </div>
         </div>
-        <div class='col-md-8'>
+        <div class='col-md'>
           <div class='row'>
             <div class="form-group col-md">
               <div class="form-label-group">
@@ -166,7 +146,7 @@ $( function() {
           </div>
         </div>
         <!-- Gestion Adresse -->
-        <div class='col-md-8'>
+        <div class='col-md'>
           <div class='row'>
             <div class="form-group col-md">
               <div class="form-label-group">
@@ -179,7 +159,7 @@ $( function() {
               $CP = $ville -> get_CP();
               $lib = $ville ->get_libVil();
              ?>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md">
               <div class="form-label-group">
                 <input type="text" id="inputCP" name='CP' value="<?php echo $CP; ?> "class="form-control" placeholder="CP"  required="required">
                 <label for="inputCP">Code Postal</label>
@@ -199,7 +179,7 @@ $( function() {
         </div>
       </form>
     </div><!--end contanier xl-14 -->
-    <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+    <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
       <div class="text-center">
         <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
         <h4>Image de profil</h4>
@@ -219,7 +199,7 @@ $( function() {
     </div><!--end container md-2-->
 </div><!--end row -->
       </div><!--container XS-14-->
-      <div class="xs-14" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+      <div class="xs-14" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
         <div class='col-md'>
           <h4>Mes Tags</h4>
           <?php

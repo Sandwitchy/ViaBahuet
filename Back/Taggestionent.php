@@ -12,7 +12,7 @@
 
   $sql = "DELETE FROM tagent
           WHERE idTags = '$idTags'
-          AND idUser = '$idUser'";
+          AND idEntreprise = '$idUser'";
   $req = $conn -> query($sql);
   echo json_encode(true);
  ?>

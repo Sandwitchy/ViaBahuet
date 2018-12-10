@@ -64,63 +64,49 @@ function gestionamis(value,type){
       <div class="col-lg"> <!-- ELEMENT A GAUCHE DE LA PAGE-->
         <div class="row">
           <div class="col-md-24">
-            <div class="row">
-              <div class="col-md-8">
                 <div class="row">
 
                       <?php
                       for($i = 0; $i < count($req) ; $i++)
                       {
                       ?>
-                      <div class="col-md-6" id="user">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <img src="../image/<?php echo $req[$i]['photoUser']; ?>" class="img-fluid img-thumbnail rounded" style="width:128px;height:128px;" alt="">
-                          </div>
-                          <div class="col-md">
-                            <p> <a href="profile.php?user=<?php echo $req[$i]['idUser']; ?>"><?php echo $req[$i]["nameUser"]." ".$req[$i]["preUser"]; ?></a> </p>
-                            <p> <?php echo $req[$i]["mailUser"]; ?> </p>
+                      <div class="card" style='width:15rem;margin:5px;'>
+                        <img class="card-img-top img-thumbnail" src="../image/<?php echo $req[$i]['photoUser']; ?>" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title"><?php echo $req[$i]['nameUser']; ?></h5>
+                          <p> <a href="profile.php?user=<?php echo $req[$i]['idUser']; ?>"><?php echo $req[$i]["nameUser"]." ".$req[$i]["preUser"]; ?></a> </p>
+                        </div>
+                        <div class='card-footer'>
+                          <?php
+                          $bool =$GLOBAL_ouser->checkFriend($req[$i]['idUser'],$conn);
+                          if ($req[$i]['idUser'] == $GLOBAL_ouser->get_idUser())
+                          {
+                            ?>
+                          <a  class="btn btn-danger btn-sm" style='color:white;'>Vous êtes si seul?</a>
                             <?php
-                            $bool =$GLOBAL_ouser->checkFriend($req[$i]['idUser'],$conn);
-                            if ($req[$i]['idUser'] == $GLOBAL_ouser->get_idUser())
+                          }
+                          else
+                          {
+                            if($bool == true)
+                            {
+                            ?>
+                            <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,1)" class="btn btn-danger btn-sm" ><?php echo "Retirer l'ami"; ?></button>
+                            <?php
+                            }
+                            else
                             {
                               ?>
-                            </p><a  class="btn btn-danger btn-sm">Vous êtes si seul?</a></p>
+                              <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,0)"  class="btn btn-success btn-sm" ><?php echo "Ajouter en ami"; ?></button>
                               <?php
-                            }else {
-                              if($bool == true)
-                              {
-                              ?>
-                              <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,1)" class="btn btn-danger btn-sm" ><?php echo "Retirer l'ami"; ?></button>
-                              <?php
-                              }
-                              else
-                              {
-                                ?>
-                                <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,0)"  class="btn btn-success btn-sm" ><?php echo "Ajouter en ami"; ?></button>
-                                <?php
-                              }
                             }
-                            ?>
-                          </div>
+                          }
+                          ?>
                         </div>
-                    </div>
+                      </div>
                       <?php
                       }
                       ?>
                 </div>
-              </div>
-              <div class="col-md-4 border rounded"> <!-- ELEMENT A DROITE DE LA PAGE -->
-                <div class="row">
-                  <div class="col-md-6">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </div>
-                  <div class="col-md-6">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

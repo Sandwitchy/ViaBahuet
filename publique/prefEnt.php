@@ -94,10 +94,10 @@ $( function() {
       }
       ?>
     <div class='row'>
-      <div class='col-xl-14' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+      <div class='col-xl' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
         <h1>Mes Préférences</h1>
         <form method='post' action='#'>
-        <div class='col-md-8'>
+        <div class='col-md'>
           <div class='row'>
             <div class='col-md'>
               <div class="form-group">
@@ -108,18 +108,18 @@ $( function() {
               </div>
             </div>
             <div class='col-md'>
-              <button type="button" id="triggermodal" name='mdp' data-toggle="modal" data-target="#ModalMDP" class='btn btn-danger'>Modifier le Mot de Passe</button>
+              <button type="button" id="triggermodal" name='mdp' onclick="$('#ModalMDP').modal('show')" class='btn btn-danger'>Modifier le Mot de Passe</button>
             </div>
           </div>
         </div>
 
-        <div class='col-md-8'>
+        <div class='col-md'>
               <div class="form-label-group">
                 <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameEnt();?>' name='name' class="form-control" placeholder="name" required="required">
                 <label for="inputName">Nom</label>
               </div>
-          </div>
-        <div class='col-md-8'>
+          </div><br>
+        <div class='col-md'>
           <div class='row'>
             <div class="form-group col-md">
               <div class="form-label-group">
@@ -141,7 +141,7 @@ $( function() {
         </div>
       </form>
     </div><!--end contanier xl-14 -->
-    <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+    <div class='col-md-4' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
       <div class="text-center">
         <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoEnt(); ?>'>
         <h4>Image de profil</h4>
@@ -161,7 +161,7 @@ $( function() {
     </div><!--end container md-2-->
 </div><!--end row -->
       </div><!--container XS-14-->
-      <div class="xs-14" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
+      <div class="xs-14" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
         <div class='col-md'>
           <h4>Mes Tags</h4>
           <?php
@@ -193,7 +193,7 @@ $( function() {
           if(isset($_POST['tags']))
           {
             $bool = $GLOBAL_ouser -> deletetags($_POST['tags'],$conn);
-            echo "<script type='text/javascript'>document.location.replace('prefEnt.php');</script>";
+            echo "<script type='text/javascript'>location.reload();</script>";
           }
          ?>
         <form method='post'>
@@ -263,7 +263,7 @@ $( function() {
     }
      ?>
      <!-- Modal Mot de passe -->
-     <div class="modal" id="ModalMDP" tabindex="-1" role="dialog">
+     <div class="modal fade" id="ModalMDP" tabindex="-1" role="dialog">
        <div class="modal-dialog" role="document">
          <div class="modal-content">
            <div class="modal-header">

@@ -46,60 +46,114 @@ include('../tools/head.inc.php');
     ?>
 
     <div class="container-fluid">
-
-    <button id="btnadd" onclick="appear()" type="button" class="btn btn-primary" name="button">Ajouter une entreprise</button>
-
-    <form style="display:none" id="formEnt" action="../Back/trait.php" method="post">
-      <div class="col-lg-14">
-        <div class="col-md-6">
-          <div class="form-group">
-            <div class="form-label-group">
-              <input type="text" id="inputEnt" name='nameEnt' value='' class="form-control" placeholder="login" required="required">
-              <label for="inputEnt">Nom de l'entreprise</label>
+    <div class='col-xs-4'>
+      <button  onclick="$('#creaentreprise').modal('show')" type="button" class="btn btn-primary" name="button">Ajouter une entreprise</button>
+    </div>
+    <!-- Affichage Entreprise -->
+    <div class="col-xl-14">
+      <div class='row'>
+        <?php
+          $ocontroller = new Controller($conn);
+          $table[0] = '';
+          $res = $ocontroller -> selectAllTable("entreprise",$table);
+          $i = 0;
+          foreach ($res as $enter)
+          {
+            ?>
+            <div class="card" style='width:15rem;margin:5px;'>
+              <img class="card-img-top img-thumbnail" src="../image/<?php echo $enter['photoEnt']; ?>" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo $enter['nameEntreprise']; ?></h5>
+                <p class="card-text"><?php echo substr($enter['descEntreprise'],0,50); ?></p>
+                <?php
+                if ((get_class($GLOBAL_ouser)=='entreprise')&&($enter['idEntreprise'] == $GLOBAL_ouser->get_idEnt()))
+                {
+                  ?> <p class="text-muted">Vous</p>
+                </div>
+                <div class='card-footer'>
+                  <a href="profileent.php" class="btn btn-primary">Voir profil</a>
+                </div><?php
+                }
+                elseif($enter['createbyuser'] == 1)
+                {
+                  ?> <p class="text-muted">Créer par un membre</p>
+                </div>
+                <div class='card-footer'>
+                  <a href="" class="btn btn-primary">Voir profil</a>
+                </div><?php
+                }else
+                {
+                  ?> <p class="text-muted">Est une entreprise</p>
+                </div>
+                <div class='card-footer'>
+                  <a href="" class="btn btn-primary">Voir profil</a>
+                </div><?php
+                } ?>
             </div>
+            <?php
+            if ($i == 3)
+            {
+              ?><div class="w-100"></div><?php
+              $i = 0;
+            }else {
+              $i++;
+            }
+          }
+        ?>
+      </div>
+    </div>
+
+<!--Modal de création entreprise -->
+    <div class="modal fade" id="creaentreprise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Créer une Entreprise</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-        </div>
-        <br>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description de l'entreprise</label>
-            <textarea class="form-control" name="descEnt" style="resize:none;" id="inputEnt" rows="8" cols="80" maxlength="2048"></textarea>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="row">
-            <div class="col-md-3">
+          <div class="modal-body">
+            <form  action="../Back/trait.php" method="post">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="villeEnt" name='vilEnt' value='' class="form-control ui-widget" placeholder="Ville" required="required">
-                  <label for="inputEnt">Ville</label>
+                  <input type="text" id='inputEnt'  name='nameEnt' class="form-control" placeholder="login" required="required">
+                  <label for="inputEnt">Nom de l'entreprise</label>
                 </div>
               </div>
-            </div>
-            <div class="col-md-3">
               <div class="form-group">
-                <div class="form-label-group">
-                  <input type="text" id="inputEnt" name='rueEnt' value='' class="form-control" placeholder="Rue">
-                  <label for="inputEnt">Rue</label>
-                </div>
+                <label for="descEnt">Description de l'entreprise</label>
+                <textarea class="form-control" id='descEnt' name="descEnt" style="resize:none;"  rows="8" cols="80" maxlength="2048"></textarea>
               </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <div class="form-label-group">
+                      <input type="text" id='villeEnt' name='vilEnt' class="form-control ui-widget" placeholder="Ville" required="required">
+                      <label for="villeEnt">Ville</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group">
+                    <div class="form-label-group">
+                      <input type="text" id='inputEnt' name='rueEnt' class="form-control" placeholder="Rue">
+                      <label for="inputEnt">Rue</label>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div class="col-md-6">
-          <input type='submit' name='registerEnt' value='Enregistrer' class='btn btn-primary'>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              <input type='submit' name='registerEnt' value='Enregistrer' class='btn btn-primary'>
+            </form>
+          </div>
         </div>
       </div>
-    </form>
+    </div>
 
-    <script type="text/javascript">
-      function appear()
-      {
-        document.getElementById("btnadd").style = "display:none";
-        document.getElementById("formEnt").style = "display:flow";
-      }
-    </script>
+
     </div>
     <!-- /.container-fluid -->
 

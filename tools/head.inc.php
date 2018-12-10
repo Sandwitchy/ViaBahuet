@@ -140,13 +140,20 @@
             <span>Mon profil</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
+        <?php
+          if(get_class($GLOBAL_ouser) == 'user')
+          {
+            ?>
+            <li class="nav-item dropdown">
 
-            <a class="nav-link" href="amis.php">
-            <i class="fas fa-fw fa-user-friends"></i>
-            <span>Mes amis</span>
-          </a>
-        </li>
+                <a class="nav-link" href="amis.php">
+                <i class="fas fa-fw fa-user-friends"></i>
+                <span>Mes amis</span>
+              </a>
+            </li>
+            <?php
+          }
+         ?>
         <li class="nav-item">
             <a class="nav-link" href="membre.php">
             <i class="fas fa-fw fa-user"></i>
