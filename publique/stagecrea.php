@@ -1,5 +1,5 @@
 <?php
-  include('tools/head.inc.php');
+  include('../tools/head.inc.php');
  ?>
  <div id="content-wrapper">
 
@@ -8,7 +8,7 @@
          <div class="container-fluid profile">
            <div class="col-xl-14" style="box-shadow:2px 5px 18px #888888;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
              <h4 class='h4'>Ajouter un stage</h4>
-             <form method='post' action='trait.php'>
+             <form method='post' action='../Back/trait.php'>
                <div class='col-md-6' style='margin:5px;padding:5px;'>
                  <div class='form-label-group'>
                    <input type="text" id="lib" name='lib' class="form-control" placeholder="libellé" required="required">
@@ -68,5 +68,5 @@
 
 <?php
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
 ?>

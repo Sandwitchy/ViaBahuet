@@ -1,6 +1,6 @@
 <?php
 //Ajout du head de page
-include('tools/head.inc.php');
+include('../tools/head.inc.php');
 ?>
 <script>
 $( function() {
@@ -173,10 +173,10 @@ $( function() {
     </div><!--end contanier xl-14 -->
     <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:2%;'>
       <div class="text-center">
-        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
+        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
         <h4>Image de profil</h4>
       </div>
-      <form method='post' enctype="multipart/form-data" action='gestImg.php'>
+      <form method='post' enctype="multipart/form-data" action='../tools/gestImg.php'>
         <div class="custom-file">
          <input type="file" name='imgProfile' class="custom-file-input" id="customFile">
          <label class="custom-file-label" for="customFile">Choisir une img</label>
@@ -281,7 +281,7 @@ $( function() {
     }
      ?>
      <!-- Modal Mot de passe -->
-     <div class="modal" id="ModalMDP" role="dialog">
+     <div class="modal" id="ModalMDP" tabindex="-1" role="dialog">
        <div class="modal-dialog" role="document">
          <div class="modal-content">
            <div class="modal-header">
@@ -314,7 +314,7 @@ $( function() {
            </form>
            </div>
          </div>
-       </div>
+      </div>
      </div><!--end Modal Mot de passe -->
 
     <!-- Sticky Footer -->
@@ -331,5 +331,5 @@ $( function() {
 
 <?php
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
  ?>

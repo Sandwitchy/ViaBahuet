@@ -1,6 +1,6 @@
 <?php
 //Ajout du head de page
-include('tools/head.inc.php');
+include('../tools/head.inc.php');
 
 $oController = new Controller($conn);
 if(isset($_POST['rechercher']))
@@ -52,7 +52,7 @@ if(isset($_POST['reset']))
                       <div class="col-md-6" id="user">
                         <div class="row">
                           <div class="col-md-6">
-                            <img src="image/<?php echo $req[$i]['photoUser']; ?>" class="img-fluid img-thumbnail rounded" style="width:128px;height:128px;" alt="">
+                            <img src="../image/<?php echo $req[$i]['photoUser']; ?>" class="img-fluid img-thumbnail rounded" style="width:128px;height:128px;" alt="">
                           </div>
                           <div class="col-md">
                             <p> <a href="profile.php?user=<?php echo $req[$i]['idUser']; ?>"><?php echo $req[$i]["nameUser"]." ".$req[$i]["preUser"]; ?></a> </p>
@@ -62,13 +62,13 @@ if(isset($_POST['reset']))
                               if($bool == true)
                               {
                               ?>
-                              <p> <a  class="btn btn-danger btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=1 " value='1'><?php echo "Retirer l'ami"; ?></a> </p>
+                              <p> <a  class="btn btn-danger btn-sm" href="../Back/trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=1 " value='1'><?php echo "Retirer l'ami"; ?></a> </p>
                               <?php
                               }
                               else
                               {
                                 ?>
-                                <p> <a  class="btn btn-success btn-sm" href="trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=0 " value='0'><?php echo "Ajouter en ami"; ?></a> </p>
+                                <p> <a  class="btn btn-success btn-sm" href="../Back/trait.php?id=<?php echo $req[$i]['idUser']; ?>&value=0 " value='0'><?php echo "Ajouter en ami"; ?></a> </p>
                                 <?php
                               }
                             ?>
@@ -110,5 +110,5 @@ if(isset($_POST['reset']))
 
 <?php
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
  ?>

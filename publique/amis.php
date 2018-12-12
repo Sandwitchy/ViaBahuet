@@ -1,6 +1,6 @@
 <?php
 //Ajout du head de page
-include('tools/head.inc.php');
+include('../tools/head.inc.php');
 $myId = $GLOBAL_ouser->get_idUser();
 $SQL_amis = "SELECT * FROM user,amis WHERE amis.idUser2 = user.idUser AND idUser1 = $myId";
 $req = $conn->query($SQL_amis);
@@ -23,7 +23,7 @@ $req = $conn->query($SQL_amis);
                 <div class="col-md-8">
                   <div class="row">
                     <div class="col-md-4">
-                      <img src="image/<?php echo $res['photoUser']; ?>" class="img-fluid img-thumbnail rounded" alt="">
+                      <img src="../image/<?php echo $res['photoUser']; ?>" class="img-fluid img-thumbnail rounded" height="128" width="128" alt="">
                     </div>
                     <div class="col-md-6">
                       <p> <a href="profile.php?user=<?php echo $res['idUser']; ?>"><?php echo $res["nameUser"]." ".$res["preUser"]; ?></a> </p>
@@ -59,5 +59,5 @@ $req = $conn->query($SQL_amis);
 
 <?php
 //ajout du pied de page
-include('tools/foot.inc.php');
+include('../tools/foot.inc.php');
  ?>

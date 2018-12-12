@@ -218,7 +218,8 @@
       if ($new !== $confirm)
       {
         return false;
-      }else
+      }
+      else
       {
         $SQL_PASS = "SELECT passUser FROM user WHERE idUser = '$id'";
         $req_PASS = $conn -> query($SQL_PASS);
@@ -226,7 +227,8 @@
         if ($old != $res_Req['passUser'])
         {
           return false;
-        }else
+        }
+        else
         {
           $new = $conn -> quote($new);
           $SQL_newpass = "UPDATE user SET passUser = $new WHERE idUser = '$id'";
@@ -248,7 +250,9 @@
       if ($res == NULL)
       {
         return false;
-      }else {
+      }
+      else
+      {
         return $res;
       }
     }
@@ -267,9 +271,11 @@
           $sql = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
           $req = $conn -> query($sql);
           return 1;
-        }else {
-          $sql = "INSERT INTO tags VALUES('','$lib',1)";
-          $req1 = $conn -> query($sql);
+        }
+        else
+        {
+          $sql = "INSERT INTO tags VALUES(NULL,'$lib',1)";
+          $req1 = $conn -> query($sql) or die($sql);
           $sql2 = "SELECT * FROM tags WHERE libTags = '$lib'";
           $req2 = $conn->query($sql2);
           $res = $req2 -> fetch();
@@ -279,13 +285,16 @@
           $req3 = $conn -> query($sql3);
           return 0;
         }
-      }else {
+      }
+      else
+      {
         $pmk = $id."/".$iduser;
         $sql ="INSERT INTO taguser VALUES('$pmk','$id','$iduser')";
         $req = $conn -> query($sql);
         return 2;
       }
     }
+
     public function checkFriend($myfriend,$conn)
     {
       $myId = $this->idUser;
