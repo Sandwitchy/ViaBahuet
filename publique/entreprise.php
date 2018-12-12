@@ -79,14 +79,14 @@ include('../tools/head.inc.php');
                   ?> <p class="text-muted">Créer par un membre</p>
                 </div>
                 <div class='card-footer'>
-                  <a href="" class="btn btn-primary">Voir profil</a>
+                  <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
                 </div><?php
                 }else
                 {
                   ?> <p class="text-muted">Est une entreprise</p>
                 </div>
                 <div class='card-footer'>
-                  <a href="" class="btn btn-primary">Voir profil</a>
+                  <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
                 </div><?php
                 } ?>
             </div>
