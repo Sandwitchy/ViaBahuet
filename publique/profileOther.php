@@ -3,15 +3,19 @@
 include('../tools/head.inc.php');
 $idUser = $_GET['user'];
 
-$SQL_user = "SELECT idStage,datedebStage,datefinStage,libStage,descStage,nameEntreprise,u.idUser,nameUser,preUser,mailUser,loginUser,descUser,photoUser
+$SQL_user = "SELECT u.idUser,nameUser,preUser,mailUser,loginUser,descUser,photoUser
               FROM user u
-              LEFT JOIN stage s ON u.idUser = s.idUser
-              LEFT JOIN entreprise e ON s.idEntreprise = e.idEntreprise
               WHERE u.idUser = '$idUser'";
 
 $req = $conn->query($SQL_user);
-while ($res = $req -> fetch())
-{
+$res = $req -> fetch();
+
+$SQL_stage = "SELECT idStage,datedebStage,datefinStage,libStage,descStage,nameEntreprise
+              FROM stage
+              LEFT JOIN entreprise ON stage.idEntreprise = entreprise.idEntreprise
+              WHERE idUser = '$idUser'
+              ORDER BY datefinStage DESC";
+$req2 = $conn->query($SQL_stage);
 ?>
 
   <div id="content-wrapper">
@@ -75,10 +79,7 @@ while ($res = $req -> fetch())
           </div>
         </div>
       </section>
-      <?php
-        if($res['idStage'] != NULL)
-        {
-      ?>
+
       <section class="stage" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
         <div class="col-lg-14">
           <div class='row' style='margin:5px;'>
@@ -87,28 +88,31 @@ while ($res = $req -> fetch())
             </div>
 
           </div>
+          <?php
+            while($res2 = $req2 -> fetch())
+            {
+          ?>
               <div class="col-md-10" style="box-shadow:2px 5px 18px #888888;margin:2%;"> <!-- CONTENU DU/DES STAGE(S)-->
                 <div class='row' >
                   <div class="col-md-4">
-                    <h4 class="h4"><?php echo $res['libStage']; ?></h4>
+                    <h4 class="h4"><?php echo $res2['libStage']; ?></h4>
                   </div>
                   <div class='col-sm-2'>
-                    <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
+                    <p class='lead'><u><strong><?php echo $res2['nameEntreprise']; ?></strong></u></p>
                   </div>
                 </div>
                 <div class='row' style="margin-left:2%;">
                   <div class='col-xs-3'>
-                    <span class="badge badge-secondary"><?php echo $res['datedebStage']; ?></span>
+                    <span class="badge badge-secondary"><?php echo $res2['datedebStage']; ?></span>
                   </div>
                   <div class='col-xs-3'>
-                    <span class="badge badge-secondary"><?php echo $res['datefinStage']; ?></span>
+                    <span class="badge badge-secondary"><?php echo $res2['datefinStage']; ?></span>
                   </div>
                 </div>
-                <p><?php echo $res['descStage'];?> </p>
+                <p><?php echo $res2['descStage'];?> </p>
               </div>
               <?php
               }
-            }
           ?>
           <!-- fin affichage BDD -->
         </div>

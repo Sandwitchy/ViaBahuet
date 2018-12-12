@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-  include('tools/bdd.inc.php');
-  include('objet/callClass.php');
+  include('../tools/bdd.inc.php');
+  include('../objet/callClass.php');
   include('../tools/error.php');
  ?>
   <head>

@@ -14,7 +14,7 @@
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function offre($entreprise,$idOff,$libOff,$descOff,$exigOff,$status)
+    public function offre($entreprise="",$idOff="",$libOff="",$descOff="",$exigOff="",$status="")
     {
       $this->entreprise = $entreprise;
       $this->idOff = $idOff;
@@ -68,6 +68,19 @@
     public function set_status($status)
     {
       $this->status = $status;
+    }
+
+    public function OffreEnt($lib,$desc,$exig,$salaire,$idEnt,$idTypeEmp,$DD,$DF,$conn)
+    {
+      $SQL = "SELECT * FROM typeemploi WHERE libTypeEmp = '$idTypeEmp'";
+      //RECUPERER LID DU TYPEEMP
+      $req = $conn->query($SQL) or die($SQL);
+      $res = $req -> fetch();
+      $idTypeEmp = $res['idTypeEmp'];
+
+
+      $SQL = "INSERT INTO emploiOff (idEmpOff,libEmpOff,descEmpOff,exiEmpOff,statusEmpOff,idEntreprise,salaireMoisBrut,DDCDD,DFCDD,idTypeEmp) VALUES(NULL,'$lib','$desc','$exig','0','$idEnt','$salaire','$DD','$DF','$idTypeEmp')";
+      $conn->query($SQL) or die($SQL);
     }
   }
 

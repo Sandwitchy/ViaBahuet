@@ -133,7 +133,7 @@
                     AND c.INSEE = v.INSEE
                     AND e.nameEntreprise LIKE $name";
       $req_check = $conn ->query($sql_check)or header("index.php?error=4");
-      if ($req_check -> rowCount() == 0)
+      if(($req_check -> rowCount() == 0) && ($req_check == false))
       {
         return false;
       }else{
@@ -177,6 +177,16 @@
         $sqlville = "UPDATE concerner SET INSEE = $INSEE , rueEntreprise = $rue WHERE idEntreprise = '$id'";
         $req_ville = $conn ->query($sqlville)or die($sqlville);
       }
+    }
+
+    public function afficheAllOffres($conn)
+    {
+      $idEnt = $this->idEnt;
+      $SQL_offre = "SELECT * FROM emploioff e,stage s WHERE e.idEntreprise = '$idEnt'AND s.idEntreprise = '$idEnt'";
+      $req = $conn->query($SQL_offre) or die($SQL_offre);
+      $res = $req->fetchall(PDO::FETCH_ASSOC);
+
+      return $res;
     }
   }
 ?>

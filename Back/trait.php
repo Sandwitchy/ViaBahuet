@@ -15,7 +15,7 @@
 
   }
 
-  if (isset($_POST['createstage']))
+  if(isset($_POST['createstage']))
   {
     $lib = $_POST['lib'];
     $desc = $_POST['desc'];
@@ -88,6 +88,38 @@
       exit();
     }
   }
+
+if(isset($_POST['registerStageOffre']))
+{
+    if($_POST['choix'] == "stage")
+    {
+      $idEnt = $GLOBAL_ouser->get_idEnt();
+      $lib = $_POST['libelle'];
+      $desc = $_POST['descstage'];
+      $DD = $_POST['DD'];
+      $DF = $_POST['DF'];
+      $exig = $_POST['exigence'];
+
+      $oStage = new Stage();
+      $oStage->StageEnt($lib,$desc,$DD,$DF,$idEnt,$exig,$conn);
+      echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php?idEnt=$idEnt');</script>";
+    }
+    elseif($_POST['choix'] == "offre")
+    {
+      $idEnt = $GLOBAL_ouser->get_idEnt();
+      $lib = $_POST['libelle'];
+      $desc = $_POST['descstage'];
+      $salaire = $_POST['salaire'];
+      $exig = $_POST['exigence'];
+      $idTypeEmp = $_POST['typeEmp'];
+      $DD = $_POST['DD'];
+      $DF = $_POST['DF'];
+
+      $oOffre = new Offre();
+      $oOffre->OffreEnt($lib,$desc,$exig,$salaire,$idEnt,$idTypeEmp,$DD,$DF,$conn);
+      echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php?idEnt=$idEnt');</script>";
+    }
+}
 
 
 

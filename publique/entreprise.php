@@ -54,15 +54,15 @@ include('../tools/head.inc.php');
         <div class="col-md-6">
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" id="inputEnt" name='nameEnt' value='' class="form-control" placeholder="login" required="required">
-              <label for="inputEnt">Nom de l'entreprise</label>
+              <input type="text" id="nameEnt" name='nameEnt' value='' class="form-control" placeholder="login" required="required">
+              <label for="nameEnt">Nom de l'entreprise</label>
             </div>
           </div>
         </div>
         <br>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description de l'entreprise</label>
+            <label for="descEnt">Description de l'entreprise</label>
             <textarea class="form-control" name="descEnt" style="resize:none;" id="inputEnt" rows="8" cols="80" maxlength="2048"></textarea>
           </div>
         </div>
@@ -72,15 +72,15 @@ include('../tools/head.inc.php');
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="text" id="villeEnt" name='vilEnt' value='' class="form-control ui-widget" placeholder="Ville" required="required">
-                  <label for="inputEnt">Ville</label>
+                  <label for="villeEnt">Ville</label>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="inputEnt" name='rueEnt' value='' class="form-control" placeholder="Rue">
-                  <label for="inputEnt">Rue</label>
+                  <input type="text" id="rueEnt" name='rueEnt' value='' class="form-control" placeholder="Rue">
+                  <label for="rueEnt">Rue</label>
                 </div>
               </div>
             </div>
