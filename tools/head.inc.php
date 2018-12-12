@@ -165,6 +165,16 @@
             <span>Les Entreprises</span></a>
         </li>
         <?php
+        if(get_class($GLOBAL_ouser) == "entreprise")
+        {
+        ?>
+        <li class="nav-item">
+            <a class="nav-link" href="mesoffres.php?idEnt=<?php echo $GLOBAL_ouser->get_idEnt(); ?>">
+            <i class="far fa-bookmark"></i>
+            <span>Mes offres</span></a>
+        </li>
+      <?php } ?>
+        <?php
         if (get_class($GLOBAL_ouser) == "user") {
           $INT_TypeUser = $GLOBAL_ouser->get_typeUser();
           if ($INT_TypeUser != 1)

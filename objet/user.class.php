@@ -217,7 +217,8 @@
       if ($new !== $confirm)
       {
         return false;
-      }else
+      }
+      else
       {
         $SQL_PASS = "SELECT passUser FROM user WHERE idUser = '$id'";
         $req_PASS = $conn -> query($SQL_PASS);
@@ -225,7 +226,8 @@
         if ($old != $res_Req['passUser'])
         {
           return false;
-        }else
+        }
+        else
         {
           $new = $conn -> quote($new);
           $SQL_newpass = "UPDATE user SET passUser = $new WHERE idUser = '$id'";
@@ -247,7 +249,9 @@
       if ($res == NULL)
       {
         return false;
-      }else {
+      }
+      else
+      {
         return $res;
       }
     }
@@ -277,6 +281,7 @@
         return 0;
       }
     }
+
     public function checkFriend($myfriend,$conn)
     {
       $myId = $this->idUser;

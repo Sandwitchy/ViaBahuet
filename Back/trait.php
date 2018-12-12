@@ -15,7 +15,7 @@
 
   }
 
-  if (isset($_POST['createstage']))
+  if(isset($_POST['createstage']))
   {
     $lib = $_POST['lib'];
     $desc = $_POST['desc'];
@@ -57,6 +57,69 @@
       header('Location:../publique/entreprise.php');
     }
   }
+
+  if(isset($_GET['id']))
+  {
+    if($_GET['value'] == 0)
+    {
+
+      $myId = $GLOBAL_ouser->get_idUser();
+      $friendId = $_GET['id'];
+
+      if($myId == $friendId)
+      {
+        echo "<script type='text/javascript'>document.location.replace('../publique/membre.php');</script>";
+      }
+      else {
+        $ID = $myId.'.'.$friendId;
+        $SQL_friend = "INSERT INTO amis VALUES ('$ID',$myId,$friendId)";
+        $conn->query($SQL_friend);
+        echo "<script type='text/javascript'>document.location.replace('../publique/membre.php');</script>";
+        exit();
+      }
+    }
+    elseif($_GET['value'] == 1)
+    {
+      $myId = $GLOBAL_ouser->get_idUser();
+      $friendId = $_GET['id'];
+      $SQL = "DELETE FROM amis WHERE idUser1 = $myId AND idUser2 = $friendId";
+      $conn->query($SQL);
+      echo "<script type='text/javascript'>document.location.replace('../publique/membre.php');</script>";
+      exit();
+    }
+  }
+
+if(isset($_POST['registerStageOffre']))
+{
+    if($_POST['choix'] == "stage")
+    {
+      $idEnt = $GLOBAL_ouser->get_idEnt();
+      $lib = $_POST['libelle'];
+      $desc = $_POST['descstage'];
+      $DD = $_POST['DD'];
+      $DF = $_POST['DF'];
+      $exig = $_POST['exigence'];
+
+      $oStage = new Stage();
+      $oStage->StageEnt($lib,$desc,$DD,$DF,$idEnt,$exig,$conn);
+      echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php?idEnt=$idEnt');</script>";
+    }
+    elseif($_POST['choix'] == "offre")
+    {
+      $idEnt = $GLOBAL_ouser->get_idEnt();
+      $lib = $_POST['libelle'];
+      $desc = $_POST['descstage'];
+      $salaire = $_POST['salaire'];
+      $exig = $_POST['exigence'];
+      $idTypeEmp = $_POST['typeEmp'];
+      $DD = $_POST['DD'];
+      $DF = $_POST['DF'];
+
+      $oOffre = new Offre();
+      $oOffre->OffreEnt($lib,$desc,$exig,$salaire,$idEnt,$idTypeEmp,$DD,$DF,$conn);
+      echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php?idEnt=$idEnt');</script>";
+    }
+}
 
 
 ?>

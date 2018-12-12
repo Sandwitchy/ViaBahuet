@@ -155,7 +155,7 @@
                     AND c.INSEE = v.INSEE
                     AND e.nameEntreprise LIKE $name";
       $req_check = $conn ->query($sql_check)or header("index.php?error=4");
-      if ($req_check -> rowCount() == 0)
+      if(($req_check -> rowCount() == 0) && ($req_check == false))
       {
         return false;
       }else{
@@ -200,6 +200,7 @@
         $req_ville = $conn ->query($sqlville)or die($sqlville);
       }
     }
+
     public function selecttagsEnt($conn)
     {
       $id = $this->idEnt;
@@ -259,6 +260,17 @@
       $iduser = $this->idEnt;
       $sqldel = "DELETE FROM tagent WHERE idtags = $idtags AND idEntreprise = $iduser";
       $req = $conn -> query($sqldel);
+
+
+    public function afficheAllOffres($conn)
+    {
+      $idEnt = $this->idEnt;
+      $SQL_offre = "SELECT * FROM emploioff e,stage s WHERE e.idEntreprise = '$idEnt'AND s.idEntreprise = '$idEnt'";
+      $req = $conn->query($SQL_offre) or die($SQL_offre);
+      $res = $req->fetchall(PDO::FETCH_ASSOC);
+
+      return $res;
+
     }
   }
 ?>

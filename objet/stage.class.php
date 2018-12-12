@@ -103,5 +103,13 @@
         $sql = "INSERT INTO stage (idUser,idEntreprise,datedebStage,datefinStage,descStage,libStage) VALUES($user,$entreprise,$datedeb,$datefin,$descStag,$libOff)";
         $req = $conn -> query($sql)or die($sql);
       }
+
+      //création d'un offre de stage par une ENTREPRISE
+      public function StageEnt($lib,$desc,$DD,$DF,$idEnt,$exig,$conn)
+      {
+        $SQL = "INSERT INTO stage (idStage,libstage,descstage,datedebStage,datefinStage,status,idEntreprise,exiStage)
+                VALUES (NULL,'$lib','$desc','$DD','$DF',0,'$idEnt','$exig')";
+        $conn->query($SQL) or die($SQL);
+      }
   }
 ?>

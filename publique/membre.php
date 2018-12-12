@@ -101,6 +101,7 @@ function gestionamis(value,type){
                             }
                           }
                           ?>
+
                         </div>
                       </div>
                       <?php

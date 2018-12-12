@@ -89,6 +89,7 @@ include('../tools/head.inc.php');
                   <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
                 </div><?php
                 } ?>
+
             </div>
             <?php
             if ($i == 3)
@@ -113,6 +114,7 @@ include('../tools/head.inc.php');
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
           <div class="modal-body">
             <form  action="../Back/trait.php" method="post">
               <div class="form-group">
@@ -122,6 +124,7 @@ include('../tools/head.inc.php');
                 </div>
               </div>
               <div class="form-group">
+
                 <label for="descEnt">Description de l'entreprise</label>
                 <textarea class="form-control" id='descEnt' name="descEnt" style="resize:none;"  rows="8" cols="80" maxlength="2048"></textarea>
               </div>
