@@ -105,10 +105,10 @@ if(isset($_GET['user']))
                 </div>
                 <div class='row' style="margin-left:2%;">
                   <div class='col-xs-3'>
-                    <span class="badge badge-secondary"><?php echo $res['datedebStage']; ?></span>
+                    <span class="badge badge-secondary"><?php echo dateFR($res['datedebStage']); ?></span>
                   </div>
                   <div class='col-xs-3'>
-                    <span class="badge badge-secondary"><?php echo $res['datefinStage']; ?></span>
+                    <span class="badge badge-secondary"><?php echo datefr($res['datefinStage']); ?></span>
                   </div>
                 </div>
                 <p><?php echo $res['descStage'];?> </p>
