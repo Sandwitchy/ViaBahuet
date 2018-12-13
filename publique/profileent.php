@@ -2,7 +2,11 @@
 //Ajout du head de page
 include('../tools/head.inc.php');
 ?>
-
+<script>
+$( function() {
+  $( "#tabs" ).tabs();
+  } );
+</script>
   <div id="content-wrapper">
 
     <div class="container-fluid profile">
@@ -50,19 +54,83 @@ include('../tools/head.inc.php');
         </div>
       </div> <!-- FIN GRID PROFILE -->
 
-      <section class="experience" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
-        <div class="col-lg-14">
-          <div class="col-md-4">
-            <h4 class="h4">Avis à propos l'entreprise</h4>
-          </div>
-          <div class="col-md-10"> <!-- CONTENU DU/DES STAGE(S)-->
-            <div class="col-md-5">
-              <h6 class="h6">Nom Utilisateur</h6>
-            </div>
-            <p>Avis : <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div id="tabs">
+        <ul>
+          <li><a href="#tabs-1">Avis</a></li>
+          <li><a href="#tabs-2">Personne ayant travaillé</a></li>
+        </ul>
+        <div id="tabs-1">
+          <h5>Avis </h5>
+          <div class='row'>
+          <?php
+            $idEnt = $GLOBAL_ouser->get_idEnt();
+            $sql = "SELECT * FROM avisentre a,user u
+                    WHERE a.idUser = u.idUser
+                    AND a.idEntreprise = $idEnt";
+            $req = $conn -> query($sql);
+            while ($res = $req -> fetch())
+            {
+              ?>
+                <div class="card border-primary mb-3" style="max-width: 15rem;margin:1%">
+                  <div class="card-header">
+                    <div class='row'>
+                      <div class='col-md'>
+                        <img src="../image/<?php echo $res['photoUser']; ?>" style="width:64px;height:auto;"  class='img-thumbnail img-fluid' alt="">
+                      </div>
+                      <div class='col-md'>
+                        <a href="profile.php?user=<?php echo $res['idUser']; ?>"><p><b><?php echo $res['nameUser']." ".$res['preUser'] ?></b></p></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body text-primary">
+                    <h5 class="card-title"><?php echo "Le :".dateFR($res['dateavis']);?></h5>
+                    <p class="card-text"><?php echo $res['avistxt'];?></p>
+                  </div>
+                </div>
+              <?php
+            }
+           ?>
+         </div><!--row-->
+        </div>
+        <div id="tabs-2">
+          <h5>Personne ayant travaillé dans cette entreprise : </h5><br>
+          <div class='row'>
+            <?php
+            $sql_job = "SELECT DISTINCT u.idUser,preUser,nameUser,photoUser FROM stage s,user u
+                        WHERE s.idUser = u.idUser
+                        AND s.idEntreprise = '$idEnt'";
+            $req_job = $conn -> query($sql_job)or die($sql_job);
+            if ($req_job->rowCount()== 0)
+            {
+              echo "<div class='container'><p>Personne<p></div>";
+            }else
+            {
+              while ($res_job = $req_job -> fetch())
+              {
+
+                  ?>
+                  <div class="card border-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                      <div class='row'>
+                        <div class='col-md'>
+                          <img src="../image/<?php echo $res_job['photoUser']; ?>" style="width:64px;height:auto;"  class='img-thumbnail img-fluid' alt="">
+                        </div>
+                        <div class='col-md'>
+                          <p><b><?php echo $res_job['nameUser']." ".$res_job['preUser'] ?></b></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body text-primary">
+                      <a href="profile.php?user=<?php echo $res_job['idUser']; ?>" class="btn btn-primary btn-sm">voir profil</a>
+                    </div>
+                  </div>
+                  <?php
+              }//end affichage job
+            }
+            ?>
           </div>
         </div>
-      </section>
+      </div>
     <!-- /.container-fluid -->
 
     <!-- Sticky Footer -->

@@ -118,7 +118,11 @@
       $sql_User = "SELECT * FROM entreprise e, concerner c,ville v WHERE e.idEntreprise = c.idEntreprise
                                                                    AND c.INSEE = v.INSEE
                                                                    AND e.idEntreprise = $idUser";
-      $req_SQL = $conn -> query($sql_User)or die($sql_User);
+      $req_SQL = $conn -> query($sql_User);
+      if ($req_SQL == false)
+      {
+        return 1;
+      }
       $res_SQL = $req_SQL -> fetch();
 
       $this -> set_nameEnt($res_SQL['nameEntreprise']);
@@ -129,6 +133,7 @@
       $this-> set_descEnt($res_SQL['descEntreprise']);
       utilisateur::set_suspendu($res_SQL['suspendu']);
       $this -> set_photoEnt($res_SQL['photoEnt']);
+      return 0;
       //utilisateur::set_datedebSuspens($res_SQL['dateSuspensdeb']);
     }
 
@@ -261,7 +266,7 @@
       $sqldel = "DELETE FROM tagent WHERE idtags = $idtags AND idEntreprise = $iduser";
       $req = $conn -> query($sqldel);
 
-
+    }
     public function afficheAllOffres($conn)
     {
       $idEnt = $this->idEnt;

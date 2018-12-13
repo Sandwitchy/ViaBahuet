@@ -52,6 +52,22 @@
           <?php
             $_SESSION['error'] = 0;
           break;
+          case 7:
+            ?>
+            <div class="alert alert-danger">
+              <strong>Erreur :</strong> L'avis comporte plus de 300 caractères.
+            </div>
+            <?php
+              $_SESSION['error'] = 0;
+            break;
+            case 9:
+              ?>
+              <div class="alert alert-danger">
+                <strong>Erreur :</strong> Vous avez déja créé un avis pour cette entreprise.
+              </div>
+              <?php
+                $_SESSION['error'] = 0;
+              break;
     }//end switch error
   }
   function success($success)
@@ -94,6 +110,22 @@
       ?>
       <div class="alert alert-success">
         Votre compte à bien été créer vous pouvez maintenant vous connecté !
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 6:
+      ?>
+      <div class="alert alert-success">
+        Votre avis à bien été enregistré!
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 8:
+      ?>
+      <div class="alert alert-warning">
+        Votre avis à bien été supprimer!
       </div>
       <?php
       $_SESSION['success'] = 0;

@@ -308,7 +308,52 @@
       $sqldel = "DELETE FROM taguser WHERE idtags = $idtags AND iduser = $iduser";
       $req = $conn -> query($sqldel);
     }
-
+    public function addavis($txt,$entreprise,$conn)
+    {
+      $identre = $entreprise->get_idEnt();
+      $iduser = $this->idUser;
+      if (strlen($txt) > 300)
+      {
+        return 1;
+      }
+      $txt = $conn -> quote($txt);
+      $sql = "INSERT INTO avisentre VALUES($identre,$iduser,DATE( NOW() ),$txt);";
+      $req = $conn ->query($sql);
+      if($conn->errorCode() == 23000)//code erreur pmk existe déja
+      {
+        return 2;
+      }
+      return 0;
+    }
+    public function modavis($txt,$entreprise,$conn)
+    {
+      $identre = $entreprise->get_idEnt();
+      $iduser = $this->idUser;
+      if (strlen($txt) > 300)
+      {
+        return 1;
+      }
+      $txt = $conn -> quote($txt);
+      $sql = "UPDATE avisentre SET avistxt = $txt,
+                                   dateavis = DATE( NOW() )
+                               WHERE idEntreprise = $identre
+                               AND idUser = $iduser";
+      $req = $conn ->query($sql);
+      return 0;
+    }
+    public function delavis($oentre,$conn)
+    {
+      $identre = $oentre->get_idEnt();
+      $iduser = $this->idUser;
+      $sql = "DELETE FROM avisentre WHERE idEntreprise = $identre AND idUser = $iduser";
+      $req = $conn -> query($sql);
+      if ($conn->errorCode() != 0)
+      {
+        return 1;
+      }else {
+        return 0;
+      }
+    }
 }
 
 ?>

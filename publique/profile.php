@@ -104,7 +104,7 @@ if(isset($_GET['user']))
                     <div class="col-md-4">
                       <h4 class="h4"><?php echo $res['libStage']; ?></h4>
                     </div>
-                    <div class='col-sm-2'>
+                    <div class='col-sm'>
                       <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
                     </div>
                   </div>
