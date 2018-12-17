@@ -17,7 +17,10 @@ $res = $req -> fetch()
   <script>
   $( function() {
     $( "#tabs" ).tabs();
-    } );
+  } );
+  $(document).ready(function(){
+    $(".cloud-tags").prettyTag();
+  });
   </script>
 
   <div id="content-wrapper">
@@ -51,18 +54,27 @@ $res = $req -> fetch()
               </div>
             </div>
           </div>
-          <div class="col-md col-lg col-ms col-xs" style="color:#007BFF;"> <!-- Boutons d'info -->
+          <div class="col-md col-lg col-ms col-xs" > <!-- Boutons d'info -->
             <div class="col-md-5 col-sm-3">
-              <p>Site web : <?php echo $res['mailEntreprise']; ?></p>
+              <p>Site web : <?php
+              if (isset($res['sitewebEntreprise'])) {
+                echo $res['sitewebEntreprise'];
+              }else {
+                echo "aucun site web";
+              }
+               ?></p>
             </div>
             <div class="col-md">
-              <p>Taille de l'entreprise : <?php echo utf8_encode($res['libTailleEntreprise']); ?></p>
+              <p>Taille de l'entreprise : <?php
+                echo utf8_encode($res['libTailleEntreprise']);
+               ?></p>
 
             </div>
             <?php if($res['createbyuser'] !=  1){ ?>
             <div class="col-md" >
               Tags affiliés à l'entreprise :
-              <div class='row'>
+            </div>
+              <ul class="cloud-tags">
               <?php
                 $sql_tags = "SELECT * FROM tagent e,tags t
                               WHERE e.idEntreprise = '$idEnt'
@@ -74,14 +86,14 @@ $res = $req -> fetch()
                 }else {
                   while ($tags = $req_tags -> fetch())
                   { ?>
-                    <button type='button' name='tags' class='tag blue btn'
-                     style='color:white;'><?php echo $tags['libTags']; ?></button>
+                    <li>
+                       <a href="#tag_link"> <?php echo $tags['libTags']; ?></a>
+                     </li>
                      <?php
                   }
                 }
               ?>
-              </div>
-            </div>
+              </ul>
           <?php } ?>
 
           </div>

@@ -11,7 +11,11 @@ $req = $conn->query($SQL_user);
 $res = $req -> fetch();
 
 ?>
-
+<script>
+  $(document).ready(function(){
+    $(".cloud-tags").prettyTag();
+  });
+</script>
   <div id="content-wrapper">
 
     <div class="container-fluid profile">
@@ -35,16 +39,29 @@ $res = $req -> fetch();
             </div>
           </div>
           <div class="col-md col-lg col-ms col-xs" style="color:#007BFF;"> <!-- Boutons d'info -->
-            <div class="col-md-5 col-sm-3">
-
+            <div class="col-md" >
+              Tags affiliés à l'utilisateur :
             </div>
-            <div class="col-md-5 col-sm-3">
-
-            </div>
-            <div class="col-md-5 col-sm-3">
-
-            </div>
-
+              <ul class="cloud-tags">
+              <?php
+                $sql_tags = "SELECT * FROM taguser u,tags t
+                              WHERE u.idUser = '$idUser'
+                              AND u.idTags = t.idTags";
+                $req_tags = $conn -> query($sql_tags);
+                if ($req_tags->rowCount() == 0)
+                {
+                  echo "L'utilisateur ne possède pas de tags";
+                }else {
+                  while ($tags = $req_tags -> fetch())
+                  { ?>
+                    <li>
+                       <a href="#tag_link"> <?php echo $tags['libTags']; ?></a>
+                     </li>
+                     <?php
+                  }
+                }
+              ?>
+              </ul>
           </div>
 
           <div class="w-100"></div> <!-- RETOUR A LA LIGNE DE LA GRID -->

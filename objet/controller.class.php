@@ -39,7 +39,7 @@
 
       if($conditions[0] != '')
       {
-        $sql_SELECTTABLE = $sql_SELECTTABLE." WHERE nameUser LIKE";
+        $sql_SELECTTABLE = $sql_SELECTTABLE." WHERE";
         $bool = 0;
         foreach ($conditions as $unecondition)
         {

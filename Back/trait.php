@@ -89,7 +89,7 @@
 
     $SQL_ville = "SELECT libvill FROM ville WHERE libvill = '$vilEnt'";
     $req = $conn->query($SQL_ville);
-    if($req->rowCount() != 0)
+    if(($req->rowCount() != 0)&&($req->rowCount() == 1))
     {
       //INSERTION DES DONNEES DE L'E.
       $data["nameEntreprise"] = $nameEnt;

@@ -47,9 +47,18 @@
       <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+    <!-- Jquery multi select avec filter -->
+      <link rel="stylesheet" href="../vendor/jquery-select-filter/jquery.multiselect.css">
+      <script src="../vendor/jquery-select-filter/jquery.multiselect.js"></script>
+      <link rel="stylesheet" href="../vendor/jquery-select-filter/jquery.multiselect.filter.css">
+      <script src="../vendor/jquery-select-filter/jquery.multiselect.filter.js"></script>
+      <!-- Jquery tags -->
+      <link rel="stylesheet" href="../vendor/tags/css/prettytag.css">
+      <script src="../vendor/tags/js/jquery.prettytag.js"></script>
+      <!-- Amsify Plugin -->
+      <link rel="stylesheet" href="../vendor/tags/css/suggestags.css">
+      <script src="../vendor/tags/js/suggestags.js"></script>
   </head>
   <body id="page-top">
 
