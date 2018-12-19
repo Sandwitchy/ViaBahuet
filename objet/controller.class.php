@@ -39,7 +39,7 @@
 
       if($conditions[0] != '')
       {
-        $sql_SELECTTABLE = $sql_SELECTTABLE." WHERE nameUser LIKE";
+        $sql_SELECTTABLE = $sql_SELECTTABLE." WHERE";
         $bool = 0;
         foreach ($conditions as $unecondition)
         {
@@ -62,7 +62,16 @@
     // var_dump($sql_SELECTTABLE);
     // die();
     }
+    public function envoieSQL($sql,$conn)
+    {
+      $req = $conn -> query($sql)or die($sql);
+      if ($req != false)
+      {
+        $res = $req -> fetchall(PDO::FETCH_ASSOC);
+        return $res;
+      }
 
+    }
     public function insertBDD($Var_nametable,$tab_value)
     {
       $sql_INSERTTABLE = "INSERT INTO $Var_nametable";

@@ -47,6 +47,20 @@
       <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+    <!-- Jquery multi select avec filter -->
+      <link rel="stylesheet" href="../vendor/jquery-select-filter/jquery.multiselect.css">
+      <script src="../vendor/jquery-select-filter/jquery.multiselect.js"></script>
+      <link rel="stylesheet" href="../vendor/jquery-select-filter/jquery.multiselect.filter.css">
+      <script src="../vendor/jquery-select-filter/jquery.multiselect.filter.js"></script>
+      <!-- Jquery tags -->
+      <link rel="stylesheet" href="../vendor/tags/css/prettytag.css">
+      <script src="../vendor/tags/js/jquery.prettytag.js"></script>
+      <!-- Amsify Plugin -->
+      <link rel="stylesheet" href="../vendor/tags/css/suggestags.css">
+      <script src="../vendor/tags/js/suggestags.js"></script>
+
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
       <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -54,6 +68,7 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   </head>
   <body id="page-top">
 
@@ -103,15 +118,20 @@
           </div>
         </li>
         <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 
-            <a class="dropdown-item" href="pref.php">Préférences</a>
+             <a class="dropdown-item" href=
+             "<?php if(get_class($GLOBAL_ouser) == "user"){
+             echo "pref.php";
+             }else{
+             echo "prefEnt.php"; }?>"
+             >Préférences</a>
             <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Se déconnecter</a>
+            <a class="dropdown-item" href="#" onclick="$('#logoutModal').modal('show')">Se déconnecter</a>
           </div>
         </li>
       </ul>
@@ -139,13 +159,20 @@
             <span>Mon profil</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
+        <?php
+          if(get_class($GLOBAL_ouser) == 'user')
+          {
+            ?>
+            <li class="nav-item dropdown">
 
-            <a class="nav-link" href="amis.php">
-            <i class="fas fa-fw fa-user-friends"></i>
-            <span>Mes amis</span>
-          </a>
-        </li>
+                <a class="nav-link" href="amis.php">
+                <i class="fas fa-fw fa-user-friends"></i>
+                <span>Mes amis</span>
+              </a>
+            </li>
+            <?php
+          }
+         ?>
         <li class="nav-item">
             <a class="nav-link" href="membre.php">
             <i class="fas fa-fw fa-user"></i>

@@ -52,18 +52,18 @@ $( function() {
      ?>
   ];
   $("#tags").autocomplete({
-    source:tagstable,
+    source: tagstable,
     minLength: 0,
   })
   } );
   function tagdelete(value){
       $.ajax({
             // chargement du fichier externe Taggestion.php
-            url      : "../Back/Taggestion.php",
+            url      : "../Back/Taggestionent.php",
             // Passage des données au fichier externe (ici le nom cliqué)
             data     : {
                         libTags: value,
-                        idUser: <?php echo $GLOBAL_ouser->get_idUser(); ?>
+                        idUser: <?php echo $GLOBAL_ouser->get_idEnt(); ?>
                         },
             cache    : true,
             dataType : "json",
@@ -97,7 +97,7 @@ $( function() {
       }
       ?>
     <div class='row'>
-      <div class='col-lg-8' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
+      <div class='col-xl' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
         <h1>Mes Préférences</h1>
         <form method='post' action='#'>
         <div class='col-md'>
@@ -105,7 +105,7 @@ $( function() {
             <div class='col-md'>
               <div class="form-group">
                 <div class="form-label-group">
-                  <input type="text" id="inputLogin" name='login' value='<?php echo $GLOBAL_ouser->get_loginUser();?>' class="form-control" placeholder="login" required="required">
+                  <input type="text" id="inputLogin" name='login' value='<?php echo $GLOBAL_ouser->get_loginEnt();?>' class="form-control" placeholder="login" required="required">
                   <label for="inputLogin">Identifiant</label>
                 </div>
               </div>
@@ -117,61 +117,23 @@ $( function() {
         </div>
 
         <div class='col-md'>
-          <div class='row'>
-            <div class="form-group col-md">
               <div class="form-label-group">
-                <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameUser();?>' name='name' class="form-control" placeholder="name" required="required">
+                <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameEnt();?>' name='name' class="form-control" placeholder="name" required="required">
                 <label for="inputName">Nom</label>
               </div>
-            </div>
-            <div class="form-group col-md">
-              <div class="form-label-group">
-                <input type="text" id="inputPrenom" name='prenom'  value='<?php echo $GLOBAL_ouser->get_preUser();?>' class="form-control" placeholder="prenom" required="required">
-                <label for="inputPrenom">Prénom</label>
-              </div>
-            </div>
-          </div>
-        </div>
+          </div><br>
         <div class='col-md'>
           <div class='row'>
             <div class="form-group col-md">
               <div class="form-label-group">
-                <input type="text" id="inputMail" name='mail'  value='<?php echo $GLOBAL_ouser->get_mailUser();?>' class="form-control" placeholder="mail" required="required">
+                <input type="text" id="inputMail" name='mail'  value='<?php echo $GLOBAL_ouser->get_mailEnt();?>' class="form-control" placeholder="mail" required="required">
                 <label for="inputMail">Email</label>
               </div>
             </div>
             <div class="form-group col-md">
               <div class="form-label-group">
-                <input type="text" id="inputTel" name='tel' class="form-control"  value='<?php echo $GLOBAL_ouser->get_telUser();?>' placeholder="tel" required="required">
+                <input type="text" id="inputTel" name='tel' class="form-control"  value='<?php echo $GLOBAL_ouser->get_telEnt();?>' placeholder="tel" required="required">
                 <label for="inputTel">Numéro de Téléphone</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Gestion Adresse -->
-        <div class='col-md'>
-          <div class='row'>
-            <div class="form-group col-md">
-              <div class="form-label-group">
-                <input type="text" id="inputRue" name='rue' class="form-control" placeholder="rue"  value='<?php echo $GLOBAL_ouser->get_adresse();?>' required="required">
-                <label for="inputRue">Rue</label>
-              </div>
-            </div>
-            <?php
-              $ville = $GLOBAL_ouser -> get_ville();
-              $CP = $ville -> get_CP();
-              $lib = $ville ->get_libVil();
-             ?>
-            <div class="form-group col-md">
-              <div class="form-label-group">
-                <input type="text" id="inputCP" name='CP' value="<?php echo $CP; ?> "class="form-control" placeholder="CP"  required="required">
-                <label for="inputCP">Code Postal</label>
-              </div>
-            </div>
-            <div class="form-group col-md">
-              <div class="form-label-group">
-                <input type="text" id="inputLibville" name='ville' value="<?php echo $lib; ?>" class="form-control autocomplete" placeholder="ville"  required="required">
-                <label for="inputLibville">Ville</label>
               </div>
             </div>
           </div>
@@ -182,9 +144,9 @@ $( function() {
         </div>
       </form>
     </div><!--end contanier xl-14 -->
-    <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
+    <div class='col-md-4' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
       <div class="text-center">
-        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
+        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoEnt(); ?>'>
         <h4>Image de profil</h4>
       </div>
       <form method='post' enctype="multipart/form-data" action='../tools/gestImg.php'>
@@ -206,9 +168,10 @@ $( function() {
         <div class='col-md'>
           <h4>Mes Tags</h4>
           <?php
-            $tagsuser = $GLOBAL_ouser -> selecttagsuser($conn);
+            $tagsuser = $GLOBAL_ouser -> selecttagsEnt($conn);
             ?>
             <div class='row'>
+              <form method='post' action='#'>
               <?php
               if ($tagsuser == false)
               {
@@ -219,13 +182,14 @@ $( function() {
                   $tags = $tag['libTags'];
                   ?>
                   <li>
-                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"><?php echo $tags; ?></a>
+                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"> <?php echo $tags; ?></a>
                    </li>
                   <?php
                 }
                 ?></ul><?php
               }
              ?>
+           </form>
          </div>
         </div>
         <?php
@@ -241,12 +205,12 @@ $( function() {
               <input type='text' class='form-control form-control-sm' id='tags' name='libtags'>
             </div>
             <div class='col-auto'>
+              <input type='hidden' id='tagsid' name='idtags'>
               <input type='submit' class='btn btn-primary' name='envoietags'>
             </div>
           </div>
         </form>
       </div><!-- container xs-14-->
-
     </div>
     <!-- /.container-fluid -->
     <?php
@@ -256,9 +220,11 @@ $( function() {
     if (isset($_POST['envoietags']))
     {
       $libtags = $_POST['libtags'];
-      $GLOBAL_ouser -> createjointag2user($libtags,$conn);
-      echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+      $id = $_POST['idtags'];
+      $GLOBAL_ouser -> createjointag2user($id,$libtags,$conn);
+      echo "<script type='text/javascript'>document.location.replace('prefEnt.php');</script>";
     }
+    //Non Fonctionnel
     if (isset($_POST['envoie']))
     {
       $CP = $_POST['CP'];
@@ -281,6 +247,7 @@ $( function() {
       $_SESSION['success'] = 1;
       echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
     }
+      //Non Fonctionnel
     if (isset($_POST['modpass']))
     {
       $old = $_POST['oldpass'];
@@ -291,7 +258,7 @@ $( function() {
       {
         unset($_SESSION['success']);
         $_SESSION['success'] = 2;
-      }elseif ($res == false) {
+      }else {
         unset($_SESSION['error']);
         $_SESSION['error'] = 2;
       }
@@ -299,7 +266,7 @@ $( function() {
     }
      ?>
      <!-- Modal Mot de passe -->
-     <div class="modal fade" id="ModalMDP" tabindex="1" role="dialog">
+     <div class="modal fade" id="ModalMDP" tabindex="-1" role="dialog">
        <div class="modal-dialog" role="document">
          <div class="modal-content">
            <div class="modal-header">

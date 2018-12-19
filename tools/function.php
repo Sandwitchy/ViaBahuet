@@ -16,6 +16,10 @@
     $res = $req -> fetchall(PDO::FETCH_ASSOC);
     return $res;
   }
+  function dateFr($date)
+  {
+    return strftime('%d-%m-%Y',strtotime($date));
+
 
 
   function DataTableStage($SQL_stage,$conn)
@@ -131,6 +135,7 @@
       </tfoot>
     </table>
     <?php
+
   }
  ?>
 <script type="text/javascript">

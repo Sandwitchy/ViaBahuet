@@ -33,7 +33,6 @@
       $this->photoUser  = $photoUser;
       $this->typeUser   = $typeUser;
       $this->descUser   = $descUser;
-
     }
 
     //INITIALISATION DES GETTERS DE LA CLASSE
@@ -232,7 +231,7 @@
         {
           $new = $conn -> quote($new);
           $SQL_newpass = "UPDATE user SET passUser = $new WHERE idUser = '$id'";
-          $req_sql = $conn -> query($sql_User);
+          $req_sql = $conn -> query($SQL_newpass);
           return true;
         }
       }
@@ -256,42 +255,31 @@
         return $res;
       }
     }
-    public function createjointag2user($id,$lib,$conn)
+    public function createjointag2user($lib,$conn)
     {
+      $lib = $conn -> quote($lib);
       $iduser = $this->idUser;
-      if ($id == "")
+      $sql = "SELECT * FROM tags WHERE libTags LIKE $lib";
+      $req = $conn -> query($sql);
+      $res = $req -> fetch();
+      if ($res != "")
       {
-        $sql = "SELECT * FROM tags WHERE libTags LIKE '$lib'";
+        $idt = $res['idTags'];
+        $pmk = $idt."/".$iduser;
+        $sql = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
         $req = $conn -> query($sql);
-        $res = $req -> fetch();
-        if ($res != "")
-        {
-          $idt = $res['idTags'];
-          $pmk = $idt."/".$iduser;
-          $sql = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
-          $req = $conn -> query($sql);
-          return 1;
-        }
-        else
-        {
-          $sql = "INSERT INTO tags VALUES(NULL,'$lib',1)";
-          $req1 = $conn -> query($sql) or die($sql);
-          $sql2 = "SELECT * FROM tags WHERE libTags = '$lib'";
-          $req2 = $conn->query($sql2);
-          $res = $req2 -> fetch();
-          $idt = $res['idTags'];
-          $pmk = $idt."/".$iduser;
-          $sql3 = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
-          $req3 = $conn -> query($sql3);
-          return 0;
-        }
-      }
-      else
-      {
-        $pmk = $id."/".$iduser;
-        $sql ="INSERT INTO taguser VALUES('$pmk','$id','$iduser')";
-        $req = $conn -> query($sql);
-        return 2;
+        return 1;
+      }else {
+        $sql = "INSERT INTO tags VALUES('',$lib',1)";
+        $req1 = $conn -> query($sql);
+        $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
+        $req2 = $conn->query($sql2);
+        $res = $req2 -> fetch();
+        $idt = $res['idTags'];
+        $pmk = $idt."/".$iduser;
+        $sql3 = "INSERT INTO taguser VALUES('$pmk','$idt','$iduser')";
+        $req3 = $conn -> query($sql3);
+        return 0;
       }
     }
 
@@ -311,7 +299,62 @@
         }
       }
     }
-
+    public function deletetags($libtags,$conn)
+    {
+      $sql = "SELECT idTags FROM tags WHERE libTags = '$libtags'";
+      $req = $conn->query($sql);
+      $res = $req -> fetch();
+      $idtags = $res['idTags'];
+      $iduser = $this->idUser;
+      $sqldel = "DELETE FROM taguser WHERE idtags = $idtags AND iduser = $iduser";
+      $req = $conn -> query($sqldel);
+    }
+    public function addavis($txt,$entreprise,$conn)
+    {
+      $identre = $entreprise->get_idEnt();
+      $iduser = $this->idUser;
+      if (strlen($txt) > 300)
+      {
+        return 1;
+      }
+      $txt = $conn -> quote($txt);
+      $sql = "INSERT INTO avisentre VALUES($identre,$iduser,DATE( NOW() ),$txt);";
+      $req = $conn ->query($sql);
+      if($conn->errorCode() == 23000)//code erreur pmk existe déja
+      {
+        return 2;
+      }
+      return 0;
+    }
+    public function modavis($txt,$entreprise,$conn)
+    {
+      $identre = $entreprise->get_idEnt();
+      $iduser = $this->idUser;
+      if (strlen($txt) > 300)
+      {
+        return 1;
+      }
+      $txt = $conn -> quote($txt);
+      $sql = "UPDATE avisentre SET avistxt = $txt,
+                                   dateavis = DATE( NOW() )
+                               WHERE idEntreprise = $identre
+                               AND idUser = $iduser";
+      $req = $conn ->query($sql);
+      return 0;
+    }
+    public function delavis($oentre,$conn)
+    {
+      $identre = $oentre->get_idEnt();
+      $iduser = $this->idUser;
+      $sql = "DELETE FROM avisentre WHERE idEntreprise = $identre AND idUser = $iduser";
+      $req = $conn -> query($sql);
+      if ($conn->errorCode() != 0)
+      {
+        return 1;
+      }else {
+        return 0;
+      }
+    }
 }
 
 ?>
