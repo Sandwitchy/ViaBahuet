@@ -257,8 +257,9 @@
     }
     public function createjointag2user($lib,$conn)
     {
+      $lib = $conn -> quote($lib);
       $iduser = $this->idUser;
-      $sql = "SELECT * FROM tags WHERE libTags LIKE '$lib'";
+      $sql = "SELECT * FROM tags WHERE libTags LIKE $lib";
       $req = $conn -> query($sql);
       $res = $req -> fetch();
       if ($res != "")
@@ -269,9 +270,9 @@
         $req = $conn -> query($sql);
         return 1;
       }else {
-        $sql = "INSERT INTO tags VALUES('','$lib',1)";
+        $sql = "INSERT INTO tags VALUES('',$lib',1)";
         $req1 = $conn -> query($sql);
-        $sql2 = "SELECT * FROM tags WHERE libTags = '$lib'";
+        $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
         $req2 = $conn->query($sql2);
         $res = $req2 -> fetch();
         $idt = $res['idTags'];

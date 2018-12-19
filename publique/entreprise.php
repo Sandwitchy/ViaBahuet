@@ -98,23 +98,36 @@ include('../tools/head.inc.php');
      {
        success($_SESSION['success']);
      }
+     /* Moteur de recherche */
      if(isset($_POST['envoiefilter']))
      {
        $i = 0;
+       $condition = "";
        foreach ($_POST['example'] as $key)
        {
+         if ($i != 0)
+         {
+            $condition = $condition.' OR';
+          }
          switch ($key) {
            case 0:
-             $condition[$i] = "createbyuser = 1";
+             $condition = $condition." entreprise.createbyuser = 1";
              break;
            case 1:
-             $condition[$i] = "createbyuser = 0";
+             $condition = $condition." entreprise.createbyuser = 0";
+             break;
+           case 2:
+             $INSEE = $GLOBAL_ouser->get_ville()->get_INSEE();
+             $condition = $condition." ville.INSEE = '$INSEE'";
              break;
          }
          $i++;
        }
+       $sql = "SELECT * FROM concerner c LEFT JOIN entreprise ON entreprise.idEntreprise = c.idEntreprise
+                                         LEFT JOIN ville ON c.INSEE = ville.INSEE
+                                                                 WHERE ".$condition;
        $ocontroller = new Controller($conn);
-       $res = $ocontroller -> selectAllTable("entreprise",$condition);
+       $res = $ocontroller -> envoieSQL($sql,$conn);
        $i = 0;
       }else {
         $ocontroller = new Controller($conn);
@@ -135,6 +148,9 @@ include('../tools/head.inc.php');
             <option value="0">Créer par un membre</option>
             <option value="1">Compte entreprise</option>
           </optgroup>
+          <optgroup label="Adresse">
+            <option value="2">Même ville</option>
+          </optgroup>
         </select>
 
         <button type='submit' name='envoiefilter' class='btn btn-primary btn-sm'><i class="fas fa-search"></i></button>
@@ -144,73 +160,80 @@ include('../tools/head.inc.php');
     <div class="col-xl-14 border border-secondary" style='padding:2%;margin-top:1%;'>
       <div class='row'>
         <?php
+          if (count($res) == 0)
+          {
+            echo "Aucun résultat";
+          }else {
           foreach ($res as $enter)
           {
-            ?>
-            <div class="card" style='width:15rem;margin:4px;'>
-              <img class="card-img-top img-thumbnail" src="../image/<?php echo $enter['photoEnt']; ?>" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $enter['nameEntreprise']; ?></h5>
-                <p class="card-text"><?php echo substr($enter['descEntreprise'],0,50); ?></p>
-                  <?php
-                    if ($enter['createbyuser'] == 0) {
-                      echo "<p class='text-muted'>Tags: <br>";
-                      $identre = $enter['idEntreprise'];
-                      $sqltags = "SELECT * FROM tags t,tagent e WHERE e.idTags = t.idTags AND idEntreprise = $identre";
-                      $reqtags = $conn -> query($sqltags)or die($sqltags);
-                      $tags = "";
-                      $bool = 0;
-                      if ($reqtags -> rowCount() == 0)
-                      {
-                        echo "Aucun tags";
-                      }else {
-                        while ($restags = $reqtags -> fetch())
+              ?>
+              <div class="card" style='width:15rem;margin:4px;'>
+                <div class='vb-profilepic card-head img-thumbnail' style="background-image:url('../image/<?php echo $enter['photoEnt']; ?>');
+                                                                          width:100%;
+                                                                          height:220px;"></div>
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $enter['nameEntreprise']; ?></h5>
+                  <p class="card-text"><?php echo substr($enter['descEntreprise'],0,50); ?></p>
+                    <?php
+                      if ($enter['createbyuser'] == 0) {
+                        echo "<p class='text-muted'>Tags: <br>";
+                        $identre = $enter['idEntreprise'];
+                        $sqltags = "SELECT * FROM tags t,tagent e WHERE e.idTags = t.idTags AND idEntreprise = $identre";
+                        $reqtags = $conn -> query($sqltags)or die($sqltags);
+                        $tags = "";
+                        $bool = 0;
+                        if ($reqtags -> rowCount() == 0)
                         {
-                          if ($bool == 0)
+                          echo "Aucun tags";
+                        }else {
+                          while ($restags = $reqtags -> fetch())
                           {
-                            $bool = 1;
-                            $tags = $restags['libTags'];
-                          }else {
-                            $tags = $tags." - ".$restags['libTags'];
+                            if ($bool == 0)
+                            {
+                              $bool = 1;
+                              $tags = $restags['libTags'];
+                            }else {
+                              $tags = $tags." - ".$restags['libTags'];
+                            }
                           }
+                          echo $tags."</p>";
                         }
-                        echo $tags."</p>";
                       }
-                    }
-                 ?>
-                <?php
-                if ((get_class($GLOBAL_ouser)=='entreprise')&&($enter['idEntreprise'] == $GLOBAL_ouser->get_idEnt()))
-                {
-                  ?> <p class="text-muted">Vous</p>
-                </div>
-                <div class='card-footer'>
-                  <a href="profileent.php" class="btn btn-primary">Voir profil</a>
-                </div><?php
-                }
-                elseif($enter['createbyuser'] == 1)
-                {
-                  ?> <p class="text-muted">Entreprise créer par un membre</p>
-                </div>
-                <div class='card-footer'>
-                  <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
-                </div><?php
-                }else
-                {
-                  ?> <p class="text-muted">Est une entreprise</p>
-                </div>
-                <div class='card-footer'>
-                  <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
-                </div><?php
-                } ?>
+                   ?>
+                  <?php
+                  if ((get_class($GLOBAL_ouser)=='entreprise')&&($enter['idEntreprise'] == $GLOBAL_ouser->get_idEnt()))
+                  {
+                    ?> <p class="text-muted">Vous</p>
+                  </div>
+                  <div class='card-footer'>
+                    <a href="profileent.php" class="btn btn-primary">Voir profil</a>
+                  </div><?php
+                  }
+                  elseif($enter['createbyuser'] == 1)
+                  {
+                    ?> <p class="text-muted">Entreprise créer par un membre</p>
+                  </div>
+                  <div class='card-footer'>
+                    <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
+                  </div><?php
+                  }else
+                  {
+                    ?> <p class="text-muted">Est une entreprise</p>
+                  </div>
+                  <div class='card-footer'>
+                    <a href="profileEntO.php?ent=<?php echo $enter['idEntreprise'];  ?>" class="btn btn-primary">Voir profil</a>
+                  </div><?php
+                  } ?>
 
-            </div>
-            <?php
-            if ($i == 3)
-            {
-              ?><div class="w-100"></div><?php
-              $i = 0;
-            }else {
-              $i++;
+              </div>
+              <?php
+              if ($i == 3)
+              {
+                ?><div class="w-100"></div><?php
+                $i = 0;
+              }else {
+                $i++;
+              }
             }
           }
         ?>

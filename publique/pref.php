@@ -76,6 +76,9 @@ $( function() {
                        }
        });
   }
+  $(document).ready(function(){
+    $(".cloud-tags").prettyTag();
+  });
 </script>
   <div id="content-wrapper">
     <div class="container-fluid">
@@ -211,14 +214,16 @@ $( function() {
               {
                 echo "Vous n'avez aucun tag";
               }else {
+                ?><ul class="cloud-tags"> <?php
                 foreach ($tagsuser as $tag){
                   $tags = $tag['libTags'];
                   ?>
-                    <button type='button' onclick="tagdelete('<?php echo $tags;?>')"
-                     name='tags' class='tag blue btn'
-                     style='color:white;'><?php echo $tag['libTags']; ?></button>
+                  <li>
+                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"><?php echo $tags; ?></a>
+                   </li>
                   <?php
                 }
+                ?></ul><?php
               }
              ?>
          </div>
@@ -241,6 +246,7 @@ $( function() {
           </div>
         </form>
       </div><!-- container xs-14-->
+
     </div>
     <!-- /.container-fluid -->
     <?php
