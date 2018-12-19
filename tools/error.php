@@ -31,7 +31,7 @@
       case 4:
         ?>
         <div class="alert alert-danger">
-          <strong>Erreur :</strong>Une erreur est survenue
+          <strong>Erreur :</strong>Une erreur est survenue !
         </div>
         <?php
           $_SESSION['error'] = 0;
@@ -39,7 +39,7 @@
       case 5:
         ?>
         <div class="alert alert-danger">
-          <strong>Erreur :</strong> Veuillez entrer un nom de ville existant
+          <strong>Erreur :</strong> Veuillez entrer un nom de ville existant.
         </div>
         <?php
           $_SESSION['error'] = 0;
@@ -47,11 +47,12 @@
         case 6:
           ?>
           <div class="alert alert-danger">
-            <strong>Erreur :</strong> Les mots de passe sont différent
+            <strong>Erreur :</strong> Les mots de passe sont différents !
           </div>
           <?php
             $_SESSION['error'] = 0;
           break;
+
     }//end switch error
   }
   function success($success)
@@ -94,6 +95,22 @@
       ?>
       <div class="alert alert-success">
         Votre compte à bien été créer vous pouvez maintenant vous connecté !
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 7:
+      ?>
+      <div class="alert alert-success">
+        L'offre ou le stage a bien été créé !
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 9:
+      ?>
+      <div class="alert alert-success">
+        Les informations ont bien été modifiées ! 
       </div>
       <?php
       $_SESSION['success'] = 0;
