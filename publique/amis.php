@@ -22,13 +22,13 @@ $req = $conn->query($SQL_amis);
                 ?>
                 <div class="col-md-8">
                   <div class="row">
+
                     <div class="col-md-4">
                       <img src="../image/<?php echo $res['photoUser']; ?>" class="img-fluid img-thumbnail rounded" height="128" width="128" alt="">
                     </div>
-                    <div class="col-md-6">
-                      <p> <a href="profile.php?user=<?php echo $res['idUser']; ?>"><?php echo $res["nameUser"]." ".$res["preUser"]; ?></a> </p>
+                    <div class="col-md">
+                      <a href="profile.php?user=<?php echo $res['idUser']; ?>"><?php echo $res["nameUser"]." ".$res["preUser"]; ?></a>
                       <p> <?php echo $res["mailUser"]; ?> </p>
-
                       <p><?php echo $res["descUser"]; ?></p>
                     </div>
                   </div>

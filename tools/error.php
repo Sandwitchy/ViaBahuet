@@ -53,6 +53,23 @@
             $_SESSION['error'] = 0;
           break;
 
+          case 7:
+            ?>
+            <div class="alert alert-danger">
+              <strong>Erreur :</strong> L'avis comporte plus de 300 caractères.
+            </div>
+            <?php
+              $_SESSION['error'] = 0;
+            break;
+            case 9:
+              ?>
+              <div class="alert alert-danger">
+                <strong>Erreur :</strong> Vous avez déja créé un avis pour cette entreprise.
+              </div>
+              <?php
+                $_SESSION['error'] = 0;
+              break;
+
     }//end switch error
   }
   function success($success)
@@ -99,16 +116,29 @@
       <?php
       $_SESSION['success'] = 0;
       break;
+
+      case 6:
+      ?>
+      <div class="alert alert-success">
+        Votre avis à bien été enregistré!
+      </div>
       case 7:
       ?>
       <div class="alert alert-success">
         L'offre ou le stage a bien été créé !
+
       </div>
       <?php
       $_SESSION['success'] = 0;
       break;
-      case 9:
+
+      case 8:
       ?>
+      <div class="alert alert-warning">
+        Votre avis à bien été supprimer!
+        </div>
+      case 9:
+
       <div class="alert alert-success">
         Les informations ont bien été modifiées ! 
       </div>

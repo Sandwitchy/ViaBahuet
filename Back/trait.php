@@ -14,7 +14,60 @@
     $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
 
   }
-
+  //enregistrer un avis à propos d'une entreprise
+  if (isset($_POST['saveavis']))
+  {
+    $oentre = new entreprise($_POST['entreprise']);
+    $bool = $oentre -> recupUser($conn);
+    $identre = $_POST['entreprise'];
+    if($bool == 1){echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?error=4&ent=$identre');</script>";}
+    $bool = $GLOBAL_ouser -> addavis($_POST['avistxt'],$oentre,$conn);
+    if ($bool == 1)
+    {
+      $_SESSION['error'] = 7;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }elseif ($bool == 2) {
+      $_SESSION['error'] = 9;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }else{
+      $_SESSION['success'] = 6;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }
+  }
+  if (isset($_POST['modavis']))
+  {
+    $oentre = new entreprise($_POST['entreprise']);
+    $bool = $oentre -> recupUser($conn);
+    $identre = $_POST['entreprise'];
+    if($bool == 1){echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?error=4&ent=$identre');</script>";}
+    $bool = $GLOBAL_ouser -> modavis($_POST['avistxt'],$oentre,$conn);
+    if ($bool == 1)
+    {
+      $_SESSION['error'] = 7;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }else{
+      $_SESSION['success'] = 6;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }
+  }
+  if (isset($_POST['delavis']))
+  {
+    $oentre = new entreprise($_POST['entreprise']);
+    $bool = $oentre -> recupUser($conn);
+    $identre = $_POST['entreprise'];
+    if($bool == 1){
+      $_SESSION['error'] = 4;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";}
+    $bool = $GLOBAL_ouser -> delavis($oentre,$conn);
+    if ($bool == 1)
+    {
+      $_SESSION['error'] = 4;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }else{
+      $_SESSION['success'] = 8;
+      echo "<script type='text/javascript'>document.location.replace('../publique/profileEntO.php?ent=$identre');</script>";
+    }
+  }
   if(isset($_POST['createstage']))
   {
     $lib = $_POST['lib'];
@@ -36,7 +89,7 @@
 
     $SQL_ville = "SELECT libvill FROM ville WHERE libvill = '$vilEnt'";
     $req = $conn->query($SQL_ville);
-    if($req->rowCount() != 0)
+    if(($req->rowCount() != 0)&&($req->rowCount() == 1))
     {
       //INSERTION DES DONNEES DE L'E.
       $data["nameEntreprise"] = $nameEnt;
@@ -177,6 +230,7 @@ if(isset($_POST['modifyoffre']))
     $DF = $conn->quote($_POST['DF']);
     $exig = $conn->quote($_POST['exigence']);
     $salaire = $conn->quote($_POST['salaire']);
+
 
     $SQL = "UPDATE emploioff SET libEmpOff = $lib, descEmpOff = $desc, exiEmpOff = $exig, salaireMoisBrut = $salaire, DDCDD = $DD, DFCDD = $DF
             WHERE idEmpOff = $idoffre";

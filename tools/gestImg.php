@@ -16,46 +16,91 @@
   }
   function imgprofile($n,$t,$s,$temp,$e,$conn,$ouser)
   {
-    $oldimg = $ouser -> get_photoUser();
-    if ($e == 0)
-    {
-      if ((strstr($t,'png'))||(strstr($t,'jpg'))||(strstr($t,'jpeg'))||(strstr($t,'gif')))
+      if (get_class($ouser) == 'user')
       {
-        if ($s > 2500000)
+        if ($e != 0)
         {
-          $_SESSION['error'] = 3;
+          $_SESSION['error'] = 4;
           header('location:../publique/pref.php');
         }
         else
         {
-          $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
-          $idUser = $ouser->get_idUser();
-          $pathnewphoto1 = "../image/".$idUser.$ext;
-          $pathnewphoto = $idUser.$ext;
-          move_uploaded_file($temp,$pathnewphoto1);
-          if ($oldimg != 'pic.jpg')
+          $oldimg = $ouser -> get_photoUser();
+          if ((strstr($t,'png'))||(strstr($t,'jpg'))||(strstr($t,'jpeg'))||(strstr($t,'gif')))
           {
-            unlink($oldimg);
+            if ($s > 2500000)
+            {
+              $_SESSION['error'] = 3;
+              header('location:../publique/pref.php');
+            }
+            else
+            {
+              $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
+              $idUser = $ouser->get_idUser();
+              $pathnewphoto1 = "../image/".$idUser.$ext;
+              $pathnewphoto = $idUser.$ext;
+              move_uploaded_file($temp,$pathnewphoto1);
+              if ($oldimg != 'pic.jpg')
+              {
+                unlink($oldimg);
+              }
+              $sql = "UPDATE user SET photoUser = '$pathnewphoto' WHERE idUser = '$idUser'";
+              $req_sql = $conn -> query($sql);
+              unset($_SESSION['success']);
+              $_SESSION['success'] = 3;
+              header('location:../publique/pref.php');
+            }
           }
-          $sql = "UPDATE user SET photoUser = '$pathnewphoto' WHERE idUser = '$idUser'";
-          $req_sql = $conn -> query($sql);
-          unset($_SESSION['success']);
-          $_SESSION['success'] = 3;
-          header('location:../publique/pref.php');
+          else
+          {
+            unset($_SESSION['error']);
+            $_SESSION['error'] = 3;
+            header('location:../publique/pref.php');
+          }
         }
+    }//end if user
+    elseif (get_class($ouser) == 'entreprise')
+    {
+      if ($e != 0)
+      {
+        $_SESSION['error'] = 4;
+        header('location:../publique/prefEnt.php');
       }
       else
       {
-        unset($_SESSION['error']);
-        $_SESSION['error'] = 3;
-        header('location:../publique/pref.php');
-      }
-    }else
-    {
-      unset($_SESSION['error']);
-      $_SESSION['error'] = 4;
-      header('location:../publique/pref.php');
-    }
-
+        $oldimg = $ouser -> get_photoEnt();
+        if ((strstr($t,'png'))||(strstr($t,'jpg'))||(strstr($t,'jpeg'))||(strstr($t,'gif')))
+        {
+          if ($s > 2500000)
+          {
+            $_SESSION['error'] = 3;
+            header('location:../publique/prefEnd.php');
+          }
+          else
+          {
+            $ext = ".".pathinfo($n, PATHINFO_EXTENSION);
+            $idUser = $ouser->get_idEnt();
+            $pathnewphoto1 = "../image/".$idUser.$ext;
+            $pathnewphoto = $idUser.$ext;
+            move_uploaded_file($temp,$pathnewphoto1);
+            if ($oldimg != 'pic.jpg')
+            {
+              unlink($oldimg);
+            }
+            $sql = "UPDATE entreprise SET photoEnt = '$pathnewphoto' WHERE idEntreprise = '$idUser'";
+            $req_sql = $conn -> query($sql);
+            unset($_SESSION['success']);
+            $_SESSION['success'] = 3;
+            header('location:../publique/prefEnt.php');
+          }
+        }
+        else
+        {
+          unset($_SESSION['error']);
+          $_SESSION['error'] = 3;
+          header('location:../publique/prefEnt.php');
+        }
+      }//end error 4
+    }//end if class
   }
  ?>

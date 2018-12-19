@@ -88,13 +88,19 @@
       public function creastage($conn)
       {
         $user = $this->user;
+        $user = $conn -> quote($user);
         $entreprise = offre::get_entreprise();
+        $entreprise = $conn -> quote($entreprise);
         $descStag = $this->descStag;
+        $descStag = $conn -> quote($descStag);
         $datedeb= $this->datedebStag;
+        $datedeb = $conn -> quote($datedeb);
         $datefin = $this->datefinStag;
+        $datefin = $conn -> quote($datefin);
         $libOff = offre::get_libOff();
+        $libOff = $conn -> quote($libOff);
 
-        $sql = "INSERT INTO stage (idUser,idEntreprise,datedebStage,datefinStage,descStage,libStage) VALUES('$user','$entreprise','$datedeb','$datefin','$descStag','$libOff')";
+        $sql = "INSERT INTO stage (idUser,idEntreprise,datedebStage,datefinStage,descStage,libStage) VALUES($user,$entreprise,$datedeb,$datefin,$descStag,$libOff)";
         $req = $conn -> query($sql)or die($sql);
       }
 

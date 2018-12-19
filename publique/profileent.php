@@ -2,7 +2,11 @@
 //Ajout du head de page
 include('../tools/head.inc.php');
 ?>
-
+<script>
+$( function() {
+  $( "#tabs" ).tabs();
+  } );
+</script>
   <div id="content-wrapper">
 
     <div class="container-fluid profile">
@@ -13,14 +17,11 @@ include('../tools/head.inc.php');
             <div class="row">
 
               <div class="col-md-6">
-                <img class="pp" src="image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>" class="img-fluid" alt="Photo de profil" style="border-radius:50%;width:120px;height:120px;margin-top:15px;margin-left:20px;"> <!-- IMAGE -->
+                <img class="pp" src="../image/<?php echo $GLOBAL_ouser->get_photoEnt(); ?>" class="img-fluid" alt="Photo de profil" style="border-radius:50%;width:120px;height:120px;margin-top:15px;margin-left:20px;"> <!-- IMAGE -->
               </div>
               <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5" style="margin-top:2%;">
                 <div class="col-md"> <!-- NOM -->
-                  <h4 class="h4"><?php echo $GLOBAL_ouser->get_nameUser(); ?></h4>
-                </div>
-                <div class="col-md"> <!-- PRENOM -->
-                  <h5 class="h5"><?php echo $GLOBAL_ouser->get_preUser(); ?></h5>
+                  <h4 class="h4"><?php echo $GLOBAL_ouser->get_nameEnt(); ?></h4>
                 </div>
               </div>
             </div>
@@ -46,70 +47,90 @@ include('../tools/head.inc.php');
                   <hr class="separator"> <!-- SEPARATEUR -->
               <br>
               <a href="#" onclick="changeState()" style="text-decoration:none;"><i class="fas fa-edit"></i></a>
-              <textarea id='textarea' onblur="register()" readonly value="textProfile" rows="8" cols="80" style="resize:none;box-shadow:2px 2px 10px #888888;outline:0;"><?php echo $GLOBAL_ouser->get_descUser();?></textarea>
+              <textarea id='textarea' onblur="register()" readonly value="textProfile" rows="8" cols="80"
+              style="resize:none;box-shadow:2px 2px 10px #888888;outline:0;"><?php echo $GLOBAL_ouser->get_descEnt();?></textarea>
             </div>
           </div>
         </div>
       </div> <!-- FIN GRID PROFILE -->
 
-      <section class="experience" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
-        <div class="col-lg-14">
-          <div class="col-md-4">
-            <h4 class="h4">Expérience</h4>
-          </div>
-          <div class="col-md-10"> <!-- CONTENU DU/DES STAGE(S)-->
-            <div class="col-md-5">
-              <h6 class="h6">Libellé du job</h6>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </div>
-      </section>
-      <section class="stage" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
-        <div class="col-lg-14">
-          <div class='row' style='margin:5px;'>
-            <div class="col-md-10">
-              <p class="h4">Stages</p>
-            </div>
-            <div class='col-sm-1' style='margin-right:2px;'>
-              <button class='btn btn-secondary btn-sm' type='button' onclick="document.location.replace('stagecrea.php');"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-          <!-- début affichage stage BDD -->
+      <div id="tabs">
+        <ul>
+          <li><a href="#tabs-1">Avis</a></li>
+          <li><a href="#tabs-2">Personne ayant travaillé</a></li>
+        </ul>
+        <div id="tabs-1">
+          <h5>Avis </h5>
+          <div class='row'>
           <?php
-            $sql = "SELECT datedebStage,datefinStage,libStage,descStage,nameEntreprise
-                    FROM stage s,entreprise e
-                    WHERE s.idEntreprise = e.idEntreprise";
-            $req = $conn -> query($sql)or die($sql);
+            $idEnt = $GLOBAL_ouser->get_idEnt();
+            $sql = "SELECT * FROM avisentre a,user u
+                    WHERE a.idUser = u.idUser
+                    AND a.idEntreprise = $idEnt";
+            $req = $conn -> query($sql);
             while ($res = $req -> fetch())
             {
               ?>
-              <div class="col-md-10" style="box-shadow:2px 5px 18px #888888;margin:2%;"> <!-- CONTENU DU/DES STAGE(S)-->
-                <div class='row' >
-                  <div class="col-md-4">
-                    <h4 class="h4"><?php echo $res['libStage']; ?></h4>
+                <div class="card border-primary mb-3" style="max-width: 15rem;margin:1%">
+                  <div class="card-header">
+                    <div class='row'>
+                      <div class='col-md'>
+                        <img src="../image/<?php echo $res['photoUser']; ?>" style="width:64px;height:auto;"  class='img-thumbnail img-fluid' alt="">
+                      </div>
+                      <div class='col-md'>
+                        <a href="profile.php?user=<?php echo $res['idUser']; ?>"><p><b><?php echo $res['nameUser']." ".$res['preUser'] ?></b></p></a>
+                      </div>
+                    </div>
                   </div>
-                  <div class='col-sm-2'>
-                    <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
+                  <div class="card-body text-primary">
+                    <h5 class="card-title"><?php echo "Le :".dateFR($res['dateavis']);?></h5>
+                    <p class="card-text"><?php echo $res['avistxt'];?></p>
                   </div>
                 </div>
-                <div class='row' style="margin-left:2%;">
-                  <div class='col-xs-3'>
-                    <span class="badge badge-secondary"><?php echo $res['datedebStage']; ?></span>
-                  </div>
-                  <div class='col-xs-3'>
-                    <span class="badge badge-secondary"><?php echo $res['datefinStage']; ?></span>
-                  </div>
-                </div>
-                <p><?php echo $res['descStage'];?> </p>
-              </div>
               <?php
             }
-          ?>
-          <!-- fin affichage BDD -->
+           ?>
+         </div><!--row-->
         </div>
-      </section>
+        <div id="tabs-2">
+          <h5>Personne ayant travaillé dans cette entreprise : </h5><br>
+          <div class='row'>
+            <?php
+            $sql_job = "SELECT DISTINCT u.idUser,preUser,nameUser,photoUser FROM stage s,user u
+                        WHERE s.idUser = u.idUser
+                        AND s.idEntreprise = '$idEnt'";
+            $req_job = $conn -> query($sql_job)or die($sql_job);
+            if ($req_job->rowCount()== 0)
+            {
+              echo "<div class='container'><p>Personne<p></div>";
+            }else
+            {
+              while ($res_job = $req_job -> fetch())
+              {
 
+                  ?>
+                  <div class="card border-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                      <div class='row'>
+                        <div class='col-md'>
+                          <img src="../image/<?php echo $res_job['photoUser']; ?>" style="width:64px;height:auto;"  class='img-thumbnail img-fluid' alt="">
+                        </div>
+                        <div class='col-md'>
+                          <p><b><?php echo $res_job['nameUser']." ".$res_job['preUser'] ?></b></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body text-primary">
+                      <a href="profile.php?user=<?php echo $res_job['idUser']; ?>" class="btn btn-primary btn-sm">voir profil</a>
+                    </div>
+                  </div>
+                  <?php
+              }//end affichage job
+            }
+            ?>
+          </div>
+        </div>
+      </div>
     <!-- /.container-fluid -->
 
     <!-- Sticky Footer -->
