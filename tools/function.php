@@ -19,7 +19,7 @@
   function dateFr($date)
   {
     return strftime('%d-%m-%Y',strtotime($date));
-
+  }
 
 
   function DataTableStage($SQL_stage,$conn)
