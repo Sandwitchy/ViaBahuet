@@ -79,7 +79,7 @@
       $idTypeEmp = $res['idTypeEmp'];
 
 
-      $SQL = "INSERT INTO emploiOff (idEmpOff,libEmpOff,descEmpOff,exiEmpOff,statusEmpOff,idEntreprise,salaireMoisBrut,DDCDD,DFCDD,idTypeEmp) VALUES(NULL,'$lib','$desc','$exig','0','$idEnt','$salaire','$DD','$DF','$idTypeEmp')";
+      $SQL = "INSERT INTO emploiOff (idEmpOff,libEmpOff,descEmpOff,exiEmpOff,statusEmpOff,idEntreprise,salaireMoisBrut,DDCDD,DFCDD,idTypeEmp) VALUES(NULL,$lib,$desc,$exig,'0',$idEnt,$salaire,$DD,$DF,$idTypeEmp)";
       $conn->query($SQL) or die($SQL);
     }
   }

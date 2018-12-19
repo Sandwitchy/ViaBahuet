@@ -147,32 +147,113 @@ if(isset($_POST['registerStageOffre']))
     if($_POST['choix'] == "stage")
     {
       $idEnt = $GLOBAL_ouser->get_idEnt();
-      $lib = $_POST['libelle'];
-      $desc = $_POST['descstage'];
-      $DD = $_POST['DD'];
-      $DF = $_POST['DF'];
-      $exig = $_POST['exigence'];
+      $lib = $conn->quote($_POST['libelle']);
+      $desc = $conn->quote($_POST['descstage']);
+      $DD = $conn->quote($_POST['DD']);
+      $DF = $conn->quote($_POST['DF']);
+      $exig = $conn->quote($_POST['exigence']);
 
       $oStage = new Stage();
       $oStage->StageEnt($lib,$desc,$DD,$DF,$idEnt,$exig,$conn);
+      $_SESSION['success'] = 7;
       echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php?idEnt=$idEnt');</script>";
     }
     elseif($_POST['choix'] == "offre")
     {
       $idEnt = $GLOBAL_ouser->get_idEnt();
-      $lib = $_POST['libelle'];
-      $desc = $_POST['descstage'];
-      $salaire = $_POST['salaire'];
-      $exig = $_POST['exigence'];
-      $idTypeEmp = $_POST['typeEmp'];
-      $DD = $_POST['DD'];
-      $DF = $_POST['DF'];
+      $lib = $conn->quote($_POST['libelle']);
+      $desc = $conn->quote($_POST['descstage']);
+      $salaire = $conn->quote($_POST['salaire']);
+      $exig = $conn->quote($_POST['exigence']);
+      $idTypeEmp = $conn->quote($_POST['typeEmp']);
+      $DD = $conn->quote($_POST['DD']);
+      $DF = $conn->quote($_POST['DF']);
 
       $oOffre = new Offre();
       $oOffre->OffreEnt($lib,$desc,$exig,$salaire,$idEnt,$idTypeEmp,$DD,$DF,$conn);
-      echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php?idEnt=$idEnt');</script>";
+      $_SESSION['success'] = 7;
+      echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php');</script>";
+    }
+    else {
+      $_SESSION['error'] = 4;
     }
 }
 
+if(isset($_POST['modifystage']))
+{
+  $idStage = $conn->quote($_POST['idStage']);
+  $lib = $conn->quote($_POST['libelle']);
+  $desc = $conn->quote($_POST['descstage']);
+  $DD = $conn->quote($_POST['DD']);
+  $DF = $conn->quote($_POST['DF']);
+  $exig = $conn->quote($_POST['exigence']);
 
+  $SQL = "UPDATE stage SET libStage = $lib, descStage = $desc, datedebStage = $DD, datefinStage = $DF, exiStage = $exig
+          WHERE idStage = $idStage";
+  $conn->query($SQL) or die($SQL);
+  $_SESSION['succes'] = 9;
+  echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php');</script>";
+}
+
+if(isset($_GET['idStage']))
+{
+  $idStage = $_GET['idStage'];
+
+  $SQL = "UPDATE stage SET status = 1 WHERE idStage = '$idStage'";
+  $conn->query($SQL) or die($SQL);
+  echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php');</script>";
+  exit();
+
+}
+
+if(isset($_GET['idOffre']))
+{
+  $idOffre = $_GET['idOffre'];
+
+  $SQL = "UPDATE emploioff SET statusEmpOff = 1 WHERE idEmpOff = '$idOffre'";
+  $conn->query($SQL) or die($SQL);
+  echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php');</script>";
+  exit();
+
+}
+
+if(isset($_POST['modifyoffre']))
+{
+  $typeEmp = $_POST['typeEmp'];
+  if($typeEmp == "CDD")
+  {
+
+    $idoffre = $conn->quote($_POST['idOffre']);
+    $lib = $conn->quote($_POST['libelle']);
+    $desc = $conn->quote($_POST['descstage']);
+    $DD = $conn->quote($_POST['DD']);
+    $DF = $conn->quote($_POST['DF']);
+    $exig = $conn->quote($_POST['exigence']);
+    $salaire = $conn->quote($_POST['salaire']);
+
+
+    $SQL = "UPDATE emploioff SET libEmpOff = $lib, descEmpOff = $desc, exiEmpOff = $exig, salaireMoisBrut = $salaire, DDCDD = $DD, DFCDD = $DF
+            WHERE idEmpOff = $idoffre";
+    $conn->query($SQL) or die($SQL);
+    $_SESSION['succes'] = 9;
+    echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php');</script>";
+  }
+  else {
+
+    $idoffre = $conn->quote($_POST['idOffre']);
+    $lib = $conn->quote($_POST['libelle']);
+    $desc = $conn->quote($_POST['descstage']);
+    $exig = $conn->quote($_POST['exigence']);
+    $salaire = $conn->quote($_POST['salaire']);
+
+    $SQL = "UPDATE emploioff SET libEmpOff = $lib, descEmpOff = $desc, exiEmpOff = $exig, salaireMoisBrut = $salaire
+            WHERE idEmpOff = $idoffre";
+    $conn->query($SQL) or die($SQL);
+    $_SESSION['succes'] = 9;
+    echo "<script type='text/javascript'>document.location.replace('../publique/mesoffres.php');</script>";
+  }
+
+
+
+}
 ?>

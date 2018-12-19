@@ -108,7 +108,7 @@
       public function StageEnt($lib,$desc,$DD,$DF,$idEnt,$exig,$conn)
       {
         $SQL = "INSERT INTO stage (idStage,libstage,descstage,datedebStage,datefinStage,status,idEntreprise,exiStage)
-                VALUES (NULL,'$lib','$desc','$DD','$DF',0,'$idEnt','$exig')";
+                VALUES (NULL,$lib,$desc,$DD,$DF,'0',$idEnt,$exig)";
         $conn->query($SQL) or die($SQL);
       }
   }
