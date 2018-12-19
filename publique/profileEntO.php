@@ -145,7 +145,7 @@ $res = $req -> fetch()
                   <div class="card-body text-primary">
                     <h5 class="card-title"><?php echo "Le :".dateFR($res['dateavis']);?></h5>
                     <p class="card-text"><?php echo $res['avistxt'];?></p>
-                    <?php if (($res['idUser'] == $GLOBAL_ouser->get_idUser())&&(get_class($GLOBAL_ouser) == 'user')): ?>
+                    <?php if ((get_class($GLOBAL_ouser) == 'user')&&($res['idUser'] == $GLOBAL_ouser->get_idUser())): ?>
                       <button class='btn btn-warning btn-sm' onclick="$('#avismod').modal('show')"><i class="fas fa-edit"></i></button>
                       <button class='btn btn-danger btn-sm' onclick="$('#avisdel').modal('show')"><i class="fas fa-trash-alt"></i></button>
                     <?php endif; ?>
@@ -223,10 +223,13 @@ $res = $req -> fetch()
     </div>
     <!-- Modal modifier avis -->
     <?php
-      $idUser = $GLOBAL_ouser->get_idUser();
-      $sql_mod = "SELECT * FROM avisentre WHERE idEntreprise = $idEnt AND idUser = $idUser";
-      $req_mod = $conn -> query($sql_mod)or die($sql_mod);
-      $resmodavis = $req_mod -> fetch();
+      if (get_class($GLOBAL_ouser) == "user") {
+        $idUser = $GLOBAL_ouser->get_idUser();
+        $sql_mod = "SELECT * FROM avisentre WHERE idEntreprise = $idEnt AND idUser = $idUser";
+        $req_mod = $conn -> query($sql_mod)or die($sql_mod);
+        $resmodavis = $req_mod -> fetch();
+      }
+
     ?>
     <div class="modal fade" tabindex="-1" id="avismod" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
