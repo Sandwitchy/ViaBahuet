@@ -57,13 +57,11 @@
       <!-- Jquery tags -->
       <link rel="stylesheet" href="../vendor/tags/css/prettytag.css">
       <script src="../vendor/tags/js/jquery.prettytag.js"></script>
-      <!-- Amsify Plugin -->
-      <link rel="stylesheet" href="../vendor/tags/css/suggestags.css">
-      <script src="../vendor/tags/js/suggestags.js"></script>
+
 
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-      <link rel="stylesheet" href="/resources/demos/style.css">
+
 
 
   </head>

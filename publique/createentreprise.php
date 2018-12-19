@@ -35,7 +35,7 @@ include('../tools/error.php');
     //vérifie si les mots de passe sont identique
     $ouser = new entreprise();
     $res = $ouser -> checkifexist($var_NameUser,$conn);
-    if ($res !== false)
+    if ($res != false)
     {
       foreach ($res as $entreprise)
       {
