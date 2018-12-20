@@ -52,10 +52,10 @@ $( function() {
      ?>
   ];
   $("#tags").autocomplete({
-    source: tagstable,
-    minLength: 0,
-  })
-  } );
+      source: tagstable,
+      minLength: 0,
+    })
+  });
   function tagdelete(value){
       $.ajax({
             // chargement du fichier externe Taggestion.php
@@ -220,8 +220,7 @@ $( function() {
     if (isset($_POST['envoietags']))
     {
       $libtags = $_POST['libtags'];
-      $id = $_POST['idtags'];
-      $GLOBAL_ouser -> createjointag2user($id,$libtags,$conn);
+      $GLOBAL_ouser -> createjointag2user($libtags,$conn);
       echo "<script type='text/javascript'>document.location.replace('prefEnt.php');</script>";
     }
     //Non Fonctionnel

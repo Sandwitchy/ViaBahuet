@@ -2,6 +2,20 @@
 //Ajout du head de page
 include('../tools/head.inc.php');
 ?>
+<style>
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+  height: 100px;
+}
+</style>
 <script>
   $( function() {
     var availableTags = [
@@ -31,9 +45,9 @@ include('../tools/head.inc.php');
       // shows header
        header: true,
        // height
-       height: 175,
+       height: 200,
        // min width
-       minWidth: 400,
+       minWidth: 250,
        // additional classes
        classes: '',
        // custom text
@@ -103,29 +117,47 @@ include('../tools/head.inc.php');
      {
        $i = 0;
        $condition = "";
-       foreach ($_POST['example'] as $key)
-       {
-         if ($i != 0)
+       $checkexample = 0;
+       /* Option Select */
+         if (isset($_POST['example']))
          {
-            $condition = $condition.' OR';
-          }
-         switch ($key) {
-           case 0:
-             $condition = $condition." entreprise.createbyuser = 1";
-             break;
-           case 1:
-             $condition = $condition." entreprise.createbyuser = 0";
-             break;
-           case 2:
-             $INSEE = $GLOBAL_ouser->get_ville()->get_INSEE();
-             $condition = $condition." ville.INSEE = '$INSEE'";
-             break;
+           $checkexample = 1;
+           foreach ($_POST['example'] as $key)
+           {
+             if ($i != 0)
+             {
+                $condition = $condition.' OR';
+              }
+             switch ($key) {
+               case 0:
+                 $condition = $condition." entreprise.createbyuser = 1";
+                 break;
+               case 1:
+                 $condition = $condition." entreprise.createbyuser = 0";
+                 break;
+               case 2:
+                 $INSEE = $GLOBAL_ouser->get_ville()->get_INSEE();
+                 $condition = $condition." ville.INSEE = '$INSEE'";
+                 break;
+             }
+              $i++;
+           }
+
+       }
+       /* input ville */
+       if ((isset($_POST['villesearch']))&&($_POST['villesearch'] != NULL))
+       {
+         if ($checkexample == 0) {
+           $ville = $_POST['villesearch'];
+           $condition = $condition."ville.libVill = '$ville'";
+         }else {
+           $ville = $_POST['villesearch'];
+           $condition = $condition." AND  ville.libVill = '$ville'";
          }
-         $i++;
        }
        $sql = "SELECT * FROM concerner c LEFT JOIN entreprise ON entreprise.idEntreprise = c.idEntreprise
                                          LEFT JOIN ville ON c.INSEE = ville.INSEE
-                                                                 WHERE ".$condition;
+                                         WHERE ".$condition;
        $ocontroller = new Controller($conn);
        $res = $ocontroller -> envoieSQL($sql,$conn);
        $i = 0;
@@ -141,19 +173,28 @@ include('../tools/head.inc.php');
     <div class='col-xs-4 border border-secondary' style='padding:2%'>
       <h5>Option</h5>
       <form method='post' action='#'>
-        <button  onclick="$('#creaentreprise').modal('show')" type="button" class="btn btn-primary" name="button">Ajouter une entreprise</button>
-
-        <select name="example[]" multiple size="10">
-          <optgroup label="Création">
-            <option value="0">Créer par un membre</option>
-            <option value="1">Compte entreprise</option>
-          </optgroup>
-          <optgroup label="Adresse">
-            <option value="2">Même ville</option>
-          </optgroup>
-        </select>
-
-        <button type='submit' name='envoiefilter' class='btn btn-primary btn-sm'><i class="fas fa-search"></i></button>
+        <div class='row'>
+          <div class='col-md'>
+            <button  onclick="$('#creaentreprise').modal('show')" type="button" class="btn btn-primary" name="button">Ajouter une entreprise</button>
+          </div>
+          <div class='col-sm'>
+            <select name="example[]" multiple size="3">
+              <optgroup label="Création">
+                <option value="0">Créer par un membre</option>
+                <option value="1">Compte entreprise</option>
+              </optgroup>
+              <optgroup label="Adresse">
+                <option value="2">Même ville</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class='form-group col-sm'>
+            <input type='text' class="form-control" placeholder="Chercher une ville..." name='villesearch'  id='villeEnt'>
+          </div>
+          <div class='col-sm'>
+            <button type='submit' name='envoiefilter' class='btn btn-primary'><i class="fas fa-search"></i></button>
+          </div>
+        </div>
       </form>
     </div>
     <!-- Affichage Entreprise -->

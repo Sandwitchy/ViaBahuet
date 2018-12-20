@@ -219,7 +219,7 @@ $( function() {
                   $tags = $tag['libTags'];
                   ?>
                   <li>
-                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"><?php echo $tags; ?></a>
+                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"> <?php echo $tags; ?></a>
                    </li>
                   <?php
                 }

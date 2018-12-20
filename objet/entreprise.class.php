@@ -109,7 +109,7 @@
     }
     public function set_descEnt($desc)
     {
-      $this->desc = $desc;
+      $this->descEnt = $desc;
     }
     public function recupUser($conn)
     {
@@ -222,12 +222,10 @@
         return $res;
       }
     }
-    public function createjointag2user($id,$lib,$conn)
+    public function createjointag2user($lib,$conn)
     {
       $lib = $conn -> quote($lib);
       $iduser = $this->idEnt;
-      if ($id == "")
-      {
         $sql = "SELECT * FROM tags WHERE libTags LIKE $lib";
         $req = $conn -> query($sql);
         $res = $req -> fetch();
@@ -239,7 +237,7 @@
           $req = $conn -> query($sql);
           return 1;
         }else {
-          $sql = "INSERT INTO tags VALUES('',$lib,1)";
+          $sql = "INSERT INTO tags VALUES('',$lib)";
           $req1 = $conn -> query($sql);
           $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
           $req2 = $conn->query($sql2);
@@ -250,12 +248,6 @@
           $req3 = $conn -> query($sql3);
           return 0;
         }
-      }else {
-        $pmk = $id."/".$iduser;
-        $sql ="INSERT INTO tagent VALUES('$pmk','$id','$iduser')";
-        $req = $conn -> query($sql);
-        return 2;
-      }
     }
     public function deletetags($libtags,$conn)
     {

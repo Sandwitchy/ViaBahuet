@@ -157,7 +157,7 @@ $( function() {
       if(document.getElementById("textarea").getAttribute("checkButton") == 1)
       {
         var textarea = document.getElementById('textarea').value;
-        location.href = "updateTextarea.inc.php?txt="+textarea;
+        location.href = "../Back/updateTextarea.inc.php?txt="+textarea;
         var textarea = document.getElementById('textarea');
         textarea.setAttribute("readonly","readonly");
       }
