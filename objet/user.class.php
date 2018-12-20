@@ -16,6 +16,7 @@
     private $typeUser;
     private $ville;
     private $descUser;
+    private $tags;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
@@ -237,7 +238,7 @@
       }
     }
 
-    public function selecttagsuser($conn)
+    public function selecttags($conn)
     {
       $id = $this->idUser;
       $sql = "SELECT t.idTags,libTags

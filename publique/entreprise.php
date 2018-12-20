@@ -117,6 +117,7 @@ include('../tools/head.inc.php');
      {
        $i = 0;
        $condition = "";
+       $join = "";
        $checkexample = 0;
        /* Option Select */
          if (isset($_POST['example']))
@@ -129,35 +130,47 @@ include('../tools/head.inc.php');
                 $condition = $condition.' OR';
               }
              switch ($key) {
-               case 0:
+               case 0://cas créer par user
                  $condition = $condition." entreprise.createbyuser = 1";
                  break;
-               case 1:
+               case 1://cas compte entreprise
                  $condition = $condition." entreprise.createbyuser = 0";
                  break;
-               case 2:
+               case 2://cas même ville
                  $INSEE = $GLOBAL_ouser->get_ville()->get_INSEE();
                  $condition = $condition." ville.INSEE = '$INSEE'";
+                 break;
+               case 3://cas même tags
+                 $tag = $GLOBAL_ouser->selecttags($conn);
+                 if (get_class($GLOBAL_ouser) == 'user')
+                 {
+                   $id = $GLOBAL_ouser->get_idUser();
+                   $condition = $condition." tagent.idTags IN (SELECT idTags FROM taguser WHERE idUser = '$id')";
+                 }else {
+                   $id = $GLOBAL_ouser->get_idEnt();
+                   $condition = $condition." tagent.idTags IN (SELECT idTags FROM tagent WHERE idEntreprise = '$id')";
+                 }
                  break;
              }
               $i++;
            }
-
        }
        /* input ville */
        if ((isset($_POST['villesearch']))&&($_POST['villesearch'] != NULL))
        {
+          $ville = $conn -> quote($_POST['villesearch']);
          if ($checkexample == 0) {
-           $ville = $_POST['villesearch'];
-           $condition = $condition."ville.libVill = '$ville'";
+           $condition = $condition."ville.libVill = $ville";
          }else {
-           $ville = $_POST['villesearch'];
-           $condition = $condition." AND  ville.libVill = '$ville'";
+           $condition = $condition."OR  ville.libVill = $ville";
          }
        }
-       $sql = "SELECT * FROM concerner c LEFT JOIN entreprise ON entreprise.idEntreprise = c.idEntreprise
-                                         LEFT JOIN ville ON c.INSEE = ville.INSEE
-                                         WHERE ".$condition;
+       $sql = " SELECT * FROM concerner c
+                LEFT JOIN entreprise ON entreprise.idEntreprise = c.idEntreprise
+                LEFT JOIN ville ON ville.INSEE = c.INSEE
+                LEFT JOIN tagent ON entreprise.idEntreprise = tagent.idEntreprise
+                WHERE ".$condition.
+                " GROUP BY entreprise.idEntreprise ASC";
        $ocontroller = new Controller($conn);
        $res = $ocontroller -> envoieSQL($sql,$conn);
        $i = 0;
@@ -184,7 +197,10 @@ include('../tools/head.inc.php');
                 <option value="1">Compte entreprise</option>
               </optgroup>
               <optgroup label="Adresse">
-                <option value="2">Même ville</option>
+                <option value="2">Même ville que moi</option>
+              </optgroup>
+              <optgroup label='Tag'>
+                <option value='3'>Même Tag que moi</option>
               </optgroup>
             </select>
           </div>
@@ -219,7 +235,7 @@ include('../tools/head.inc.php');
                       if ($enter['createbyuser'] == 0) {
                         echo "<p class='text-muted'>Tags: <br>";
                         $identre = $enter['idEntreprise'];
-                        $sqltags = "SELECT * FROM tags t,tagent e WHERE e.idTags = t.idTags AND idEntreprise = $identre";
+                        $sqltags = "SELECT * FROM tags t,tagent e WHERE e.idTags = t.idTags AND idEntreprise = '$identre'";
                         $reqtags = $conn -> query($sqltags)or die($sqltags);
                         $tags = "";
                         $bool = 0;

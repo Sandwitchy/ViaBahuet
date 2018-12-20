@@ -206,7 +206,7 @@
       }
     }
 
-    public function selecttagsEnt($conn)
+    public function selecttags($conn)
     {
       $id = $this->idEnt;
       $sql = "SELECT t.idTags,libTags

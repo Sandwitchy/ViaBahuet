@@ -168,7 +168,7 @@ $( function() {
         <div class='col-md'>
           <h4>Mes Tags</h4>
           <?php
-            $tagsuser = $GLOBAL_ouser -> selecttagsEnt($conn);
+            $tagsuser = $GLOBAL_ouser -> selecttags($conn);
             ?>
             <div class='row'>
               <form method='post' action='#'>
