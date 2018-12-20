@@ -74,7 +74,15 @@
     {
      return  $this->photoEnt;
     }
+    public function get_siteweb()
+    {
+      return $this->sitewebEnt;
+    }
     //INITIALISATION DES SETTERS DE LA CLASSE
+    public function set_siteweb($web)
+    {
+      $this->sitewebEnt = $web;
+    }
     public function set_photoEnt($photoEnt)
     {
       $this->photoEnt = $photoEnt;

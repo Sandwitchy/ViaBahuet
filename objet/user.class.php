@@ -271,7 +271,7 @@
         $req = $conn -> query($sql)or die($sql);
         return 1;
       }else {
-        $sql = "INSERT INTO tags VALUES('',$lib)";
+        $sql = "INSERT INTO tags(libTags) VALUES($lib)";
         $req1 = $conn -> query($sql)or die($sql);
         $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
         $req2 = $conn->query($sql2)or die($sql2);

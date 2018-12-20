@@ -26,6 +26,29 @@ $( function() {
     source: availableTags
   });
 } );
+$(document).ready(function(){
+  $(".cloud-tags").prettyTag();
+});
+function tagdelete(value){
+    $.ajax({
+          // chargement du fichier externe Taggestion.php
+          url      : "../Back/Taggestionent.php",
+          // Passage des données au fichier externe (ici le nom cliqué)
+          data     : {
+                      libTags: value,
+                      idUser: <?php echo $GLOBAL_ouser->get_idEnt(); ?>
+                      },
+          cache    : true,
+          dataType : "json",
+          method   : "POST",
+          error    : function(request, error) { // Info Debuggage si erreur
+                       alert("Erreur : responseText: "+request.responseText);
+                     },
+          success  : function() {
+                      location.reload();
+                     }
+     });
+}
 $( function() {
   var tagstable = [
     <?php
@@ -56,29 +79,7 @@ $( function() {
       minLength: 0,
     })
   });
-  function tagdelete(value){
-      $.ajax({
-            // chargement du fichier externe Taggestion.php
-            url      : "../Back/Taggestionent.php",
-            // Passage des données au fichier externe (ici le nom cliqué)
-            data     : {
-                        libTags: value,
-                        idUser: <?php echo $GLOBAL_ouser->get_idEnt(); ?>
-                        },
-            cache    : true,
-            dataType : "json",
-            method   : "POST",
-            error    : function(request, error) { // Info Debuggage si erreur
-                         alert("Erreur : responseText: "+request.responseText);
-                       },
-            success  : function() {
-                        location.reload();
-                       }
-       });
-  }
-  $(document).ready(function(){
-    $(".cloud-tags").prettyTag();
-  });
+
 </script>
   <div id="content-wrapper">
     <div class="container-fluid">
@@ -96,121 +97,154 @@ $( function() {
         success($_SESSION['success']);
       }
       ?>
-    <div class='row'>
-      <div class='col-xl' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
-        <h1>Mes Préférences</h1>
-        <form method='post' action='#'>
-        <div class='col-md'>
-          <div class='row'>
-            <div class='col-md'>
-              <div class="form-group">
+      <div class='row'>
+
+        <div class='col-xl-7' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
+          <h1>Mes Préférences</h1>
+          <form method='post' action='#'>
+          <div class='col-md'>
+            <div class='row'>
+              <div class='col-md'>
+                <div class="form-group">
+                  <div class="form-label-group">
+                    <input type="text" id="inputLogin" name='login' value='<?php echo $GLOBAL_ouser->get_loginEnt();?>' class="form-control" placeholder="login" required="required">
+                    <label for="inputLogin">Identifiant</label>
+                  </div>
+                </div>
+              </div>
+              <div class='col-md'>
+                <button type="button" id="triggermodal" name='mdp' onclick="$('#ModalMDP').modal('show')" class='btn btn-danger'>Modifier le Mot de Passe</button>
+              </div>
+            </div>
+          </div>
+
+          <div class='col-md'>
                 <div class="form-label-group">
-                  <input type="text" id="inputLogin" name='login' value='<?php echo $GLOBAL_ouser->get_loginEnt();?>' class="form-control" placeholder="login" required="required">
-                  <label for="inputLogin">Identifiant</label>
+                  <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameEnt();?>' name='name' class="form-control" placeholder="name" required="required">
+                  <label for="inputName">Nom</label>
+                </div>
+            </div><br>
+          <div class='col-md'>
+            <div class='row'>
+              <div class="form-group col-md">
+                <div class="form-label-group">
+                  <input type="text" id="inputMail" name='mail'  value='<?php echo $GLOBAL_ouser->get_mailEnt();?>' class="form-control" placeholder="mail" required="required">
+                  <label for="inputMail">Email</label>
+                </div>
+              </div>
+              <div class="form-group col-md">
+                <div class="form-label-group">
+                  <input type="text" id="inputTel" name='tel' class="form-control"  value='<?php echo $GLOBAL_ouser->get_telEnt();?>' placeholder="tel" required="required">
+                  <label for="inputTel">Numéro de Téléphone</label>
                 </div>
               </div>
             </div>
-            <div class='col-md'>
-              <button type="button" id="triggermodal" name='mdp' onclick="$('#ModalMDP').modal('show')" class='btn btn-danger'>Modifier le Mot de Passe</button>
-            </div>
           </div>
-        </div>
-
-        <div class='col-md'>
-              <div class="form-label-group">
-                <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameEnt();?>' name='name' class="form-control" placeholder="name" required="required">
-                <label for="inputName">Nom</label>
-              </div>
-          </div><br>
-        <div class='col-md'>
-          <div class='row'>
-            <div class="form-group col-md">
-              <div class="form-label-group">
-                <input type="text" id="inputMail" name='mail'  value='<?php echo $GLOBAL_ouser->get_mailEnt();?>' class="form-control" placeholder="mail" required="required">
-                <label for="inputMail">Email</label>
-              </div>
-            </div>
-            <div class="form-group col-md">
-              <div class="form-label-group">
-                <input type="text" id="inputTel" name='tel' class="form-control"  value='<?php echo $GLOBAL_ouser->get_telEnt();?>' placeholder="tel" required="required">
-                <label for="inputTel">Numéro de Téléphone</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='col-md-8'>
-          <input type='submit' name='envoie' value='Enregistrer' class='btn btn-primary'>
-          <a href='home.php'><button type='button' class='btn btn-secondary'>Annuler</button></a>
-        </div>
-      </form>
-    </div><!--end contanier xl-14 -->
-    <div class='col-md-4' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
-      <div class="text-center">
-        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoEnt(); ?>'>
-        <h4>Image de profil</h4>
-      </div>
-      <form method='post' enctype="multipart/form-data" action='../tools/gestImg.php'>
-        <div class="custom-file">
-         <input type="file" name='imgProfile' class="custom-file-input" id="customFile">
-         <label class="custom-file-label" for="customFile">Choisir une img</label>
-       </div>
-       <div class='text-center' style="margin-top:2%">
-         <div class="btn-group">
-           <input type='submit' value='Envoyer' name='envoieProPic' class='btn btn-primary'>
-           <input type='reset' value='Annuler' class='btn btn-secondary'>
-         </div>
-       </div>
-      </form>
-    </div><!--end container md-2-->
-</div><!--end row -->
-      </div><!--container XS-14-->
-      <div class="xs-14" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
-        <div class='col-md'>
-          <h4>Mes Tags</h4>
-          <?php
-            $tagsuser = $GLOBAL_ouser -> selecttags($conn);
-            ?>
+          <div class='col-md'>
             <div class='row'>
-              <form method='post' action='#'>
-              <?php
-              if ($tagsuser == false)
-              {
-                echo "Vous n'avez aucun tag";
-              }else {
-                ?><ul class="cloud-tags"> <?php
-                foreach ($tagsuser as $tag){
-                  $tags = $tag['libTags'];
-                  ?>
-                  <li>
-                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"> <?php echo $tags; ?></a>
-                   </li>
-                  <?php
-                }
-                ?></ul><?php
-              }
-             ?>
-           </form>
-         </div>
-        </div>
-        <?php
-          if(isset($_POST['tags']))
-          {
-            $bool = $GLOBAL_ouser -> deletetags($_POST['tags'],$conn);
-            echo "<script type='text/javascript'>location.reload();</script>";
-          }
-         ?>
-        <form method='post'>
-          <div class='form-row align-items-center'>
-            <div class='col-auto'>
-              <input type='text' class='form-control form-control-sm' id='tags' name='libtags'>
+              <div class="form-group col-md">
+                <div class="form-label-group">
+                  <input type="text" id="inputWeb" name='web'  value='<?php echo $GLOBAL_ouser->get_siteweb();?>' class="form-control" placeholder="web" required="required">
+                  <label for="inputWeb">Site Web</label>
+                </div>
+              </div>
+              <div class="form-group col-md">
+                <div class="form-label-group">
+                  <select name='tailleent' class='form-control' required>
+                    <option default>Choisir une taille</option>
+                    <?php
+                      $sql_select = "SELECT * FROM tailleentreprise WHERE idTailleEntreprise != 7";
+                      $req = $conn ->query($sql_select);
+                      while ($opt = $req->fetch())
+                      {
+                        ?><option value='<?php echo $opt['idTailleEntreprise']; ?>'><?php echo utf8_encode($opt['libTailleEntreprise']); ?></option><?php
+                      }
+                     ?>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class='col-auto'>
-              <input type='hidden' id='tagsid' name='idtags'>
-              <input type='submit' class='btn btn-primary' name='envoietags'>
-            </div>
+          </div>
+          <div class='col-md-8'>
+            <input type='submit' name='envoie' value='Enregistrer' class='btn btn-primary'>
+            <a href='home.php'><button type='button' class='btn btn-secondary'>Annuler</button></a>
           </div>
         </form>
-      </div><!-- container xs-14-->
+      </div><!--end contanier préférence xl-14 -->
+
+     <div class='col-lg-4'>
+
+        <div class='col-md' style='box-shadow:2px 5px 18px #888888;margin-bottom:2%;'>
+          <div class="text-center">
+            <div class='vb-profilepic img-thumbnail' style="background-image:url('../image/<?php echo $GLOBAL_ouser->get_photoEnt()?>');
+                                                                      width:50%;
+                                                                      height:175px;"></div>
+            <h4>Image de profil</h4>
+          </div>
+          <form method='post' enctype="multipart/form-data" action='../tools/gestImg.php'>
+            <div class="custom-file">
+             <input type="file" name='imgProfile' class="custom-file-input" id="customFile">
+             <label class="custom-file-label" for="customFile">Choisir une img</label>
+           </div>
+           <div class='text-center' style="margin-top:2%">
+             <div class="btn-group">
+               <input type='submit' value='Envoyer' name='envoieProPic' class='btn btn-primary'>
+               <input type='reset' value='Annuler' class='btn btn-secondary'>
+             </div>
+           </div>
+          </form>
+        </div><!--end container img profile md-2-->
+
+          <div class="col-md" style='box-shadow:2px 5px 18px #888888;padding:2%;margin-top:1%;'>
+            <div class='col-md'>
+              <h4>Mes Tags</h4>
+              <?php
+                $tagsuser = $GLOBAL_ouser -> selecttags($conn);
+                ?>
+                <div class='row'>
+                  <form method='post' action='#'>
+                  <?php
+                  if ($tagsuser == false)
+                  {
+                    echo "Vous n'avez aucun tag";
+                  }else {
+                    ?><ul class="cloud-tags"> <?php
+                    foreach ($tagsuser as $tag){
+                      $tags = $tag['libTags'];
+                      ?>
+                      <li>
+                         <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"> <?php echo $tags; ?></a>
+                       </li>
+                      <?php
+                    }
+                    ?></ul><?php
+                  }
+                 ?>
+               </form>
+             </div>
+            </div>
+            <?php
+              if(isset($_POST['tags']))
+              {
+                $bool = $GLOBAL_ouser -> deletetags($_POST['tags'],$conn);
+                echo "<script type='text/javascript'>location.reload();</script>";
+              }
+             ?>
+            <form method='post'>
+              <div class='form-row align-items-center'>
+                <div class='col-auto'>
+                  <input type='text' class='form-control form-control-sm' id='tags' name='libtags'>
+                </div>
+                <div class='col-auto'>
+                  <input type='hidden' id='tagsid' name='idtags'>
+                  <input type='submit' class='btn btn-primary' name='envoietags'>
+                </div>
+              </div>
+            </form>
+          </div><!-- container tags xs-14-->
+
+        </div><!-- container tags + img -->
+      </div><!-- Row-->
     </div>
     <!-- /.container-fluid -->
     <?php

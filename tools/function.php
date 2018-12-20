@@ -110,7 +110,7 @@
             <td><?php echo $res['libEmpOff']; ?></td>
             <td><?php echo $res['descEmpOff']; ?></td>
             <td><?php echo $res['exiEmpOff']; ?></td>
-            <td><?php echo $res['salaireMoisBrut']; ?></td>
+            <td><?php echo $res['salaireMoisBrut']."€"; ?></td>
             <td><?php echo dateFr($res['DDCDD']); ?></td>
             <td><?php echo dateFr($res['DFCDD']); ?></td>
             <td> <a href="../Back/modif.offre.php?offre=<?php echo $res['idEmpOff']; ?>" name="idStage"><i class="fas fa-edit" style="color:#FFC312"></i></a> </td>
@@ -137,6 +137,10 @@
     </table>
     <?php
 
+  }
+  function errorSQL($sql)
+  {
+    echo $sql."<img src='../image/Error.jpg'>";
   }
  ?>
 <script type="text/javascript">
