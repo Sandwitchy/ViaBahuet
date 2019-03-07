@@ -141,24 +141,24 @@ if(isset($_GET['user']))
   </div>
   <!-- /.content-wrapper -->
   <script type="text/javascript">
-    function changeState()
-    {
-      var textarea = document.getElementById("textarea");
-      textarea.removeAttribute("readonly");
-      textarea.setAttribute("checkButton","1");
-    }
+   function changeState()
+   {
+     var textarea = document.getElementById("textarea");
+     textarea.removeAttribute("readonly");
+     textarea.setAttribute("checkButton","1");
+   }
 
-    function register()
-    {
-      if(document.getElementById("textarea").getAttribute("checkButton") == 1)
-      {
-        var textarea = document.getElementById('textarea').value;
-        location.href = "../Back/updateTextarea.inc.php?txt="+textarea;
-        var textarea = document.getElementById('textarea');
-        textarea.setAttribute("readonly","readonly");
-      }
-    }
-  </script>
+   function register()
+   {
+     if(document.getElementById("textarea").getAttribute("checkButton") == 1)
+     {
+       var textarea = document.getElementById('textarea').value;
+       location.href = "../Back/updateTextarea.inc.php?txt="+textarea;
+       var textarea = document.getElementById('textarea');
+       textarea.setAttribute("readonly","readonly");
+     }
+   }
+ </script>
 <?php
 
 //ajout du pied de page

@@ -177,12 +177,12 @@ $( function() {
             <div id="tabs-1">
               <?php DataTableStage("SELECT *
                               FROM stage
-                              WHERE idEntreprise = $idEntreprise AND status = 0 AND idUser IS NULL",$conn); ?>
+                              WHERE idEntreprise = $idEntreprise AND status = 0 AND idUser IS NULL",$conn,1); ?>
             </div> <!-- fin tab 1-->
             <div id="tabs-2">
                 <?php DataTableOffre("SELECT * FROM emploioff OF,typeemploi TY WHERE idEntreprise = $idEntreprise
                                 AND OF.idTypeEmp = TY.idTypeEmp
-                                AND statusEmpOff = 0",$conn); ?>
+                                AND statusEmpOff = 0",$conn,1); ?>
             </div><!-- fin tab 2 -->
           </div><!-- FIN DIV TAB-->
 

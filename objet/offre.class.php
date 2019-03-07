@@ -72,7 +72,7 @@
 
     public function OffreEnt($lib,$desc,$exig,$salaire,$idEnt,$idTypeEmp,$DD,$DF,$conn)
     {
-      $SQL = "SELECT * FROM typeemploi WHERE libTypeEmp = '$idTypeEmp'";
+      $SQL = "SELECT * FROM typeemploi WHERE libTypeEmp = $idTypeEmp";
       //RECUPERER LID DU TYPEEMP
       $req = $conn->query($SQL) or die($SQL);
       $res = $req -> fetch();

@@ -147,7 +147,7 @@
         }
       }
     }
-    public function updateBDD($table,$data,$idUser,$conn) //FAIRE UNE FONCTION QUI GENERE PLUSIEURS MODIFICATIONS EN FONCTION DU NOMBRE DE DONNEES
+    public function updateBDD($table,$data,$id,$conn,$type) //FAIRE UNE FONCTION QUI GENERE PLUSIEURS MODIFICATIONS EN FONCTION DU NOMBRE DE DONNEES
     {
       $SQL_update = "UPDATE $table SET";
       $i = 0;
@@ -163,8 +163,9 @@
           $SQL_update = $SQL_update." , ".$uneData['colonne']."=".$donnee; //s'il y a plusieurs données, je les ajoute en gérant les virgules dans la RQT
         }
       }
-      $SQL_update = $SQL_update." WHERE idUser = $idUser";
-      $conn ->query($SQL_update); //je termine la RQT et j'exécute
+      $SQL_update = $SQL_update." WHERE $type = $id";
+      // die($SQL_update);
+      $conn ->query($SQL_update) or die($SQL_update); //je termine la RQT et j'exécute
     }
 
   }
