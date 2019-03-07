@@ -43,6 +43,7 @@
         {
           $ouser = new user("",$var_NameUser,$var_PrenomUser,$var_MailUser,$var_PassUser,$var_IdentifiantUser);
           $ouser -> registeruser($conn,$var_NameUser,$var_PrenomUser,$var_MailUser,$var_PassUser,$var_IdentifiantUser);
+          $_SESSION['success'] = 5;
           header('location:index.php');
         }else //si mot de passe différent -> affichage message d'erreur
         {

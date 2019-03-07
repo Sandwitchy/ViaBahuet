@@ -99,85 +99,77 @@ $( function() {
       ?>
       <div class='row'>
 
-        <div class='col-xl-7' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
-          <h1>Mes Préférences</h1>
-          <form method='post' action='#'>
-          <div class='col-md'>
-            <div class='row'>
-              <div class='col-md'>
-                <div class="form-group">
+          <div class='col-xl-8' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%'>
+            <h1>Mes Préférences</h1>
+            <form method='post' action='#'>
+            <div class='col-md'>
+              <div class='row'>
+                <div class='col-md'>
+                  <div class="form-group">
+                    <div class="form-label-group">
+                      <input type="text" id="inputLogin" name='login' value='<?php echo $GLOBAL_ouser->get_loginEnt();?>' class="form-control" placeholder="login" required="required">
+                      <label for="inputLogin">Identifiant</label>
+                    </div>
+                  </div>
+                </div>
+                <div class='col-md'>
+                  <button type="button" id="triggermodal" name='mdp' onclick="$('#ModalMDP').modal('show')" class='btn btn-danger'>Modifier le Mot de Passe</button>
+                </div>
+              </div>
+            </div>
+
+            <div class='col-md'>
                   <div class="form-label-group">
-                    <input type="text" id="inputLogin" name='login' value='<?php echo $GLOBAL_ouser->get_loginEnt();?>' class="form-control" placeholder="login" required="required">
-                    <label for="inputLogin">Identifiant</label>
+                    <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameEnt();?>' name='name' class="form-control" placeholder="name" required="required">
+                    <label for="inputName">Nom</label>
+                  </div>
+              </div><br>
+            <div class='col-md'>
+              <div class='row'>
+                <div class="form-group col-md">
+                  <div class="form-label-group">
+                    <input type="text" id="inputMail" name='mail'  value='<?php echo $GLOBAL_ouser->get_mailEnt();?>' class="form-control" placeholder="mail" required="required">
+                    <label for="inputMail">Email</label>
                   </div>
                 </div>
               </div>
-              <div class='col-md'>
-                <button type="button" id="triggermodal" name='mdp' onclick="$('#ModalMDP').modal('show')" class='btn btn-danger'>Modifier le Mot de Passe</button>
-              </div>
             </div>
-          </div>
-
-          <div class='col-md'>
-                <div class="form-label-group">
-                  <input type="text" id="inputName"  value='<?php echo $GLOBAL_ouser->get_nameEnt();?>' name='name' class="form-control" placeholder="name" required="required">
-                  <label for="inputName">Nom</label>
+            <div class='col-md'>
+              <div class='row'>
+                <div class="form-group col-md">
+                  <div class="form-label-group">
+                    <input type="text" id="inputWeb" name='web'  value='<?php echo $GLOBAL_ouser->get_siteweb();?>' class="form-control" placeholder="web" required="required">
+                    <label for="inputWeb">Site Web</label>
+                  </div>
                 </div>
-            </div><br>
-          <div class='col-md'>
-            <div class='row'>
-              <div class="form-group col-md">
-                <div class="form-label-group">
-                  <input type="text" id="inputMail" name='mail'  value='<?php echo $GLOBAL_ouser->get_mailEnt();?>' class="form-control" placeholder="mail" required="required">
-                  <label for="inputMail">Email</label>
-                </div>
-              </div>
-              <div class="form-group col-md">
-                <div class="form-label-group">
-                  <input type="text" id="inputTel" name='tel' class="form-control"  value='<?php echo $GLOBAL_ouser->get_telEnt();?>' placeholder="tel" required="required">
-                  <label for="inputTel">Numéro de Téléphone</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class='col-md'>
-            <div class='row'>
-              <div class="form-group col-md">
-                <div class="form-label-group">
-                  <input type="text" id="inputWeb" name='web'  value='<?php echo $GLOBAL_ouser->get_siteweb();?>' class="form-control" placeholder="web" required="required">
-                  <label for="inputWeb">Site Web</label>
-                </div>
-              </div>
-              <div class="form-group col-md">
-                <div class="form-label-group">
-                  <select name='tailleent' class='form-control' required>
-                    <option default>Choisir une taille</option>
-                    <?php
-                      $sql_select = "SELECT * FROM tailleentreprise WHERE idTailleEntreprise != 7";
-                      $req = $conn ->query($sql_select);
-                      while ($opt = $req->fetch())
-                      {
-                        ?><option value='<?php echo $opt['idTailleEntreprise']; ?>'><?php echo utf8_encode($opt['libTailleEntreprise']); ?></option><?php
-                      }
-                     ?>
-                  </select>
+                <div class="form-group col-md">
+                  <div class="form-label-group">
+                    <select name='tailleent' class='form-control' required>
+                      <option default value="">Choisir une taille</option>
+                      <?php
+                        $sql_select = "SELECT * FROM tailleentreprise WHERE idTailleEntreprise != 7";
+                        $req = $conn ->query($sql_select);
+                        while ($opt = $req->fetch())
+                        {
+                          ?><option value='<?php echo $opt['idTailleEntreprise']; ?>'><?php echo utf8_encode($opt['libTailleEntreprise']); ?></option><?php
+                        }
+                      ?>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class='col-md-8'>
-            <input type='submit' name='envoie' value='Enregistrer' class='btn btn-primary'>
-            <a href='home.php'><button type='button' class='btn btn-secondary'>Annuler</button></a>
-          </div>
-        </form>
-      </div><!--end contanier préférence xl-14 -->
+            <div class='col-md-8'>
+              <input type='submit' name='envoie' value='Enregistrer' class='btn btn-primary'>
+              <a href='home.php'><button type='button' class='btn btn-secondary'>Annuler</button></a>
+            </div>
+          </form>
+        </div><!--end contanier préférence xl-14 -->
 
-     <div class='col-lg-4'>
-
-        <div class='col-md' style='box-shadow:2px 5px 18px #888888;margin-bottom:2%;'>
+        <div class='col-md-3' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%'>
           <div class="text-center">
             <div class='vb-profilepic img-thumbnail' style="background-image:url('../image/<?php echo $GLOBAL_ouser->get_photoEnt()?>');
-                                                                      width:50%;
+                                                                      width:75%;
                                                                       height:175px;"></div>
             <h4>Image de profil</h4>
           </div>
@@ -194,8 +186,9 @@ $( function() {
            </div>
           </form>
         </div><!--end container img profile md-2-->
-
-          <div class="col-md" style='box-shadow:2px 5px 18px #888888;padding:2%;margin-top:1%;'>
+      </div><!-- Row -->
+      <div class='row'>
+          <div class="col-md" style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
             <div class='col-md'>
               <h4>Mes Tags</h4>
               <?php
@@ -257,30 +250,18 @@ $( function() {
       $GLOBAL_ouser -> createjointag2user($libtags,$conn);
       echo "<script type='text/javascript'>document.location.replace('prefEnt.php');</script>";
     }
-    //Non Fonctionnel
     if (isset($_POST['envoie']))
     {
-      $CP = $_POST['CP'];
-      $lib = $_POST['ville'];
-      $ville = new ville($lib,$CP);
-      $check = $ville->searchIfExist($conn);
-      if ($check == FALSE)
-      {
-        $_SESSION['error'] = 1;
-        echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
-      }
       $login = $_POST['login'];
       $nom = $_POST['name'];
-      $prenom = $_POST['prenom'];
       $mail = $_POST['mail'];
-      $tel = $_POST['tel'];
-      $rue = $_POST['rue'];
-      $GLOBAL_ouser -> updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn);
+      $taille = $_POST['tailleent'];
+      $site = $_POST['web'];
+      $GLOBAL_ouser ->  updateEntreprise($login,$nom,$mail,$taille,$site,$conn);
       unset($_SESSION['success']);
       $_SESSION['success'] = 1;
-      echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+      echo "<script type='text/javascript'>document.location.replace('prefEnt.php');</script>";
     }
-      //Non Fonctionnel
     if (isset($_POST['modpass']))
     {
       $old = $_POST['oldpass'];
@@ -295,7 +276,7 @@ $( function() {
         unset($_SESSION['error']);
         $_SESSION['error'] = 2;
       }
-      echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+      echo "<script type='text/javascript'>document.location.replace('prefEnt.php');</script>";
     }
      ?>
      <!-- Modal Mot de passe -->

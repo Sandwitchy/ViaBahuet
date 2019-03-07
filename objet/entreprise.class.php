@@ -18,10 +18,11 @@
     private $typeEnt;
     private $mailEnt;
     private $telEnt;
+    private $taille;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
-    public function entreprise($idEnt='',$nEnt='',$dEnt='',$sitewebEnt='',$dateCreateEnt='',$idUtilisateur='',$suspendu='',$datedebSuspens='',$ville = "")
+    public function entreprise($idEnt='',$nEnt='',$dEnt='',$sitewebEnt='',$dateCreateEnt='',$idUtilisateur='',$suspendu='',$taille = "",$datedebSuspens='',$ville = "")
     {
       utilisateur::utilisateur($idUtilisateur,$suspendu,$datedebSuspens);
       $this->idEnt         = $idEnt;
@@ -30,6 +31,7 @@
       $this->sitewebEnt    = $sitewebEnt;
       $this->dateCreateEnt = $dateCreateEnt;
       $this->ville         = $ville;
+      $this->taille        = $taille;
     }
 
     //INITIALISATION DES GETTERS DE LA CLASSE
@@ -78,7 +80,15 @@
     {
       return $this->sitewebEnt;
     }
+    public function get_taille()
+    {
+      return $this->taille;
+    }
     //INITIALISATION DES SETTERS DE LA CLASSE
+    public function set_taille($taille)
+    {
+      $this->taille = $taille;
+    }
     public function set_siteweb($web)
     {
       $this->sitewebEnt = $web;
@@ -213,7 +223,58 @@
         $req_ville = $conn ->query($sqlville)or die($sqlville);
       }
     }
-
+        /*
+    fonction pour changer le pot de passe de l'user
+    */
+    public function changePass($old,$new,$confirm,$conn)
+    {
+      $id = $this->idEnt;
+      if ($new !== $confirm)
+      {
+        return false;
+      }
+      else
+      {
+        $SQL_PASS = "SELECT passEntreprise FROM entreprise WHERE idEntreprise = '$id'";
+        $req_PASS = $conn -> query($SQL_PASS);
+        $res_Req = $req_PASS -> fetch();
+        if ($old != $res_Req['passEntreprise'])
+        {
+          return false;
+        }
+        else
+        {
+          $new = $conn -> quote($new);
+          $SQL_newpass = "UPDATE entreprise SET passEntreprise = $new WHERE idEntreprise = '$id'";
+          $req_sql = $conn -> query($SQL_newpass);
+          return true;
+        }
+      }
+    }
+    //mise à jour des information essentiel de l'user exepté MDP
+    public function updateEntreprise($login,$nom,$mail,$taille,$site,$conn)
+    {
+      $id = $this->idEnt;
+      $this -> set_taille($taille);
+      $this -> set_nameEnt($nom);
+      $this -> set_mailEnt($mail);
+      $this -> set_loginEnt($login);
+      $this-> set_siteweb($site);
+      $site = $conn->quote($site);
+      $taille = $conn->quote($taille);
+      $login = $conn -> quote($login);
+      $nom = $conn -> quote($nom);
+      $mail = $conn -> quote($mail);
+      $SQL_updateUser = "UPDATE entreprise
+                         SET loginEntreprise = $login,
+                             nameEntreprise = $nom,
+                             mailEntreprise = $mail,
+                             idTailleEntreprise = $taille,
+                             siteWebEntreprise = $site
+                          WHERE idEntreprise = $id";
+      $req_SQL = $conn -> query($SQL_updateUser)or die($SQL_updateUser);
+      return true;
+    }
     public function selecttags($conn)
     {
       $id = $this->idEnt;
