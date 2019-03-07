@@ -206,7 +206,7 @@ $( function() {
         <div class='col-md'>
           <h4>Mes Tags</h4>
           <?php
-            $tagsuser = $GLOBAL_ouser -> selecttagsuser($conn);
+            $tagsuser = $GLOBAL_ouser -> selecttags($conn);
             ?>
             <div class='row'>
               <?php
@@ -219,7 +219,7 @@ $( function() {
                   $tags = $tag['libTags'];
                   ?>
                   <li>
-                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"><?php echo $tags; ?></a>
+                     <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"> <?php echo $tags; ?></a>
                    </li>
                   <?php
                 }

@@ -56,7 +56,7 @@
         }
       }
       $conn = $this->get_conn();
-      $req_sql = $conn->query($sql_SELECTTABLE)or die($sql_SELECTTABLE);
+      $req_sql = $conn->query($sql_SELECTTABLE);
       $res_sql = $req_sql -> fetchall(PDO::FETCH_ASSOC);
       return $res_sql;
     // var_dump($sql_SELECTTABLE);

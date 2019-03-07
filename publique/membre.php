@@ -46,7 +46,12 @@ function gestionamis(value,type){
           // Passage des données au fichier externe (ici le nom cliqué)
           data     : {
                       idamis: value,
-                      idUser: <?php echo $GLOBAL_ouser->get_idUser(); ?>,
+                      idUser: <?php
+                                    if (get_class($GLOBAL_ouser) == 'user')
+                                    {
+                                      echo $GLOBAL_ouser->get_idUser() ;
+                                    }
+                                    ?>,
                       type:type
                       },
           cache    : true,
@@ -71,43 +76,50 @@ function gestionamis(value,type){
                       {
                       ?>
                       <div class="card" style='width:15rem;margin:5px;'>
-                        <img class="card-img-top img-thumbnail" src="../image/<?php echo $req[$i]['photoUser']; ?>" alt="Card image cap">
-                        <div class="card-body">
+                        <div class='vb-profilepic card-head img-thumbnail' style="background-image:url('../image/<?php echo $req[$i]['photoUser']; ?>');
+                                                                                  width:100%;
+                                                                                  height:220px;"></div>
+                          <div class="card-body">
                           <h5 class="card-title"><?php echo $req[$i]['nameUser']; ?></h5>
                           <p> <a href="profile.php?user=<?php echo $req[$i]['idUser']; ?>"><?php echo $req[$i]["nameUser"]." ".$req[$i]["preUser"]; ?></a> </p>
                         </div>
-                        <div class='card-footer'>
+
                           <?php
-                          $bool =$GLOBAL_ouser->checkFriend($req[$i]['idUser'],$conn);
-                          if ($req[$i]['idUser'] == $GLOBAL_ouser->get_idUser())
+                          if ((get_class($GLOBAL_ouser) == "user"))
                           {
-                            ?>
-                          <a  class="btn btn-danger btn-sm" style='color:white;'>Vous êtes si seul?</a>
-                            <?php
-                          }
-                          else
-                          {
-                            if($bool == true)
+                            ?><div class='card-footer'><?php
+                            $bool =$GLOBAL_ouser->checkFriend($req[$i]['idUser'],$conn);
+                            if ($req[$i]['idUser'] == $GLOBAL_ouser->get_idUser())
                             {
-                            ?>
-                            <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,1)" class="btn btn-danger btn-sm" ><?php echo "Retirer l'ami"; ?></button>
-                            <?php
+                              ?>
+                            <a  class="btn btn-danger btn-sm" style='color:white;'>Vous êtes si seul?</a>
+                              <?php
                             }
                             else
                             {
+                              if($bool == true)
+                              {
                               ?>
-                              <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,0)"  class="btn btn-success btn-sm" ><?php echo "Ajouter en ami"; ?></button>
+                              <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,1)" class="btn btn-danger btn-sm" ><?php echo "Retirer l'ami"; ?></button>
                               <?php
+                              }
+                              else
+                              {
+                                ?>
+                                <button onclick="gestionamis(<?php echo $req[$i]['idUser']; ?>,0)"  class="btn btn-success btn-sm" ><?php echo "Ajouter en ami"; ?></button>
+                                <?php
+                              }
                             }
+                            ?></div><?php
                           }
                           ?>
 
                         </div>
-                      </div>
+
                       <?php
                       }
                       ?>
-                </div>
+                      </div>
           </div>
         </div>
       </div>

@@ -58,7 +58,6 @@ if(isset($_GET['user']))
           </div>
         </div>
       </div> <!-- FIN GRID PROFILE -->
-
       <section class="experience" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
         <div class="col-lg-14">
           <div class="col-md-4">
@@ -90,37 +89,41 @@ if(isset($_GET['user']))
                     WHERE s.idEntreprise = e.idEntreprise
                     AND s.idUser = '$idUser'";
 
-            $req = $conn -> query($sql)or die($sql);
-            while ($res = $req -> fetch())
-            {
-              ?>
-              <div class="col-md-10" style="box-shadow:2px 5px 18px #888888;margin:2%;"> <!-- CONTENU DU/DES STAGE(S)-->
-              <div class='row'>
-                <div class='col-md-2'>
-                  <img src='../image/<?php echo $res['photoEnt']; ?>' class='img-thumbnail' style="height:128px;width:auto;">
-                </div>
-                <div class='col-md'>
-                  <div class='row' >
-                    <div class="col-md-4">
-                      <h4 class="h4"><?php echo $res['libStage']; ?></h4>
-                    </div>
-                    <div class='col-sm'>
-                      <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
-                    </div>
+            $req = $conn -> query($sql);
+            if ($req -> rowCount() == 0) {
+              echo "Aucun Résultat";
+            }else {
+              while ($res = $req -> fetch())
+              {
+                ?>
+                <div class="col-md-10" style="box-shadow:2px 5px 18px #888888;margin:2%;"> <!-- CONTENU DU/DES STAGE(S)-->
+                <div class='row'>
+                  <div class='col-md-2'>
+                    <img src='../image/<?php echo $res['photoEnt']; ?>' class='img-thumbnail' style="height:128px;width:auto;">
                   </div>
-                  <div class='row' style="margin-left:2%;">
-                    <div class='col-xs-3'>
-                      <span class="badge badge-secondary"><?php echo dateFR($res['datedebStage']); ?></span>
+                  <div class='col-md'>
+                    <div class='row' >
+                      <div class="col-md-4">
+                        <h4 class="h4"><?php echo $res['libStage']; ?></h4>
+                      </div>
+                      <div class='col-sm'>
+                        <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
+                      </div>
                     </div>
-                    <div class='col-xs-3'>
-                      <span class="badge badge-secondary"><?php echo dateFR($res['datefinStage']); ?></span>
+                    <div class='row' style="margin-left:2%;">
+                      <div class='col-xs-3'>
+                        <span class="badge badge-secondary"><?php echo dateFR($res['datedebStage']); ?></span>
+                      </div>
+                      <div class='col-xs-3'>
+                        <span class="badge badge-secondary"><?php echo dateFR($res['datefinStage']); ?></span>
+                      </div>
                     </div>
+                    <p><?php echo $res['descStage'];?> </p>
                   </div>
-                  <p><?php echo $res['descStage'];?> </p>
                 </div>
               </div>
-            </div>
-              <?php
+                <?php
+              }
             }
           ?>
           <!-- fin affichage BDD -->

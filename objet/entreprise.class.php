@@ -74,7 +74,15 @@
     {
      return  $this->photoEnt;
     }
+    public function get_siteweb()
+    {
+      return $this->sitewebEnt;
+    }
     //INITIALISATION DES SETTERS DE LA CLASSE
+    public function set_siteweb($web)
+    {
+      $this->sitewebEnt = $web;
+    }
     public function set_photoEnt($photoEnt)
     {
       $this->photoEnt = $photoEnt;
@@ -109,7 +117,7 @@
     }
     public function set_descEnt($desc)
     {
-      $this->desc = $desc;
+      $this->descEnt = $desc;
     }
     public function recupUser($conn)
     {
@@ -206,7 +214,7 @@
       }
     }
 
-    public function selecttagsEnt($conn)
+    public function selecttags($conn)
     {
       $id = $this->idEnt;
       $sql = "SELECT t.idTags,libTags
@@ -222,12 +230,11 @@
         return $res;
       }
     }
-    public function createjointag2user($id,$lib,$conn)
+    public function createjointag2user($lib,$conn)
     {
+      $lib = $conn -> quote($lib);
       $iduser = $this->idEnt;
-      if ($id == "")
-      {
-        $sql = "SELECT * FROM tags WHERE libTags LIKE '$lib'";
+        $sql = "SELECT * FROM tags WHERE libTags LIKE $lib";
         $req = $conn -> query($sql);
         $res = $req -> fetch();
         if ($res != "")
@@ -238,9 +245,9 @@
           $req = $conn -> query($sql);
           return 1;
         }else {
-          $sql = "INSERT INTO tags VALUES('','$lib',1)";
+          $sql = "INSERT INTO tags VALUES('',$lib)";
           $req1 = $conn -> query($sql);
-          $sql2 = "SELECT * FROM tags WHERE libTags = '$lib'";
+          $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
           $req2 = $conn->query($sql2);
           $res = $req2 -> fetch();
           $idt = $res['idTags'];
@@ -249,12 +256,6 @@
           $req3 = $conn -> query($sql3);
           return 0;
         }
-      }else {
-        $pmk = $id."/".$iduser;
-        $sql ="INSERT INTO tagent VALUES('$pmk','$id','$iduser')";
-        $req = $conn -> query($sql);
-        return 2;
-      }
     }
     public function deletetags($libtags,$conn)
     {

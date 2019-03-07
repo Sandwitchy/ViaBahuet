@@ -2,10 +2,9 @@
   //créer une vue vtags qui référence tout les tags et leur type
   function createviewtags($conn)
   {
-    $sql = "CREATE VIEW vtags (idtags,libtags,libtypetags) AS
-            SELECT idtags,libtags,libTypeTags
-            FROM tags t,typetags g
-            WHERE t.idTypeTags = g.idTypeTags";
+    $sql = "CREATE VIEW vtags (idtags,libtags) AS
+            SELECT *
+            FROM tags";
     $req = $conn -> query($sql);
     return true;
   }
@@ -19,7 +18,7 @@
   function dateFr($date)
   {
     return strftime('%d-%m-%Y',strtotime($date));
-
+  }
 
 
   function DataTableStage($SQL_stage,$conn)
@@ -50,8 +49,8 @@
             <td><?php echo $res['idStage']; ?></td> <!-- 9 TD -->
             <td><?php echo $res['dateComm']; ?></td>
             <td><?php echo $res['contentComm']; ?></td>
-            <td><?php echo $res['datedebStage']; ?></td>
-            <td><?php echo $res['datefinStage']; ?></td>
+            <td><?php echo dateFr($res['datedebStage']); ?></td>
+            <td><?php echo dateFr($res['datefinStage']); ?></td>
             <td><?php echo $res['libStage']; ?></td>
             <td><?php echo $res['descStage']; ?></td>
             <td><?php echo $res['exiStage']; ?></td>
@@ -111,9 +110,9 @@
             <td><?php echo $res['libEmpOff']; ?></td>
             <td><?php echo $res['descEmpOff']; ?></td>
             <td><?php echo $res['exiEmpOff']; ?></td>
-            <td><?php echo $res['salaireMoisBrut']; ?></td>
-            <td><?php echo $res['DDCDD']; ?></td>
-            <td><?php echo $res['DFCDD']; ?></td>
+            <td><?php echo $res['salaireMoisBrut']."€"; ?></td>
+            <td><?php echo dateFr($res['DDCDD']); ?></td>
+            <td><?php echo dateFr($res['DFCDD']); ?></td>
             <td> <a href="../Back/modif.offre.php?offre=<?php echo $res['idEmpOff']; ?>" name="idStage"><i class="fas fa-edit" style="color:#FFC312"></i></a> </td>
             <td> <a href="#" id="deleteoffre" value="<?php echo $res['idEmpOff']; ?>" onclick="recupidOffre(<?php echo $res['idEmpOff']; ?>)"><i class="fas fa-trash-alt" style="color:#EA2027;"></i></a></td>
           </tr>
@@ -131,11 +130,17 @@
         <th>Salaire / Mois Brut</th>
         <th>Date début</th>
         <th>Date fin</th>
+        <th></th>
+        <th></th>
       </tr>
       </tfoot>
     </table>
     <?php
 
+  }
+  function errorSQL($sql)
+  {
+    echo $sql."<img src='../image/Error.jpg'>";
   }
  ?>
 <script type="text/javascript">
