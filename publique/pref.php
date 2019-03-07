@@ -184,7 +184,9 @@ $( function() {
     </div><!--end contanier xl-14 -->
     <div class='col-md' style='box-shadow:2px 5px 18px #888888;padding:2%;margin:1%;'>
       <div class="text-center">
-        <img class='img-fluid img-circle' style='border-radius:50%;height:150px;margin:auto;' src='../image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>'>
+      <div class='vb-profilepic img-thumbnail' style="background-image:url('../image/<?php echo $GLOBAL_ouser->get_photoUser()?>');
+                                                                      width:75%;
+                                                                      height:175px;"></div>
         <h4>Image de profil</h4>
       </div>
       <form method='post' enctype="multipart/form-data" action='../tools/gestImg.php'>
@@ -269,17 +271,20 @@ $( function() {
       {
         $_SESSION['error'] = 1;
         echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+        die();
+      }else{
+        $login = $_POST['login'];
+        $nom = $_POST['name'];
+        $prenom = $_POST['prenom'];
+        $mail = $_POST['mail'];
+        $tel = $_POST['tel'];
+        $rue = $_POST['rue'];
+        $GLOBAL_ouser -> updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn);
+        unset($_SESSION['success']);
+        $_SESSION['success'] = 1;
+        echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
       }
-      $login = $_POST['login'];
-      $nom = $_POST['name'];
-      $prenom = $_POST['prenom'];
-      $mail = $_POST['mail'];
-      $tel = $_POST['tel'];
-      $rue = $_POST['rue'];
-      $GLOBAL_ouser -> updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn);
-      unset($_SESSION['success']);
-      $_SESSION['success'] = 1;
-      echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
+      
     }
     if (isset($_POST['modpass']))
     {
