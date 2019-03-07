@@ -16,6 +16,7 @@
     private $typeUser;
     private $ville;
     private $descUser;
+    private $tags;
 
     //INITIALISATION DU CONSTRUCTEUR DE LA CLASSE
 
@@ -237,7 +238,7 @@
       }
     }
 
-    public function selecttagsuser($conn)
+    public function selecttags($conn)
     {
       $id = $this->idUser;
       $sql = "SELECT t.idTags,libTags
@@ -270,7 +271,11 @@
         $req = $conn -> query($sql)or die($sql);
         return 1;
       }else {
+<<<<<<< HEAD
         $sql = "INSERT INTO tags VALUES(NULL,$lib)";
+=======
+        $sql = "INSERT INTO tags(libTags) VALUES($lib)";
+>>>>>>> 34c6be20f27d11201116746c179ab1193ea89bb8
         $req1 = $conn -> query($sql)or die($sql);
         $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
         $req2 = $conn->query($sql2)or die($sql2);

@@ -31,10 +31,44 @@
     <title>SB Admin - Dashboard</title>
 
     <!-- Bootstrap core CSS-->
+<<<<<<< HEAD
    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
    <link href='../css/profile.css' rel='stylesheet'>
    <!-- Custom fonts for this template-->
    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+=======
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href='../css/profile.css' rel='stylesheet'>
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../css/sb-admin.css" rel="stylesheet">
+
+    <!--Jquery ui import -->
+      <script src="../vendor/jquery/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+    <!-- Jquery multi select avec filter -->
+      <link rel="stylesheet" href="../vendor/jquery-select-filter/jquery.multiselect.css">
+      <script src="../vendor/jquery-select-filter/jquery.multiselect.js"></script>
+      <link rel="stylesheet" href="../vendor/jquery-select-filter/jquery.multiselect.filter.css">
+      <script src="../vendor/jquery-select-filter/jquery.multiselect.filter.js"></script>
+      <!-- Jquery tags -->
+      <link rel="stylesheet" href="../vendor/tags/css/prettytag.css">
+      <script src="../vendor/tags/js/jquery.prettytag.js"></script>
+
+
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+>>>>>>> 34c6be20f27d11201116746c179ab1193ea89bb8
 
    <!-- Page level plugin CSS-->
    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
