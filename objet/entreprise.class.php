@@ -244,14 +244,12 @@
           $sql = "INSERT INTO tagent VALUES('$pmk','$idt','$iduser')";
           $req = $conn -> query($sql) or die($sql);
           return 1;
-        }else {
-<<<<<<< HEAD
+        }
+        else
+        {
           $sql = "INSERT INTO tags VALUES(NULL,$lib)";
           $req1 = $conn -> query($sql) or die($sql);
-=======
-          $sql = "INSERT INTO tags VALUES('',$lib)";
-          $req1 = $conn -> query($sql);
->>>>>>> 34c6be20f27d11201116746c179ab1193ea89bb8
+
           $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
           $req2 = $conn->query($sql2);
           $res = $req2 -> fetch();
@@ -261,15 +259,6 @@
           $req3 = $conn -> query($sql3) or die($sql);
           return 0;
         }
-<<<<<<< HEAD
-      }else {
-        $pmk = $id."/".$iduser;
-        $sql ="INSERT INTO tagent VALUES('$pmk','$id','$iduser')";
-        $req = $conn -> query($sql) or die($sql);
-        return 2;
-      }
-=======
->>>>>>> 34c6be20f27d11201116746c179ab1193ea89bb8
     }
     public function deletetags($libtags,$conn)
     {

@@ -3,6 +3,11 @@
 include('../tools/head.inc.php');
 ?>
 <script>
+$("#czContainer").czMore();
+</script>
+
+<script>
+
 $( function() {
   var availableTags = [
     <?php
@@ -174,6 +179,19 @@ $( function() {
                 <label for="inputLibville">Ville</label>
               </div>
             </div>
+            <div class="form-group col-md">
+              <div class="form-label-group">
+                <div id="czContainer">
+                  <div id="first">
+                    <div class="recordset">
+                      <input type="text" name="input 1" id="input 1">
+                      <input type="text" name="input 2" id="input 2">
+                      <input type="text" name="input 3" id="input 3">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class='col-md-8'>
@@ -322,7 +340,7 @@ $( function() {
                <div class="form-group">
                  <div class="form-label-group">
                    <input type="password" id="inputConfPass" name='confpass' class="form-control" placeholder="Confirm Password" required="required">
-                   <label for="inputConfPass">Comfirmer Nouveau Mot de Passe</label>
+                   <label for="inputConfPass">Confirmer Nouveau Mot de Passe</label>
                  </div>
                </div>
            </div>

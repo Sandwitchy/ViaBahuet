@@ -33,7 +33,7 @@
     Sortie :
       Resultats de la requete.
     ***************************************************************************/
-    public function selectAllTable($Var_nametable,$conditions)
+    public function selectAllTable($Var_nametable,array $conditions)
     {
       $sql_SELECTTABLE = "SELECT * FROM $Var_nametable";
 
@@ -45,7 +45,7 @@
         {
           if($bool == 0)
           {
-            $sql_SELECTTABLE = $sql_SELECTTABLE." ".$unecondition;
+            $sql_SELECTTABLE = $sql_SELECTTABLE." ".$unecondition." AND";
             $bool = 1;
           }
           else
@@ -56,7 +56,8 @@
         }
       }
       $conn = $this->get_conn();
-      $req_sql = $conn->query($sql_SELECTTABLE);
+      // die($sql_SELECTTABLE);
+      $req_sql = $conn->query($sql_SELECTTABLE) or die($sql_SELECTTABLE);
       $res_sql = $req_sql -> fetchall(PDO::FETCH_ASSOC);
       return $res_sql;
     // var_dump($sql_SELECTTABLE);

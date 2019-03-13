@@ -87,7 +87,6 @@
           </div>
           <pre>
           <?php
-            echo $penis;
             print_r($_SESSION['user_info']);
            ?>
          </pre>

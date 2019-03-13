@@ -30,13 +30,6 @@
 
     <title>SB Admin - Dashboard</title>
 
-    <!-- Bootstrap core CSS-->
-<<<<<<< HEAD
-   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-   <link href='../css/profile.css' rel='stylesheet'>
-   <!-- Custom fonts for this template-->
-   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-=======
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href='../css/profile.css' rel='stylesheet'>
     <!-- Custom fonts for this template-->
@@ -64,11 +57,14 @@
       <link rel="stylesheet" href="../vendor/tags/css/prettytag.css">
       <script src="../vendor/tags/js/jquery.prettytag.js"></script>
 
+      <!-- Jquery czmore -->
+      <script src="../js/jquery.czMore-latest.js"></script>
+      <!-- Jquery czmore -->
+
+
 
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
->>>>>>> 34c6be20f27d11201116746c179ab1193ea89bb8
 
    <!-- Page level plugin CSS-->
    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
