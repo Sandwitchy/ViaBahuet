@@ -6,8 +6,6 @@
     if($GLOBAL_ouser -> checkIfStupid($conn,(isset($_GET['offres']) ? $_GET['offres'] : $_GET['offreEmploi']),(isset($_GET['offres']) ?0:1))){
         $_SESSION['error'] = 10;
         echo "<script type='text/javascript'>document.location.replace('lesoffres.php');</script>";
-    }else{
-        echo "ah...";
     }
     $offres = new Offre();
     if((isset($_GET['offres']))&&(!$offres -> offreExiste($conn,$_GET['offres'],0))){
