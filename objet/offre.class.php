@@ -82,6 +82,34 @@
       $SQL = "INSERT INTO emploiOff (idEmpOff,libEmpOff,descEmpOff,exiEmpOff,statusEmpOff,idEntreprise,salaireMoisBrut,DDCDD,DFCDD,idTypeEmp) VALUES(NULL,$lib,$desc,$exig,'0',$idEnt,$salaire,$DD,$DF,$idTypeEmp)";
       $conn->query($SQL) or die($SQL);
     }
+
+    /**
+     * check si offre existe
+     */
+    public function offreExiste($conn,$id,$type){
+      if($type == 0){
+        // TEST STAGE
+        $sql = "SELECT idStage 
+                FROM stage 
+                WHERE idStage = $id 
+                AND status = 0";
+        if($this->envoieSQL($sql,$conn)){
+          return true;
+        }
+      }elseif($type == 1){
+         // TEST EMPLOI
+        $sql = "SELECT idEmpOff
+                FROM emploiOff
+                WHERE idEmpOff = $id 
+                AND statusEmpOff = 0";
+
+        if($this->envoieSQL($sql,$conn)){
+        return true;
+        }
+      }
+      return false;
+    }
+
   }
 
 ?>

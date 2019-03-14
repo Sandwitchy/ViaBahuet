@@ -21,6 +21,10 @@
   {
     return strftime('%d-%m-%Y',strtotime($date));
   }
+  function datetimeFr($datetime)
+  {
+    return strftime('%d-%m-%Y à %H:%M',strtotime($datetime));
+  }
 
 
   function DataTableStage($SQL_stage,$conn,$bool)
@@ -95,6 +99,7 @@
             <th>Libellé</th>
             <th>Description</th>
             <th>Exigences</th>
+            <th>Postuler</th>
         </tr>
       </thead>
       <tbody>
@@ -116,6 +121,12 @@
             <td><?php echo $res['libStage']; ?></td>
             <td><?php echo $res['descStage']; ?></td>
             <td><?php echo $res['exiStage']; ?></td>
+            <td>
+              <form method='get' action='postul.php'>
+                <input type='hidden' name='offres' value='<?php echo $res['idStage']; ?>'>
+                <button type='submit' class='btn btn-success'>Postuler</button>
+              </form>
+            </td>
           </tr>
           <?php
           }
@@ -131,6 +142,7 @@
         <th>Libellé</th>
         <th>Description</th>
         <th>Exigences</th>
+        <th>Postuler</th>
       </tr>
       </tfoot>
     </table>
@@ -215,6 +227,7 @@
               <th>Salaire / Mois Brut</th>
               <th>Date début</th>
               <th>Date fin</th>
+              <th>Postuler</th>
           </tr>
         </thead>
         <tbody>
@@ -239,6 +252,12 @@
               <td><?php echo $res['salaireMoisBrut']; ?></td>
               <td><?php echo $res['DDCDD']; ?></td>
               <td><?php echo $res['DFCDD']; ?></td>
+              <td>
+              <form method='get' action='postul.php'>
+                <input type='hidden' name='offreEmploi' value='<?php echo $res['idEmpOff']; ?>'>
+                <button type='submit' class='btn btn-success'>Postuler</button>
+              </form>
+            </td>
             </tr>
             <?php
             }
@@ -256,6 +275,7 @@
           <th>Salaire / Mois Brut</th>
           <th>Date début</th>
           <th>Date fin</th>
+          <th>Postuler</th>
         </tr>
         </tfoot>
       </table>

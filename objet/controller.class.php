@@ -63,16 +63,23 @@
     // var_dump($sql_SELECTTABLE);
     // die();
     }
+    /**
+     * EXECUTE UNE REQUETE SQL DONNEE
+     */
     public function envoieSQL($sql,$conn)
     {
       $req = $conn -> query($sql)or die($sql);
       if ($req != false)
       {
         $res = $req -> fetchall(PDO::FETCH_ASSOC);
+        if(empty($res)){
+          return false;
+        }
         return $res;
       }
-
+      return false;
     }
+
     public function insertBDD($Var_nametable,$tab_value)
     {
       $sql_INSERTTABLE = "INSERT INTO $Var_nametable";
