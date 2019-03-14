@@ -93,7 +93,7 @@ if(isset($_POST['filter']))
       {
         switch ($key) {
           case 0://cas même ville
-              $conditions = $conditions." user.INSEE = ".$GLOBAL_ouser->get_ville()->get_INSEE();
+              $conditions = $conditions." u.INSEE = ".$conn->quote($GLOBAL_ouser->get_ville()->get_INSEE());
             break;
           case 1://cas est mon ami
               $FROM .= ",amis a";

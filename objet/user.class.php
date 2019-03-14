@@ -179,7 +179,7 @@
       utilisateur::set_datedebSuspens($res_SQL['datedebSuspens']);
     }
     //mise à jour des information essentiel de l'user exepté MDP
-    public function updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn)
+    public function updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$descUser,$conn)
     {
       $id = $this->idUser;
       $this -> set_nameUser($nom);
@@ -187,6 +187,7 @@
       $this -> set_mailUser($mail);
       $this -> set_loginUser($login);
       $this -> set_telUser($tel);
+      $this -> set_descUser($descUser);
       $login = $conn -> quote($login);
       $nom = $conn -> quote($nom);
       $prenom = $conn -> quote($prenom);
@@ -194,6 +195,7 @@
       $tel = $conn -> quote($tel);
       $rue = $conn -> quote($rue);
       $INSEE = $ville->get_INSEE();
+      $descUser = $conn -> quote($descUser);
       $SQL_updateUser = "UPDATE user
                          SET loginUser = $login,
                              nameUser = $nom,
@@ -201,7 +203,8 @@
                              telUser = $tel,
                              mailUser = $mail,
                              rueUser = $rue,
-                             INSEE = $INSEE
+                             INSEE = $INSEE,
+                             descUser = $descUser
                           WHERE idUser = $id";
       $req_SQL = $conn -> query($SQL_updateUser);
       return true;
