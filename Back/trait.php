@@ -6,6 +6,7 @@
       // session isn't started
       session_start();
   }
+
   if (!isset($_SESSION['user_info'])) //verifie si un user c'est correctement connecté sinon revoie vers la page de connexion
   {
     echo "<script type='text/javascript'>document.location.replace('../publique/index.php');</script>";
@@ -14,6 +15,7 @@
     $GLOBAL_ouser = $_SESSION['user_info']; // définition de la variable global de l'user connecter
 
   }
+  
   //enregistrer un avis à propos d'une entreprise
   if (isset($_POST['saveavis']))
   {

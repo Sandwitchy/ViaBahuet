@@ -231,6 +231,19 @@
             <?php
           }
         }
-
+        if (get_class($GLOBAL_ouser) == "user") {
+          $nbr = $GLOBAL_ouser->nbrCandidature($conn);
+          if ($nbr > 0)
+          {
+            ?>
+            <li class="nav-item">
+                <a class="nav-link" href="../publique/mescandidatures.php">
+                <i class="fas fa-fw fa-database"></i>
+                <span>Mes candidatures</span></a>
+            </li>
+            <?php
+          }
+        }
          ?>
+         
       </ul>
