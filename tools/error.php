@@ -122,6 +122,9 @@
       <div class="alert alert-success">
         Votre avis à bien été enregistré !
       </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
       case 7:
       ?>
       <div class="alert alert-success">
@@ -137,8 +140,11 @@
       <div class="alert alert-warning">
         Votre avis à bien été supprimé!
         </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
       case 9:
-
+      ?>
       <div class="alert alert-success">
         Les informations ont bien été modifiées !
       </div>

@@ -182,10 +182,6 @@
     public function updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn)
     {
       $id = $this->idUser;
-      $this -> set_ville($ville);
-      $INSEE = $this->ville->get_INSEE();
-      $INSEE = $conn -> quote($INSEE);
-      $this -> set_adresse($rue);
       $this -> set_nameUser($nom);
       $this -> set_preUser($prenom);
       $this -> set_mailUser($mail);
@@ -197,6 +193,7 @@
       $mail = $conn -> quote($mail);
       $tel = $conn -> quote($tel);
       $rue = $conn -> quote($rue);
+      $INSEE = $ville->get_INSEE();
       $SQL_updateUser = "UPDATE user
                          SET loginUser = $login,
                              nameUser = $nom,
