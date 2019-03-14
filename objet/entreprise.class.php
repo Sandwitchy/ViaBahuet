@@ -296,25 +296,28 @@
       $lib = $conn -> quote($lib);
       $iduser = $this->idEnt;
         $sql = "SELECT * FROM tags WHERE libTags LIKE $lib";
-        $req = $conn -> query($sql);
+        $req = $conn -> query($sql) or die($sql);
         $res = $req -> fetch();
         if ($res != "")
         {
           $idt = $res['idTags'];
           $pmk = $idt."/".$iduser;
           $sql = "INSERT INTO tagent VALUES('$pmk','$idt','$iduser')";
-          $req = $conn -> query($sql);
+          $req = $conn -> query($sql) or die($sql);
           return 1;
-        }else {
-          $sql = "INSERT INTO tags VALUES('',$lib)";
-          $req1 = $conn -> query($sql);
+        }
+        else
+        {
+          $sql = "INSERT INTO tags VALUES(NULL,$lib)";
+          $req1 = $conn -> query($sql) or die($sql);
+
           $sql2 = "SELECT * FROM tags WHERE libTags = $lib";
           $req2 = $conn->query($sql2);
           $res = $req2 -> fetch();
           $idt = $res['idTags'];
           $pmk = $idt."/".$iduser;
           $sql3 = "INSERT INTO tagent VALUES('$pmk','$idt','$iduser')";
-          $req3 = $conn -> query($sql3);
+          $req3 = $conn -> query($sql3) or die($sql);
           return 0;
         }
     }

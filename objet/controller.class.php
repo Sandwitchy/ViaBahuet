@@ -33,7 +33,7 @@
     Sortie :
       Resultats de la requete.
     ***************************************************************************/
-    public function selectAllTable($Var_nametable,$conditions)
+    public function selectAllTable($Var_nametable,array $conditions)
     {
       $sql_SELECTTABLE = "SELECT * FROM $Var_nametable";
 
@@ -45,7 +45,7 @@
         {
           if($bool == 0)
           {
-            $sql_SELECTTABLE = $sql_SELECTTABLE." ".$unecondition;
+            $sql_SELECTTABLE = $sql_SELECTTABLE." ".$unecondition." AND";
             $bool = 1;
           }
           else
@@ -56,7 +56,8 @@
         }
       }
       $conn = $this->get_conn();
-      $req_sql = $conn->query($sql_SELECTTABLE);
+      // die($sql_SELECTTABLE);
+      $req_sql = $conn->query($sql_SELECTTABLE) or die($sql_SELECTTABLE);
       $res_sql = $req_sql -> fetchall(PDO::FETCH_ASSOC);
       return $res_sql;
     // var_dump($sql_SELECTTABLE);
@@ -147,7 +148,7 @@
         }
       }
     }
-    public function updateBDD($table,$data,$idUser,$conn) //FAIRE UNE FONCTION QUI GENERE PLUSIEURS MODIFICATIONS EN FONCTION DU NOMBRE DE DONNEES
+    public function updateBDD($table,$data,$id,$conn,$type) //FAIRE UNE FONCTION QUI GENERE PLUSIEURS MODIFICATIONS EN FONCTION DU NOMBRE DE DONNEES
     {
       $SQL_update = "UPDATE $table SET";
       $i = 0;
@@ -163,8 +164,9 @@
           $SQL_update = $SQL_update." , ".$uneData['colonne']."=".$donnee; //s'il y a plusieurs données, je les ajoute en gérant les virgules dans la RQT
         }
       }
-      $SQL_update = $SQL_update." WHERE idUser = $idUser";
-      $conn ->query($SQL_update); //je termine la RQT et j'exécute
+      $SQL_update = $SQL_update." WHERE $type = $id";
+      // die($SQL_update);
+      $conn ->query($SQL_update) or die($SQL_update); //je termine la RQT et j'exécute
     }
 
   }

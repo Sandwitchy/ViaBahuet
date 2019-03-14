@@ -79,7 +79,7 @@
       case 1:
         ?>
         <div class="alert alert-success">
-          Vos informations ont bien été mis à jour
+          Vos informations ont bien été mises à jour
         </div>
         <?php
         $_SESSION['success'] = 0;
@@ -95,7 +95,7 @@
       case 3:
       ?>
       <div class="alert alert-success">
-        Votre Image de profil à bien été mis à jour
+        Votre image de profil à bien été mise à jour
       </div>
       <?php
       $_SESSION['success'] = 0;
@@ -111,7 +111,7 @@
       case 5:
       ?>
       <div class="alert alert-success">
-        Votre compte à bien été créer vous pouvez maintenant vous connecté !
+        Votre compte à bien été créé, vous pouvez maintenant vous connecter !
       </div>
       <?php
       $_SESSION['success'] = 0;
@@ -120,7 +120,7 @@
       case 6:
       ?>
       <div class="alert alert-success">
-        Votre avis à bien été enregistré!
+        Votre avis à bien été enregistré !
       </div>
       <?php
       $_SESSION['success'] = 0;
@@ -138,7 +138,7 @@
       case 8:
       ?>
       <div class="alert alert-warning">
-        Votre avis à bien été supprimer!
+        Votre avis à bien été supprimé!
         </div>
       <?php
       $_SESSION['success'] = 0;
@@ -146,7 +146,7 @@
       case 9:
       ?>
       <div class="alert alert-success">
-        Les informations ont bien été modifiées ! 
+        Les informations ont bien été modifiées !
       </div>
       <?php
       $_SESSION['success'] = 0;

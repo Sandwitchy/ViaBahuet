@@ -9,7 +9,101 @@ if(isset($_GET['user']))
   }
 }
 ?>
-
+<style media="screen">
+.emp-profile{
+  padding-top: 3%;
+  padding-bottom: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+.profile-img{
+  text-align: center;
+}
+.profile-img img{
+  width: 70%;
+  height: 100%;
+}
+.profile-img .file {
+  position: relative;
+  overflow: hidden;
+  margin-top: -20%;
+  width: 70%;
+  border: none;
+  border-radius: 0;
+  font-size: 15px;
+  background: #212529b8;
+}
+.profile-img .file input {
+  position: absolute;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+.profile-head h5{
+  color: #333;
+}
+.profile-head h6{
+  color: #0062cc;
+}
+.profile-edit-btn{
+  border: none;
+  border-radius: 1.5rem;
+  width: 70%;
+  padding: 2%;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+}
+.proile-rating{
+  font-size: 12px;
+  color: #818182;
+  margin-top: 5%;
+}
+.proile-rating span{
+  color: #495057;
+  font-size: 15px;
+  font-weight: 600;
+}
+.profile-head .nav-tabs{
+  margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+  font-weight:600;
+  border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+  border: none;
+  border-bottom:2px solid #0062cc;
+}
+.profile-work{
+  padding: 14%;
+  margin-top: -15%;
+}
+.profile-work p{
+  font-size: 12px;
+  color: #818182;
+  font-weight: 600;
+  margin-top: 10%;
+}
+.profile-work a{
+  text-decoration: none;
+  color: #495057;
+  font-weight: 600;
+  font-size: 14px;
+}
+.profile-work ul{
+  list-style: none;
+}
+.profile-tab label{
+  font-weight: 600;
+}
+.profile-tab p{
+  font-weight: 600;
+  color: #0062cc;
+}
+</style>
   <div id="content-wrapper">
 
     <div class="container-fluid profile">
@@ -19,117 +113,190 @@ if(isset($_GET['user']))
           <div class="col-md col-lg col-ms col-xs">
             <div class="row">
 
-              <div class="col-md-6">
-                <img class="pp" src="../image/<?php echo $GLOBAL_ouser->get_photoUser(); ?>" class="img-fluid" alt="Photo de profil" style="border-radius:50%;width:120px;height:120px;margin-top:15px;margin-left:20px;"> <!-- IMAGE -->
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5" style="margin-top:2%;">
-                <div class="col-md"> <!-- NOM -->
-                  <h4 class="h4"><?php echo $GLOBAL_ouser->get_nameUser(); ?></h4>
+          <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        <?php echo $GLOBAL_ouser->get_preUser()." ".$GLOBAL_ouser->get_nameUser(); ?>
+                                    </h5>
+                                    <h6>
+                                        Web Developer and Designer
+                                    </h6>
+                                    <br>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">À propos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#stages" role="tab" aria-controls="profile" aria-selected="false">Stages</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="pref.php" class="profile-edit-btn btn-dark" style="color:white;text-decoration:none;">Modifier le profil</a>
+                    </div>
                 </div>
-                <div class="col-md"> <!-- PRENOM -->
-                  <h5 class="h5"><?php echo $GLOBAL_ouser->get_preUser(); ?></h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md col-lg col-ms col-xs" style="color:#007BFF;"> <!-- Boutons d'info -->
-            <div class="col-md-5 col-sm-3">
-              <a href="#" style="text-decoration:none;"><i class="fas fa-user-friends"></i> Liste d'amis</a>
-            </div>
-            <div class="col-md-5 col-sm-3">
-              <a href="#" style="text-decoration:none;"><i class="fas fa-address-book"></i> Mes coordonnées</a>
-            </div>
-            <div class="col-md-5 col-sm-3">
-              <a href="pref.php"  style="text-decoration:none;"><i class="fas fa-edit"></i>Modifier mes informations</a>
-            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <p>TAGS</p>
+                            <?php
+                            $tagsuser = $GLOBAL_ouser -> selecttags($conn);
+                            if ($tagsuser == false)
+                            {
+                              echo "Pas de tags";
+                            }else {
+                              ?><ul class="cloud-tags"> <?php
+                              foreach ($tagsuser as $tag){
+                                $tags = $tag['libTags'];
+                                ?>
+                                <li>
+                                   <a href="#tag_link" onclick="tagdelete('<?php echo $tags;?>')"> <?php echo $tags; ?></a>
+                                 </li>
+                                <?php
+                              }
+                              ?></ul><?php
+                            }
+                           ?>
+                            <script>
+                            $(function(){
+                              $(".cloud-tags").prettyTag();
+                            });
+                            </script>
 
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Nom / Prénom</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $GLOBAL_ouser->get_nameUser()." ".$GLOBAL_ouser->get_preUser(); ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $GLOBAL_ouser->get_mailUser(); ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Téléphone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $GLOBAL_ouser->get_telUser(); ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Profession</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Web Developer and Designer</p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade show" id="stages" role="tabpanel" aria-labelledby="profile-tab">
+                              <?php
+                              $idUser = $GLOBAL_ouser->get_idUser();
+                                $sql = "SELECT datedebStage,datefinStage,libStage,descStage,nameEntreprise,photoEnt
+                                        FROM stage s,entreprise e
+                                        WHERE s.idEntreprise = e.idEntreprise
+                                        AND s.idUser = '$idUser'";
+
+                                $req = $conn -> query($sql);
+                                if ($req -> rowCount() == 0) {
+                                  echo "Aucun Résultat";
+                                }
+                                else {
+                                ?>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Libellé</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $res['libStage']; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Description</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $res['descStage']; ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Date de début</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo dateFR($res['datedebStage']); ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Date de fin</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo dateFR($res['datefinStage']); ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Entreprise d'accueil</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $res['nameEntreprise']; ?></p>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                      }
+                    ?>
+                </div>
+            </form>
+        </div>
+
+            </div>
           </div>
 
           <div class="w-100"></div> <!-- RETOUR A LA LIGNE DE LA GRID -->
 
           <div class="col-md col-lg col-ms col-xs" style="margin-bottom:2%;">
             <div class="col-md-8"> <!-- BIOGRAPHIE -->
+              <h1>
+                <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, Im VipulM.", "I Love Design.", "I Love to Develop." ]'>
+                  <span class="wrap"></span>
+                </a>
+              </h1>
               <br>
-                  <hr class="separator"> <!-- SEPARATEUR -->
-              <br>
-              <a href="#" onclick="changeState()" style="text-decoration:none;"><i class="fas fa-edit"></i></a>
-              <textarea id='textarea' onblur="register()" readonly value="textProfile" rows="8" cols="80" style="resize:none;box-shadow:2px 2px 10px #888888;outline:0;"><?php echo $GLOBAL_ouser->get_descUser();?></textarea>
             </div>
           </div>
         </div>
       </div> <!-- FIN GRID PROFILE -->
-      <section class="experience" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
-        <div class="col-lg-14">
-          <div class="col-md-4">
-            <h4 class="h4">Expérience</h4>
-          </div>
-          <div class="col-md-10"> <!-- CONTENU DU/DES STAGE(S)-->
-            <div class="col-md-5">
-              <h6 class="h6">Libellé du job</h6>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </div>
-      </section>
-      <section class="stage" style="box-shadow:2px 5px 18px #888888;margin-top:1.5%;border-radius:3px;border:1px solid rgba(0,0,0,0.15)">
-        <div class="col-lg-14">
-          <div class='row' style='margin:5px;'>
-            <div class="col-md-10">
-              <p class="h4">Stages</p>
-            </div>
-            <div class='col-sm-1' style='margin-right:2px;'>
-              <button class='btn btn-secondary btn-sm' type='button' onclick="document.location.replace('stagecrea.php');"><i class="fas fa-plus"></i></button>
-            </div>
-          </div>
-          <!-- début affichage stage BDD -->
-          <?php
-          $idUser = $GLOBAL_ouser->get_idUser();
-            $sql = "SELECT datedebStage,datefinStage,libStage,descStage,nameEntreprise,photoEnt
-                    FROM stage s,entreprise e
-                    WHERE s.idEntreprise = e.idEntreprise
-                    AND s.idUser = '$idUser'";
-
-            $req = $conn -> query($sql);
-            if ($req -> rowCount() == 0) {
-              echo "Aucun Résultat";
-            }else {
-              while ($res = $req -> fetch())
-              {
-                ?>
-                <div class="col-md-10" style="box-shadow:2px 5px 18px #888888;margin:2%;"> <!-- CONTENU DU/DES STAGE(S)-->
-                <div class='row'>
-                  <div class='col-md-2'>
-                    <img src='../image/<?php echo $res['photoEnt']; ?>' class='img-thumbnail' style="height:128px;width:auto;">
-                  </div>
-                  <div class='col-md'>
-                    <div class='row' >
-                      <div class="col-md-4">
-                        <h4 class="h4"><?php echo $res['libStage']; ?></h4>
-                      </div>
-                      <div class='col-sm'>
-                        <p class='lead'><u><strong><?php echo $res['nameEntreprise']; ?></strong></u></p>
-                      </div>
-                    </div>
-                    <div class='row' style="margin-left:2%;">
-                      <div class='col-xs-3'>
-                        <span class="badge badge-secondary"><?php echo dateFR($res['datedebStage']); ?></span>
-                      </div>
-                      <div class='col-xs-3'>
-                        <span class="badge badge-secondary"><?php echo dateFR($res['datefinStage']); ?></span>
-                      </div>
-                    </div>
-                    <p><?php echo $res['descStage'];?> </p>
-                  </div>
-                </div>
-              </div>
-                <?php
-              }
-            }
-          ?>
-          <!-- fin affichage BDD -->
-        </div>
-      </section>
-
+    </div>
     <!-- /.container-fluid -->
 
     <!-- Sticky Footer -->
@@ -141,27 +308,26 @@ if(isset($_GET['user']))
       </div>
     </footer>
 
-  </div>
   <!-- /.content-wrapper -->
   <script type="text/javascript">
-    function changeState()
-    {
-      var textarea = document.getElementById("textarea");
-      textarea.removeAttribute("readonly");
-      textarea.setAttribute("checkButton","1");
-    }
+   function changeState()
+   {
+     var textarea = document.getElementById("textarea");
+     textarea.removeAttribute("readonly");
+     textarea.setAttribute("checkButton","1");
+   }
 
-    function register()
-    {
-      if(document.getElementById("textarea").getAttribute("checkButton") == 1)
-      {
-        var textarea = document.getElementById('textarea').value;
-        location.href = "../Back/updateTextarea.inc.php?txt="+textarea;
-        var textarea = document.getElementById('textarea');
-        textarea.setAttribute("readonly","readonly");
-      }
-    }
-  </script>
+   function register()
+   {
+     if(document.getElementById("textarea").getAttribute("checkButton") == 1)
+     {
+       var textarea = document.getElementById('textarea').value;
+       location.href = "../Back/updateTextarea.inc.php?txt="+textarea;
+       var textarea = document.getElementById('textarea');
+       textarea.setAttribute("readonly","readonly");
+     }
+   }
+ </script>
 <?php
 
 //ajout du pied de page

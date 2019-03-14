@@ -1,27 +1,116 @@
 <?php
 //Ajout du head de page
 include('../tools/head.inc.php');
-
+?>
+<script>
+$(function(){
+  $("select").multiselect({
+    // shows header
+     header: true,
+     // height
+     height: 200,
+     // min width
+     minWidth: 250,
+     // additional classes
+     classes: '',
+     // custom text
+     checkAllText: 'Tout cocher',
+     uncheckAllText: 'Tout décocher',
+     noneSelectedText: 'Choisir des options',
+     // shows check/uncheck all links
+     showCheckAll: true,
+     showUncheckAll: true,
+     // text for selected options
+     selectedText: '# selectionné',
+     selectedList: 0,
+     // clise icon
+     closeIcon: 'ui-icon-circle-close',
+     // show/hide animations
+     show: null,
+     hide: null,
+     // auto open
+     autoOpen: false,
+     // allows to select multiple options
+     multiple: true,
+     // position options
+     position: {},
+     // where to append the multiple select to
+     appendTo: null,
+     // menu width
+     menuWidth:null,
+     // list separator
+     selectedListSeparator: ',',
+     // disables input on toggle
+     disableInputsOnToggle: true,
+     // grouped columns
+     groupColumns: false
+  }).multiselectfilter({
+    // The text to appear left of the input.
+    label: 'Filtre:',
+    // The width of the input in pixels.
+    width: null,
+    // The HTML5 placeholder attribute value of the input.
+    placeholder: 'Saisir un filtre',
+    // A boolean value denoting whether or not to reset the search box & any filtered options when the widget closes.
+    autoReset: false,
+    // in milliseconds
+    debounceMS: 250
+  });
+});
+</script>
+<?php
 $oController = new Controller($conn);
+$FROM = "user u";
 if(isset($_POST['rechercher']))
 {
   if(!empty($_POST['rechercher']))
   {
-    $conditions[0] = $conn->quote($_POST['rechercher']);
+    $isEmpty = 0;
+    $conditions = "WHERE nameUser = ".$conn->quote($_POST['rechercher']);
   }
-  else {
-    $conditions[0] = '';
+  else
+  {
+    $isEmpty = 1;
+    $conditions = '';
   }
 }
 else {
-  $conditions[0] = '';
+  $isEmpty = 1;
+  $conditions = '';
 }
-$req = $oController->selectAllTable("user u",$conditions);
+
+if(isset($_POST['filter']))
+{
+  if($isEmpty == 1)
+  {
+    $conditions = "WHERE ";
+  }
+
+  /* Option Select */
+    if(isset($_POST['filter']))
+    {
+      foreach ($_POST['filter'] as $key)
+      {
+        switch ($key) {
+          case 0://cas même ville
+              $conditions = $conditions." user.INSEE = ".$GLOBAL_ouser->get_ville()->get_INSEE();
+            break;
+          case 1://cas est mon ami
+              $FROM .= ",amis a";
+              $conditions .= "u.idUser = a.idUser2";
+              $conditions = $conditions." AND a.idUser1 = ".$GLOBAL_ouser->get_idUser();
+            break;
+        }
+       }
+    }
+}
+$SQL = "SELECT * FROM ".$FROM." ".$conditions;
+$req = $oController->envoieSQL($SQL,$conn);
 
 if(isset($_POST['reset']))
 {
-  $conditions[0] = '';
-  $req = $oController->selectAllTable("user u",$conditions);
+  $noCondi[0] = '';
+  $req = $oController->selectAllTable("user u",$noCondi);
 
 }
 ?>
@@ -32,10 +121,27 @@ if(isset($_POST['reset']))
 
       <!-- BARRE DE RECHERCHE -->
       <form class="" action="#" method="post">
-        <input type="text" name="rechercher" value="">
+        <input type="text" name="rechercher">
         <input type="submit" name="" value="Rechercher">
-        <input type="submit" name="reset" value="retour">
+        <input type="submit" name="reset" value="Retour">
+        <select name="filter[]" multiple size="5">
+            <?php
+              if(!empty($GLOBAL_ouser->get_ville()->get_INSEE()))
+              {
+              ?>
+              <option value="0">Même ville que moi</option>
+              <?php
+              }
+            ?>
+            <option value="1">Est mon ami</option>
+        </select>
       </form>
+      <script type="text/javascript">
+      $(function(){
+      $("select").multiselect();
+      });
+      </script>
+
 <body>
 <br>
 <script>
