@@ -421,6 +421,7 @@
        * Affichage Stage
        */
       echo "<h2>Demande de stage</h2>";
+      if(!empty($stage)){
       foreach($stage as $oneStage){
         ?>
         <div class='container-flex border border-secondary' style='padding:5px;margin:10px'>
@@ -476,17 +477,17 @@
                               switch($oneStage['status']){
                                 case 0 :
                                 ?>
-                                  <button type='button' id='delete' class='btn btn-danger'>Annuler</button>
+                                  <button type='submit'  name='delete' id='delete' class='btn btn-danger'>Annuler</button>
                                 <?php
                                 break;
                                 case 1 :
                                 ?>
-                                  <button type='button' id='delete' class='btn btn-danger'>Supprimer</button>
+                                  <button type='submit'  name='delete' id='delete' class='btn btn-danger'>Supprimer</button>
                                 <?php
                                 break;
                                 case 3 :
                                 ?>
-                                  <button type='button' id='addStage' class='btn btn-success'>Ajouter à mon profil</button>
+                                  <button type='submit'  name='addStage' id='addStage' class='btn btn-success'>Ajouter à mon profil</button>
                                 <?php
                                 break;
                               }
@@ -498,11 +499,12 @@
             </div>
         </div>
         <?php
-      }
+      }}
       /**
        * Affichage Offre d'emploi
        */
       echo "<h2>Offre d'emploi</h2>";
+      if(!empty($emploi)){
       foreach($emploi as $oneEmp){
         ?>
         <div class='container-flex border border-secondary' style='padding:5px;margin:10px'>
@@ -532,7 +534,7 @@
                         </div>
                         <div class='col-md-1'>
                             <?php 
-                              switch($oneStage['status']){
+                              switch($oneEmp['status']){
                                 case 0 :
                                 ?>
                                 <span class="badge badge-warning">En attente</span>
@@ -553,22 +555,22 @@
                         </div>
                         <div class='col-md-3'>
                           <form method='post' action='../Back/postul.trait.php'>
-                              <input type='hidden' value="<?php echo $oneStage['idCandidature']; ?>" name='candidature'>
+                              <input type='hidden' value="<?php echo $oneEmp['idCandidature']; ?>" name='candidature'>
                               <?php 
-                              switch($oneStage['status']){
+                              switch($oneEmp['status']){
                                 case 0 :
                                 ?>
-                                  <button type='button' id='delete' class='btn btn-danger'>Annuler</button>
+                                  <button type='submit'  name='delete' id='delete' class='btn btn-danger'>Annuler</button>
                                 <?php
                                 break;
                                 case 1 :
                                 ?>
-                                  <button type='button' id='delete' class='btn btn-danger'>Supprimer</button>
+                                  <button type='submit' name='delete' id='delete' class='btn btn-danger'>Supprimer</button>
                                 <?php
                                 break;
                                 case 3 :
                                 ?>
-                                  <button type='button' id='addEmp' class='btn btn-success'>Ajouter à mon profil</button>
+                                  <button type='submit' name='addEmp' id='addEmp' class='btn btn-success'>Ajouter à mon profil</button>
                                 <?php
                                 break;
                               }
@@ -581,6 +583,7 @@
         </div>
         <?php
       }
+    }
     }
 }
 

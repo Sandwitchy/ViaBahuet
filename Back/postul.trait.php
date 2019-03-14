@@ -41,4 +41,50 @@
     $_SESSION['success'] = 10;
     header("location:../publique/lesOffres.php");
   }
+  // DELETE CANDIDATURE
+  if(isset($_POST['delete'])){
+    $id = $_POST['candidature'];
+
+    $sql = "DELETE FROM candidature WHERE idCandidature = $id";
+
+    $req = $conn -> query($sql)or die($sql);
+
+    header("location:../publique/home.php");
+  }
+  // AJOUT A PROFIL STAGE CANDIDATURE ACCEPTE 
+  if(isset($_POST['addStage'])){
+
+    $id = $_POST['candidature'];
+
+    $sql = "SELECT idStage FROM candidature WHERE idCandidature = $id";
+    $req = $conn -> query($sql)or die($sql);
+    $res = $req -> fetch();
+
+    $idUser = $GLOBAL_ouser->get_idUser();
+    $idStage = $res['idStage'];
+    $sql = "UPDATE stage SET idUser = $idUser WHERE idStage = $idStage";
+    $req = $conn -> query($sql)or die($sql);
+
+    $sql = "DELETE FROM candidature WHERE idCandidature = $id";
+    $req = $conn -> query($sql)or die($sql);
+    header("location:../publique/profile.php");
+  }
+  // AJOUT A PROFIL EMPLOI CANDIDATURE ACCEPTE 
+  if(isset($_POST['addEmp'])){
+
+    $id = $_POST['candidature'];
+
+    $sql = "SELECT idEmpOff FROM candidature WHERE idCandidature = $id";
+    $req = $conn -> query($sql)or die($sql);
+    $res = $req -> fetch();
+
+    $idUser = $GLOBAL_ouser->get_idUser();
+    $idEmp = $res['idEmpOff'];
+    $sql = "UPDATE emploiOff SET idUser = $idUser WHERE idEmpOff = $idEmp";
+    $req = $conn -> query($sql)or die($sql);
+
+    $sql = "DELETE FROM candidature WHERE idCandidature = $id";
+    $req = $conn -> query($sql)or die($sql);
+    header("location:../publique/profile.php");
+  }
 ?>
