@@ -113,26 +113,30 @@ if(isset($_GET['user']))
           <div class="col-md col-lg col-ms col-xs">
             <div class="row">
 
-          <div class="container emp-profile">
+          <div class="container emp-profile" style="padding:0;">
             <form method="post">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
-                            </div>
-                        </div>
+                      <div class='vb-profilepic img-thumbnail' style="background-image:url('../image/<?php echo $GLOBAL_ouser->get_photoUser()?>');
+                                                                                      width:50%;
+                                                                                      height:250px;"></div>
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
                                     <h5>
                                         <?php echo $GLOBAL_ouser->get_preUser()." ".$GLOBAL_ouser->get_nameUser(); ?>
                                     </h5>
-                                    <h6>
-                                        Web Developer and Designer
-                                    </h6>
+                                    <div class="col-md col-lg col-ms col-xs" style="margin-bottom:2%;">
+                                      <div class="col-md-8"> <!-- BIOGRAPHIE -->
+                                        <h6 style="color:#212529">
+                                          Bio :
+                                          <a href="" style="color:rgb(<?php echo rand(0,230).','.rand(0,230).','.rand(0,230); ?>)" class="typewrite" data-period="850" data-type=<?php echo displayBio($GLOBAL_ouser->get_descUser()); ?>>
+                                            <span class="wrap"></span>
+                                          </a>
+                                        </h6>
+                                        <br>
+                                      </div>
+                                    </div>
                                     <br>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -145,13 +149,13 @@ if(isset($_GET['user']))
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <a href="pref.php" class="profile-edit-btn btn-dark" style="color:white;text-decoration:none;">Modifier le profil</a>
+                        <a href="pref.php" class="profile-edit-btn btn-warning" style="color:white;text-decoration:none;">Modifier le profil</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                            <p>TAGS</p>
+                            <p>TAGS :</p>
                             <?php
                             $tagsuser = $GLOBAL_ouser -> selecttags($conn);
                             if ($tagsuser == false)
@@ -216,6 +220,7 @@ if(isset($_GET['user']))
                                         </div>
                             </div>
                             <div class="tab-pane fade show" id="stages" role="tabpanel" aria-labelledby="profile-tab">
+                              <a href="stagecrea.php" class="btn btn-primary">Ajouter un stage</a>
                               <?php
                               $idUser = $GLOBAL_ouser->get_idUser();
                                 $sql = "SELECT datedebStage,datefinStage,libStage,descStage,nameEntreprise,photoEnt
@@ -228,6 +233,7 @@ if(isset($_GET['user']))
                                   echo "Aucun Résultat";
                                 }
                                 else {
+                                  while ($res = $req ->fetch()) {
                                 ?>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -274,6 +280,7 @@ if(isset($_GET['user']))
                     </div>
                     <?php
                       }
+                    }
                     ?>
                 </div>
             </form>
@@ -283,17 +290,6 @@ if(isset($_GET['user']))
           </div>
 
           <div class="w-100"></div> <!-- RETOUR A LA LIGNE DE LA GRID -->
-
-          <div class="col-md col-lg col-ms col-xs" style="margin-bottom:2%;">
-            <div class="col-md-8"> <!-- BIOGRAPHIE -->
-              <h1>
-                <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, Im VipulM.", "I Love Design.", "I Love to Develop." ]'>
-                  <span class="wrap"></span>
-                </a>
-              </h1>
-              <br>
-            </div>
-          </div>
         </div>
       </div> <!-- FIN GRID PROFILE -->
     </div>

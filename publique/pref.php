@@ -3,10 +3,6 @@
 include('../tools/head.inc.php');
 ?>
 <script>
-$("#czContainer").czMore();
-</script>
-
-<script>
 
 $( function() {
   var availableTags = [
@@ -179,17 +175,12 @@ $( function() {
                 <label for="inputLibville">Ville</label>
               </div>
             </div>
+          </div>
+          <div class="row">
             <div class="form-group col-md">
               <div class="form-label-group">
-                <div id="czContainer">
-                  <div id="first">
-                    <div class="recordset">
-                      <input type="text" name="input 1" id="input 1">
-                      <input type="text" name="input 2" id="input 2">
-                      <input type="text" name="input 3" id="input 3">
-                    </div>
-                  </div>
-                </div>
+                <h6><label for="field-name">Texte bio</label></h6>
+                <?php duplicateForm(); //function.php line 373?>
               </div>
             </div>
           </div>
@@ -210,7 +201,7 @@ $( function() {
       <form method='post' enctype="multipart/form-data" action='../tools/gestImg.php'>
         <div class="custom-file">
          <input type="file" name='imgProfile' class="custom-file-input" id="customFile">
-         <label class="custom-file-label" for="customFile">Choisir une img</label>
+         <label class="custom-file-label" for="customFile">Choisir une image</label>
        </div>
        <div class='text-center' style="margin-top:2%">
          <div class="btn-group">
@@ -290,19 +281,35 @@ $( function() {
         $_SESSION['error'] = 1;
         echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
         die();
-      }else{
+      }
+      else
+      {
         $login = $_POST['login'];
         $nom = $_POST['name'];
         $prenom = $_POST['prenom'];
         $mail = $_POST['mail'];
         $tel = $_POST['tel'];
         $rue = $_POST['rue'];
-        $GLOBAL_ouser -> updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$conn);
+        $txtbio = $_POST['text'];
+        $textbio = "";
+        $count = 0;
+        foreach($txtbio as $untextbio)
+        {
+          if($count == 0)
+          {
+            $textbio = $untextbio;
+          }
+          else {
+            $textbio = $textbio."|".$untextbio;
+          }
+          $count++;
+        }
+        $GLOBAL_ouser -> updateUser($login,$nom,$prenom,$mail,$tel,$rue,$ville,$textbio,$conn);
         unset($_SESSION['success']);
         $_SESSION['success'] = 1;
         echo "<script type='text/javascript'>document.location.replace('pref.php');</script>";
       }
-      
+
     }
     if (isset($_POST['modpass']))
     {
@@ -366,7 +373,6 @@ $( function() {
         </div>
       </div>
     </footer>
-
   </div>
   <!-- /.content-wrapper -->
 

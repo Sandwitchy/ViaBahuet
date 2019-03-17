@@ -369,3 +369,126 @@ var TxtType = function(el, toRotate, period) {
       document.body.appendChild(css);
   };
 </script>
+<?php
+  function duplicateForm()
+  {
+  ?>
+  <script type="text/javascript">
+  // Dynamically add-on fields
+
+  $(function() {
+    var count = 1;
+    // Remove button click
+    $(document).on(
+        'click',
+        '[data-role="appendRow"] > .form-inline [data-role="remove"]',
+        function(e)
+        {
+            e.preventDefault();
+            if(count > 1)
+            {
+              $(this).closest('.form-row').remove();
+              count = count -1;
+            }
+            else if(count == 1){
+              count = 1;
+            }
+            console.log(count);
+        }
+    );
+    // Add button click
+    $(document).on(
+        'click',
+        '[data-role="appendRow"] > .form-row [data-role="add"]',
+        function(e)
+        {
+            e.preventDefault();
+            var container = $(this).closest('[data-role="appendRow"]');
+            new_field_group = container.children().filter('.form-row:first-child').clone();
+            new_field_group.find('label').html('Upload Document').append("name='text'+count");
+            new_field_group.find('input').each(function(){
+                $(this).val('');
+                $(this).attr('name', "text[]");
+
+            });
+            container.append(new_field_group);
+            count = count+1;
+            console.log(count);
+        }
+    );
+  });
+
+
+  // file upload
+
+  $(document).on('change', '.file-upload', function(){
+  var i = $(this).prev('label').clone();
+  var file = this.files[0].name;
+  $(this).prev('label').text(file);
+  });
+
+  </script>
+</head>
+<body>
+
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+
+<div class="container">
+
+<div class="form-group row custom-upload">
+
+
+  <div class="col-md-12">
+    <div data-role="appendRow">
+          <div class="form-inline form-row">
+
+            <input input type="text" class="form-control mb-2 mr-sm-2 col-sm-4" id="field-name" name="text[]" placeholder="Texte biographique">
+
+      <button class="btn btn-sm btn-danger  mb-2" data-role="remove">
+       <i class="fa fa-minus"></i>
+      </button>
+      <button class="btn btn-sm btn-primary  mb-2" data-role="add">
+          <i class="fa fa-plus"></i>
+      </button>
+
+
+          </div>  <!-- /div.form-inline -->
+      </div>  <!-- /div[data-role="dynamic-fields"] -->
+  </div>
+</div>
+</div>
+</body>
+</html>
+
+  <?php
+  }
+?>
+<?php
+  function displayBio($descUser)
+  {
+    if($descUser != "")
+    {
+      $bio = '["';
+      $descUser = explode('|',$descUser);
+      $bool = 0;
+      foreach ($descUser as $undescUser)
+      {
+        if($bool == 0)
+        {
+          $bio = $bio.$undescUser.'"';
+          $bool++;
+        }
+        else {
+          $bio = $bio.',"'.$undescUser.'"';
+        }
+      }
+      $bio = $bio.']';
+    }
+    else {
+      $bio = "";
+    }
+    return $bio;
+  }
+?>
