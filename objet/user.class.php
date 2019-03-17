@@ -376,15 +376,17 @@
 
       if($type == 0){
         $sql = "SELECT idUser FROM candidature
-                WHERE idStage = $idOffre ";
+                WHERE idStage = $idOffre 
+                AND idUser = $id";
       }
       elseif($type == 1){
         $sql = "SELECT idUser FROM candidature
-                WHERE idEmpOff = $idOffre ";
+                WHERE idEmpOff = $idOffre 
+                AND idUser = $id";
       }
       $req = $conn -> query($sql)or die($sql);
       $res = $req -> fetch();
-
+      
       if(empty($res)){
         return false;
       }else{

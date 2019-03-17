@@ -167,6 +167,22 @@
       <?php
       $_SESSION['success'] = 0;
       break;
+      case 11:
+      ?>
+      <div class="alert alert-danger">
+        La candidature à bien été refusé
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 12:
+      ?>
+      <div class="alert alert-danger">
+        La candidature à bien été accepté. Toutes les autres candidature affilié à la même offre ont bien été refusé automatiquement.
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
     }//end switch success
   }
  ?>
