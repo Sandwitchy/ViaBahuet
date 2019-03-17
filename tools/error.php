@@ -69,6 +69,14 @@
               <?php
                 $_SESSION['error'] = 0;
               break;
+            case 10:
+            ?>
+            <div class="alert alert-danger">
+              <strong>Erreur :</strong> Vous avez déja postuler à cette offre. Vous pouvez la consultée dans l'onglet <u><i>Mes Candidatures</i></u>
+            </div>
+            <?php
+              $_SESSION['error'] = 0;
+            break;
 
     }//end switch error
   }
@@ -147,6 +155,30 @@
       ?>
       <div class="alert alert-success">
         Les informations ont bien été modifiées !
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 10:
+      ?>
+      <div class="alert alert-success">
+        Votre candidature a bien été enregistré!
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 11:
+      ?>
+      <div class="alert alert-danger">
+        La candidature à bien été refusé
+      </div>
+      <?php
+      $_SESSION['success'] = 0;
+      break;
+      case 12:
+      ?>
+      <div class="alert alert-danger">
+        La candidature à bien été accepté. Toutes les autres candidature affilié à la même offre ont bien été refusé automatiquement.
       </div>
       <?php
       $_SESSION['success'] = 0;
