@@ -87,4 +87,15 @@
     $req = $conn -> query($sql)or die($sql);
     header("location:../publique/profile.php");
   }
+  //REFUS CANDIDATURE PAR ENTREPRISE
+  if(isset($_POST['refuse'])){
+    $GLOBAL_ouser->refuseCandidature($_POST['candidature'],$conn);
+    $_SESSION['success'] = 11;
+    header("location:../publique/mescandidaturesEnt.php");
+  }
+  if (isset($_POST['accept'])){
+    $GLOBAL_ouser-> acceptCandidature($_POST['candidature'],$conn);
+    $_SESSION['success'] = 12;
+    header("location:../publique/mescandidaturesEnt.php");
+  }
 ?>

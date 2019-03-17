@@ -78,6 +78,7 @@ $( function() {
                                 AND C.INSEE = V.INSEE
                                 AND ent.idEntreprise = S.idEntreprise
                                 AND S.status = 0
+                                AND s.idUser IS NULL
                                 GROUP BY S.idStage",$conn,0);
           ?>
         </div> <!-- fin tab 1-->
@@ -88,6 +89,7 @@ $( function() {
                                   AND ent.idEntreprise = E.idEntreprise
                                   AND E.idEmpOff = TypeE.idTypeEmp
                                   AND statusEmpOff = 0;
+                                  AND e.idUser IS NULL
                                   GROUP BY E.idEmpOff",$conn,0); ?>
         </div><!-- fin tab 2 -->
       </div><!-- FIN DIV TAB-->

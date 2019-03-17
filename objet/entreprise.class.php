@@ -342,5 +342,223 @@
       return $res;
 
     }
+    /**
+     * Procédure qui Met à jour une candidature à "refus"
+     */
+    public function refuseCandidature($idc,$conn){
+      $sql = "UPDATE candidature SET status = 1 WHERE idCandidature = $idc";
+      $req = $conn->query($sql);
+
+    }
+    /**
+     * Procédure d'acceptation de candidature
+     * Refuse automatiquement les autres candidature affilié à l'offre
+     */
+    public function acceptCandidature($idc,$conn){
+      // accept la candidature
+      $sql = "UPDATE candidature SET status = 3 WHERE idCandidature = $idc";
+      $req = $conn->query($sql)or die($sql);
+
+      // refuse les autres candidature associé à la même offre
+      // récupère info offre
+      $sql = "SELECT typeOffre, idStage , idEmpOff FROM candidature WHERE idCandidature = $idc";
+      $req = $conn -> query($sql)or die($sql);
+      $res = $req -> fetch(PDO::FETCH_ASSOC);
+      var_dump($res);
+      if($res['typeOffre'] == 0){
+        // offre est un stage
+        $ids = $res['idStage'];
+        $sql = "UPDATE candidature SET status = 1
+                WHERE idStage = $ids
+                AND idCandidature <> $idc";
+      }else{
+        //offre est un emploi
+        $ide = $res['idEmpOff'];
+        $sql = "UPDATE candidature SET status = 1
+        WHERE idEmpOff = $ide
+        AND idCandidature <> $idc";
+      }
+      $req = $conn -> query($sql)or die($sql);
+      // archive l'offre 
+      if($res['typeOffre'] == 0){
+        //offre est stage
+        $sql = "UPDATE stage SET status = 1 WHERE idStage = $ids";
+      }else{
+        $sql = "UPDATE emploidff SET statusEmpOff = 1 WHERE idEmpOff = $ide";
+      }
+      $req = $conn -> query($sql)or die($sql);
+
+    }
+     /**
+     * Procedure d'affichage des candidatures pour l'entreprise
+     */
+    public function getCandidature($conn){
+      $id = $this->idEnt;
+
+      $sql = "SELECT c.idCandidature,u.idUser, c.createdAt, s.libStage, c.status , u.photoUser , u.nameUser, u.preUser
+              FROM candidature c
+              INNER JOIN stage s ON s.idStage = c.idStage
+              INNER JOIN user u ON u.idUser = c.idUser
+              WHERE s.idEntreprise = $id
+              AND c.status = 0
+              ORDER BY c.createdAt DESC";
+
+      $req = $conn -> query($sql)or die($sql);
+      $stage = $req ->fetchAll(PDO::FETCH_ASSOC);
+
+      $sql = "SELECT c.idCandidature,u.idUser, c.createdAt, e.libEmpOff, c.status , u.photoUser , u.nameUser, u.preUser  
+              FROM candidature c
+              INNER JOIN emploiOff e ON e.idEmpOff = c.idEmpOff
+              INNER JOIN user u ON u.idUser = c.idUser
+              WHERE e.idEntreprise = $id
+              AND c.status = 0
+              ORDER BY c.createdAt DESC";
+
+      $req = $conn -> query($sql)or die($sql);
+      $emploi = $req ->fetchAll(PDO::FETCH_ASSOC);
+
+      /**
+       * Affichage Stage
+       */
+      echo "<h2>Demande de stage</h2>";
+      if(!empty($stage)){
+      foreach($stage as $oneStage){
+        ?>
+        <div class='container-flex border border-secondary' style='padding:5px;margin:10px'>
+            <div class='row'>
+                <!-- IMAGE ENTREPRISE -->
+                <div class='col-md-1' style='padding-right:5px;'>
+                  <div class='vb-profilepic img-thumbnail' 
+                  style=" background-image:url('../image/<?php echo $oneStage['photoUser']?>');
+                          width : 100%;
+                          height:87px;">
+                  </div>
+                </div>
+                <!-- COntenu -->
+                <div class='col-md-11'>
+                    <div class='row' style='margin-left:10px;'>
+                      <div class='col-md-4'>
+                        <p><u><b><?php echo $oneStage['nameUser']." ".$oneStage['preUser']; ?></u></b></p>
+                      </div><div class='col-md-4'>
+                        <p>Postulé le: <?php echo datetimeFr($oneStage['createdAt']); ?></p>
+                      </div><div class='col-md-4'>
+                        <p>Offre de stage</p>
+                      </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-8'>
+                            <p><i><b>Intitulé du Stage : </i></b><?php echo $oneStage['libStage'] ?></p>
+                        </div>
+                        <div class='col-md-1'>
+                            <?php 
+                              switch($oneStage['status']){
+                                case 0 :
+                                ?>
+                                <span class="badge badge-warning">En attente</span>
+                                <?php
+                                break;
+                                case 1 :
+                                ?>
+                                <span class="badge badge-danger">Refusé</span>
+                                <?php
+                                break;
+                                case 3 :
+                                ?>
+                                <span class="badge badge-success">Accepté</span>
+                                <?php
+                                break;
+                              }
+                            ?>
+                        </div>
+                        <div class='col-md-3'>
+                          <form method='post' action='../Back/postul.trait.php'>
+                              <input type='hidden' value="<?php echo $oneStage['idCandidature']; ?>" name='candidature'>
+                             
+                             <button type='submit'  name='refuse' id='refuse' class='btn btn-danger'>Refuser</button>
+                             <button type='submit'  name='accept' id='accept' class='btn btn-success'>Accepter</button>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+      }
+    }else{
+      echo "Aucune réponse à vos candidatures";
+    }
+      /**
+       * Affichage Offre d'emploi
+       */
+      echo "<h2>Offre d'emploi</h2>";
+      if(!empty($emploi)){
+      foreach($emploi as $oneEmp){
+        ?>
+        <div class='container-flex border border-secondary' style='padding:5px;margin:10px'>
+            <div class='row'>
+                <!-- IMAGE ENTREPRISE -->
+                <div class='col-md-1' style='padding-right:5px;'>
+                  <div class='vb-profilepic img-thumbnail' 
+                  style=" background-image:url('../image/<?php echo $oneEmp['photoUser']?>');
+                          width : 100%;
+                          height:87px;">
+                  </div>
+                </div>
+                <!-- COntenu -->
+                <div class='col-md-11'>
+                    <div class='row' style='margin-left:10px;'>
+                      <div class='col-md-4'>
+                        <a href="#profileOther.php?user=<?php echo $oneStage['idUser']; ?>"> 
+                          <p><u><b><?php echo $oneEmp['nameUser']." ".$oneEmp['preUser']; ?></u></b></p>
+                        </a>
+                      </div><div class='col-md-4'>
+                        <p>Postulé le: <?php echo datetimeFr($oneEmp['createdAt']); ?></p>
+                      </div><div class='col-md-4'>
+                        <p>Offre d'emploi</p>
+                      </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-8'>
+                            <p><i><b>Intitulé du Stage : </i></b><?php echo $oneEmp['libEmpOff'] ?></p>
+                        </div>
+                        <div class='col-md-1'>
+                            <?php 
+                              switch($oneEmp['status']){
+                                case 0 :
+                                ?>
+                                <span class="badge badge-warning">En attente</span>
+                                <?php
+                                break;
+                                case 1 :
+                                ?>
+                                <span class="badge badge-danger">Refusé</span>
+                                <?php
+                                break;
+                                case 3 :
+                                ?>
+                                <span class="badge badge-success">Accepté</span>
+                                <?php
+                                break;
+                              }
+                            ?>
+                        </div>
+                        <div class='col-md-3'>
+                          <form method='post' action='../Back/postul.trait.php'>
+                              <input type='hidden' value="<?php echo $oneEmp['idCandidature']; ?>" name='candidature'>
+                             
+                                  <button type='submit'  name='refuse' id='refuse' class='btn btn-danger'>Refuser</button>
+                                  <button type='submit'  name='accept' id='accept' class='btn btn-success'>Accepter</button>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+      }
+    }else{
+      echo "Aucune réponse à vos candidatures";
+    }
+    }
   }
 ?>

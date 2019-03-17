@@ -116,8 +116,8 @@
             <td><?php echo $res['idStage']; ?></td> <!-- 9 TD -->
             <td> <a style="color:rgb(<?php echo rand(0,200); ?>,<?php echo rand(0,200) ;?>, <?php echo rand(0,200);?>);text-decoration:underline;" class="btn" href="#" data-toggle="tooltip" title="<?php gettags($restag); ?>"><?php echo $res['nameEntreprise']; ?></a> </td>
             <td><?php echo $res['libVill']; ?></td>
-            <td><?php echo $res['datedebStage']; ?></td>
-            <td><?php echo $res['datefinStage']; ?></td>
+            <td><?php echo dateFR($res['datedebStage']); ?></td>
+            <td><?php echo dateFR($res['datefinStage']); ?></td>
             <td><?php echo $res['libStage']; ?></td>
             <td><?php echo $res['descStage']; ?></td>
             <td><?php echo $res['exiStage']; ?></td>

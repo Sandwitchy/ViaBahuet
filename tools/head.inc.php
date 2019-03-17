@@ -218,6 +218,7 @@
         </li>
       <?php } ?>
         <?php
+        // candidature User
         if (get_class($GLOBAL_ouser) == "user") {
           $INT_TypeUser = $GLOBAL_ouser->get_typeUser();
           if ($INT_TypeUser != 1)
@@ -231,6 +232,7 @@
             <?php
           }
         }
+        // Candidature Entreprise
         if (get_class($GLOBAL_ouser) == "user") {
           $nbr = $GLOBAL_ouser->nbrCandidature($conn);
           if ($nbr > 0)
@@ -243,6 +245,15 @@
             </li>
             <?php
           }
+        }
+          if (get_class($GLOBAL_ouser) == "entreprise") {
+            ?>
+            <li class="nav-item">
+                <a class="nav-link" href="../publique/mescandidaturesEnt.php">
+                <i class="fas fa-fw fa-database"></i>
+                <span>Mes candidatures</span></a>
+            </li>
+            <?php
         }
          ?>
          
